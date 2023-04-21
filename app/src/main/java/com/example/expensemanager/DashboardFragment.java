@@ -259,7 +259,6 @@ public class DashboardFragment extends Fragment {
         Button saveBtn=myview.findViewById(R.id.btnSave);
         Button cancelBtn=myview.findViewById(R.id.btnCancel);
 
-
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

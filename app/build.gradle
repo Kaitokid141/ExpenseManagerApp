@@ -23,6 +23,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
+
+    //Add them to connect firebase(tu lam)
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -49,6 +57,7 @@ dependencies {
 
     implementation 'com.android.support:support-v4:30.+'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-database:20.2.0'
     androidTestImplementation 'com.android.support:support-annotations:23.3.0'
     androidTestImplementation 'com.android.support.test:runner:0.3'
     androidTestImplementation 'com.android.support.test:rules:0.3'

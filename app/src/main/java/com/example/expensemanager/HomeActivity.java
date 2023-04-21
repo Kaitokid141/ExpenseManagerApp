@@ -28,22 +28,16 @@ import com.google.common.math.Stats;
 import com.google.firebase.auth.FirebaseAuth;
 
 import static com.example.expensemanager.R.string.navigation_drawer_open;
-
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
 
     //Fragment
-
     private DashboardFragment dashboardFragment;
     private IncomeFragment incomeFragment;
     private ExpenseFragment expenseFragment;
     private StatsFragment statsFragment;
-
     private FirebaseAuth mAuth;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +61,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         {};
         toggle.setDrawerIndicatorEnabled(true);
         drawerLayout.addDrawerListener(toggle);
-
 
         toggle.syncState();
 

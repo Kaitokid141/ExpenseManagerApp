@@ -1,5 +1,4 @@
 package com.example.expensemanager;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,27 +12,26 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
 public class MainActivity extends AppCompatActivity {
-
     private EditText mEmail;
     private EditText mPassword;
     private Button loginButton;
     private TextView mForgotPassword;
     private TextView mSignup;
-
     private ProgressDialog mDialog;
     private FirebaseAuth mAuth;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mAuth = FirebaseAuth.getInstance();
+
         if(mAuth.getCurrentUser()!=null){
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         }
@@ -46,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         loginButton=findViewById(R.id.btn_login);
         mForgotPassword=findViewById(R.id.forgot_password);
         mSignup=findViewById(R.id.signup);
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
                 mDialog.setMessage("Processing");
                 mDialog.show();
-
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -84,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+
         // Redirect to SignUp activity
         mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), RegistrationActivity.class));
             }
         });
+
         // Redirect to reset password activity
         mForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override

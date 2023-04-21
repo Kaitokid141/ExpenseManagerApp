@@ -90,8 +90,6 @@ public class StatsFragment extends Fragment {
         mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
         mIncomeDatabase.keepSynced(true);
         mExpenseDatabase.keepSynced(true);
-
-
         mIncomeDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -110,27 +108,20 @@ public class StatsFragment extends Fragment {
                     }
                     DateWiseIncome.put(date,DateWiseIncome.getOrDefault(date,0)+data.getAmount());
 
-
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
 
-
         //Calculate total expense
-
         mExpenseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 values[1] = 0;
-
                 for (DataSnapshot mysnap : snapshot.getChildren()) {
-
                     Data data = mysnap.getValue(Data.class);
 
                     values[1] += data.getAmount();
@@ -227,9 +218,6 @@ public class StatsFragment extends Fragment {
         mLineGraph.getDescription().setEnabled(false);
 
 
-
-
-
         ArrayList<ILineDataSet> dataSets1 = new ArrayList<>();
         String[] xAxisValues1 = new String[DateWiseExpense.size()];
         ArrayList<Entry> expenseEntries = new ArrayList<>();
@@ -276,9 +264,6 @@ public class StatsFragment extends Fragment {
         mLineGraph1.invalidate();
         mLineGraph1.getDescription().setEnabled(false);
 
-
         return myView;
-
-
     }
 }
