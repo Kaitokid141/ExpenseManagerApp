@@ -242,7 +242,7 @@ public class IncomeFragment extends Fragment {
         mydialog.setView(myview);
 
         edtAmount = myview.findViewById(R.id.amount);
-        edtType = myview.findViewById(R.id.type_edt);
+        edtType = myview.findViewById(R.id.autoCompleteTextView);
         edtNote = myview.findViewById(R.id.note_edt);
 
         //Set data to edit text

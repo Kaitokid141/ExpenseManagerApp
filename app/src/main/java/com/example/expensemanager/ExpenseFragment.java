@@ -234,7 +234,7 @@ public class ExpenseFragment extends Fragment {
 
         edtAmount = myview.findViewById(R.id.amount);
         edtNote = myview.findViewById(R.id.note_edt);
-        edtType = myview.findViewById(R.id.type_edt);
+        edtType = myview.findViewById(R.id.autoCompleteTextView);
 
         edtType.setText(type);
         edtType.setSelection(type.length());
