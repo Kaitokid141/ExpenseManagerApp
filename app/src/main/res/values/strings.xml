@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">Quản lý chi tiêu</string>
+    <string name="app_name">Expense Manager</string>
     <string name="forgot_password">Quên mật khẩu?</string>
-    <string name="welcome_back">Xin chào!</string>
+    <string name="welcome_back">Bonjour User</string>
     <string name="don_t_have_an_account_yet_signup_now">Bạn chưa có tài khoản? Hãy đăng ký</string>
     <string name="you_seem_new_here_signup">Chưa có tài khoản? Hãy đăng ký</string>
 
@@ -12,14 +12,43 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="typesOfTransactions">
-        <item>Đồ ăn</item>
-        <item>Tiền điện</item>
-        <item>Cước</item>
-        <item>Tiền nước</item>
-        <item>Nợ</item>
-        <item>Lặt vặt</item>
-        <item>Khấu hao</item>
-        <item>Thêm</item>
+        <item>Ăn uống</item>
+        <item>Di chuyển</item>
+        <item>Thuê nhà</item>
+        <item>Hóa đơn nước</item>
+        <item>Hóa đơn điện</item>
+        <item>Hóa đơn điện thoại</item>
+        <item>Hóa đơn gas</item>
+        <item>Hóa đơn truyền hình</item>
+        <item>Hóa đơn internet</item>
+        <item>Hóa đơn tiện ích khác</item>
+        <item>Sửa và trang trí khác </item>
+        <item>Bảo dưỡng xe</item>
+        <item>Khám sức khỏe</item>
+        <item>Bảo hiểm</item>
+        <item>Giáo dục</item>
+        <item>Đồ gia dụng</item>
+        <item>Đồ dùng cá nhân</item>
+        <item>Vật nuôi</item>
+        <item>Dịch vụ gia đình</item>
+        <item>Các chi phí khác</item>
+        <item>Thể dục thể thao</item>
+        <item>Làm đẹp</item>
+        <item>Quà tặng và quyên góp</item>
+        <item>Dịch vụ trực tuyến</item>
+        <item>Vui - chơi</item>
+        <item>Đầu tư</item>
+        <item>Cho vay</item>
+        <item>Trả nợ</item>
+        <item>Trả lãi</item>
+        <item>Khác</item>
+    </string-array>
+
+    <string-array name="typesOfIncome">
+        <item>Lương</item>
+        <item>Làm thêm</item>
+        <item>Thu nợ</item>
+        <item>Khác</item>
     </string-array>
 
     /Headings

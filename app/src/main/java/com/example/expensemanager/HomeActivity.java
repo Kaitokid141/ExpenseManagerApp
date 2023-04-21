@@ -44,7 +44,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_home);
         mAuth=FirebaseAuth.getInstance();
         Toolbar toolbar=findViewById(R.id.my_toolbar);
-        toolbar.setTitle("Expense Manager");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);

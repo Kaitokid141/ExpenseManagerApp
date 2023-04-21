@@ -23,12 +23,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
                         android:text="GIÁ TIỀN:"
-
                         android:layout_height="wrap_content"
                         />
                 </RelativeLayout>
@@ -41,6 +40,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:id="@+id/amount"
                         android:hint="(Nhập giá tiền)"
                         />
@@ -57,7 +57,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
@@ -82,7 +82,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="none"
-                            android:text="Đồ ăn" />
+                            android:text="Chọn loại"/>
                     </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
             </LinearLayout>
@@ -96,7 +96,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
@@ -137,10 +137,11 @@
                         android:id="@+id/btnUpdDelete"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/holo_red_dark"
                         android:text="XOÁ"
                         android:textAppearance="?android:textAppearanceMedium"
-                        app:backgroundTint="#D31717" />
+                        app:backgroundTint="#E74646"
+                        android:background="@drawable/btn_rounded_accent"
+                        android:padding="10dp"/>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -153,11 +154,12 @@
                         android:id="@+id/btnUpdUpdate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/holo_green_dark"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:backgroundTint="@android:color/holo_green_dark"
                         android:text="CẬP NHẬT"
-                        app:backgroundTint="#22CF29" />
+                        app:backgroundTint="#1ca87a"
+                        android:background="@drawable/btn_rounded_accent"
+                        android:padding="10dp"/>
                 </RelativeLayout>
 
             </LinearLayout>

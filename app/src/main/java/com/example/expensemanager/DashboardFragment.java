@@ -301,7 +301,7 @@ public class DashboardFragment extends Fragment {
             }
         });
         dialog.show();
-        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
+        String[] transaction = getResources().getStringArray(R.array.typesOfIncome);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 myview.findViewById(R.id.autoCompleteTextView);
@@ -393,6 +393,7 @@ public class DashboardFragment extends Fragment {
                 incomeViewHolder.setIncomeType(data.getType());
                 incomeViewHolder.setIncomeAmount(data.getAmount());
                 incomeViewHolder.setIncomeDate(data.getDate());
+                incomeViewHolder.setNoteDate(data.getNote());
 
             }
         };
@@ -409,6 +410,7 @@ public class DashboardFragment extends Fragment {
                 expenseViewHolder.setExpenseType(data.getType());
                 expenseViewHolder.setExpenseAmount(data.getAmount());
                 expenseViewHolder.setExpenseDate(data.getDate());
+                expenseViewHolder.setExpenseNote(data.getNote());
             }
         };
         mRecyclerExpense.setAdapter(expenseAdapter);
@@ -440,6 +442,11 @@ public class DashboardFragment extends Fragment {
             Log.i("DATE", date);
             mDate.setText(date);
         }
+        public void setNoteDate(String note){
+            TextView mNote=mIncomeView.findViewById(R.id.note_Income_ds);
+            Log.i("NOTE", note);
+            mNote.setText(note);
+        }
 
     }
 
@@ -465,6 +472,11 @@ public class DashboardFragment extends Fragment {
         public void setExpenseDate(String date){
             TextView mDate=mExpenseView.findViewById(R.id.date_Expense_ds);
             mDate.setText(date);
+        }
+
+        public void setExpenseNote(String note){
+            TextView mNote=mExpenseView.findViewById(R.id.note_Expense_ds);
+            mNote.setText(note);
         }
     }
 }

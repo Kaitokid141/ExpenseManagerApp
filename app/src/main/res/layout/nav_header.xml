@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     app:theme = "@style/ThemeOverlay.AppCompat.Dark"
-    android:background="@color/green_900"
+    android:background="#1ca87a"
     android:layout_height="200dp">
 
     <TextView
