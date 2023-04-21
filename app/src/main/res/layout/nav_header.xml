@@ -7,15 +7,16 @@
     android:gravity="center"
     android:orientation="vertical"
     app:theme = "@style/ThemeOverlay.AppCompat.Dark"
-    android:background="@color/nav_header"
+    android:background="@color/green_900"
     android:layout_height="200dp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/expense_manager"
+        android:text="@string/app_name"
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@color/white"
+        android:textSize="30sp"
         android:gravity="center">
 
 

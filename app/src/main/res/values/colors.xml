@@ -9,4 +9,26 @@
     <color name="white">#FFFFFF</color>
     <color name="nav_header">#FF295578</color>
     <color name="date_colour">#FF000000</color>
+
+    //onboarding colors
+    <color name="background">#F0F4F3</color>
+    <color name="buttontext">#50C2C9</color>
+
+    //indicator color
+    <color name="inactive">#C4C4C4</color>
+    <color name="active">#50C2C9</color>
+
+    <color name="blue_600">#1E88E5</color>
+    <color name="colorPrimary">#1976D2</color>
+    <color name="colorPrimaryDark">#1565C0</color>
+    <color name="colorPrimaryLight">#1E88E5</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="blue_grey_600">#546E7A</color>
+    <color name="blue_400">#42A5F5</color>
+    <color name="light_green_500">#8BC34A</color>
+    <color name="grey_10">#e6e6e6</color>
+    <color name="grey_40">#999999</color>
+    <color name="grey_90">#263238</color>
+    <color name="green_400">#66BB6A</color>
+    <color name="green_900">#1B5E20</color>
 </resources>

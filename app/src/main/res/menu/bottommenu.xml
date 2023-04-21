@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/dashboard"
-        android:title="Dashboard"
-        android:icon="@drawable/dashboard"/>
+        android:title="Home"
+        android:icon="@drawable/baseline_home_24"/>
     <item android:id="@+id/stats"
-        android:title="Stats"
-        android:icon="@drawable/stats"/>
+        android:title="Thống kê"
+        android:icon="@drawable/baseline_insights_24"/>
 
     <item android:id="@+id/income"
-        android:title="Income"
-        android:icon="@drawable/income"/>
+        android:title="Thu nhập"
+        android:icon="@drawable/ic_income"/>
 
     <item android:id="@+id/expense"
-        android:title="Expense"
-        android:icon="@drawable/expense"/>
+        android:title="Chi tiêu"
+        android:icon="@drawable/ic_expense"/>
 
 
 

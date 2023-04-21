@@ -17,6 +17,7 @@
             android:orientation="vertical"
             android:gravity="center" >
             <TextView
+                android:id="@+id/textView2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/you_seem_new_here_signup"
@@ -29,7 +30,11 @@
                 android:layout_margin="10dp"
                 android:hint="Email"
                 android:id="@+id/email_signup"
-
+                android:drawableStart="@drawable/name"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:textSize="20sp"
                 />
             <EditText
                 android:layout_width="match_parent"
@@ -38,13 +43,16 @@
                 android:inputType="textPassword"
                 android:hint="Password"
                 android:id="@+id/password_signup"
-
+                android:drawableStart="@drawable/password"
+                android:drawablePadding="16dp"
+                android:ems="10"
+                android:textSize="20sp"
                 />
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Sign Up"
+                android:text="Đăng ký"
                 android:id="@+id/btn_signup"
                 android:textAppearance="?android:textAppearanceLarge"
                 />
@@ -54,8 +62,9 @@
                 android:gravity="center"
                 android:layout_margin="5dp"
                 android:id="@+id/login"
-                android:text="Already have an account? Login Now"
-
+                android:text="Đã có tài khoản? Hãy đăng nhập!"
+                android:textSize="20sp"
+                android:textColor="@color/blue_400"
                 />
         </LinearLayout>
     </ScrollView>

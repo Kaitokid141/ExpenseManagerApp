@@ -20,15 +20,17 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/date_txt_income"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="30 Nov 2020"
-                android:layout_margin="5dp"
-                android:textColor="@color/date_colour"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="DD/MM/YY"
                 android:textAppearance="?android:textAppearanceSmall"
-                android:textStyle="bold"
-                android:id="@+id/date_txt_income"
-                />
+                android:textColor="@color/date_colour"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 
@@ -40,7 +42,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Type"
+                android:text="Nhóm"
                 android:maxLines="1"
                 android:textColor="@color/date_colour"
                 android:textAppearance="?android:textAppearanceSmall"
@@ -51,7 +53,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Note"
+                android:text="Ghi chú"
                 android:maxLines="1"
                 android:textColor="@color/date_colour"
                 android:textAppearance="?android:textAppearanceSmall"
@@ -70,7 +72,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="600000"
+                android:text="Giá trị"
                 android:textColor="@color/date_colour"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textStyle="bold"

@@ -14,7 +14,7 @@
         <androidx.appcompat.widget.Toolbar
             android:layout_width="match_parent"
             android:id="@+id/my_toolbar"
-
+            android:background="@color/green_900"
             android:layout_height="wrap_content">
 
         </androidx.appcompat.widget.Toolbar>

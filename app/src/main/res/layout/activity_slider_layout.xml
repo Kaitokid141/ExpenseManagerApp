@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:flow_horizontalAlign="center">
+
+    <ImageView
+        android:id="@+id/titleImage"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="0dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/desc_one"
+        android:src="@drawable/pic_manage_money" />
+
+    <TextView
+        android:id="@+id/texttitle"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeMaxTextSize="50sp"
+        android:autoSizeStepGranularity="2sp"
+        android:layout_marginTop="0dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:fontFamily="@font/poppins_bold"
+        android:layout_weight="0.5"
+        android:text="@string/heading_one"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/textdeccription"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="5sp"
+        android:autoSizeMaxTextSize="50sp"
+        android:autoSizeStepGranularity="2sp"
+        android:layout_weight="0.5"
+        android:layout_marginHorizontal="30dp"
+        android:fontFamily="@font/poppins_regular"
+        android:text="@string/desc_one"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="287dp"
+        android:layout_weight="0.5"/>
+
+
+</LinearLayout>

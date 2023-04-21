@@ -2,29 +2,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:id="@+id/group1">
     <item android:id="@+id/dashboard"
-        android:title="Dashboard"
-        android:icon="@drawable/dashboard"/>
+        android:title="Home"
+        android:icon="@drawable/baseline_home_24"/>
     <item android:id="@+id/stats"
-        android:title="Stats"
-        android:icon="@drawable/stats"/>
+        android:title="Thống kê chi tiêu"
+        android:icon="@drawable/baseline_insights_24"/>
 
     <item android:id="@+id/income"
-        android:title="Income"
-        android:icon="@drawable/income"/>
+        android:title="Thu nhập"
+        android:icon="@drawable/ic_income"/>
 
     <item android:id="@+id/expense"
-        android:title="Expense"
-        android:icon="@drawable/expense"/>
+        android:title="Chi tiêu"
+        android:icon="@drawable/ic_expense"/>
     </group>
     <group android:id="@+id/group3">
         <item android:id="@+id/account"
-            android:title="Account"
-            android:icon="@drawable/account"/>
+            android:title="Tài khoản"
+            android:icon="@drawable/baseline_account_circle_24"/>
     </group>
 
     <group android:id="@+id/group2">
     <item android:id="@+id/logout"
-        android:title="Logout"
+        android:title="Đăng xuất"
         android:icon="@drawable/logout"/>
     </group>
 </menu>

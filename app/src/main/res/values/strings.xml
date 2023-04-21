@@ -1,24 +1,42 @@
 <resources>
-    <string name="app_name">Expense Manager</string>
-    <string name="forgot_password">Forgot Password?</string>
-    <string name="welcome_back">Welcome Back!</string>
-    <string name="don_t_have_an_account_yet_signup_now">Don\'t have an account yet? SignUp Now!</string>
-    <string name="you_seem_new_here_signup">You Seem New Here? SignUp</string>
+    <string name="app_name">Quản lý chi tiêu</string>
+    <string name="forgot_password">Quên mật khẩu?</string>
+    <string name="welcome_back">Xin chào!</string>
+    <string name="don_t_have_an_account_yet_signup_now">Bạn chưa có tài khoản? Hãy đăng ký</string>
+    <string name="you_seem_new_here_signup">Chưa có tài khoản? Hãy đăng ký</string>
 
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>
-    <string name="expense_manager">Expense Manager</string>
+    <string name="expense_manager">Quản lý chi tiêu</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="typesOfTransactions">
-        <item>Food</item>
-        <item>Social Life</item>
-        <item>Transportation</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
+        <item>Đồ ăn</item>
+        <item>Tiền điện</item>
+        <item>Cước</item>
+        <item>Tiền nước</item>
+        <item>Nợ</item>
+        <item>Lặt vặt</item>
+        <item>Khấu hao</item>
+        <item>Thêm</item>
     </string-array>
+
+    /Headings
+    <string name="heading_one">Quản lý chi tiêu hiệu quả với Expense Manager</string>
+    <string name="heading_two">Cắt giảm những chi phí không cần thiết</string>
+    <string name="heading_three">Gia tăng tiết kiệm đều đặn hàng tháng</string>
+    <string name="heading_fourth">Đảm bảo thông tin của bạn luôn được bảo mật</string>
+    <string name="heading_fifth">Báo cáo và phân tích bằng biểu đồ trực quan</string>
+
+    //Description
+    <string name="desc_one">Cho phép bạn theo dõi chi tiêu của mình bằng cách ghi lại các giao dịch và phân loại chúng để dễ dàng phân tích</string>
+    <string name="desc_two">Giúp bạn lập kế hoạch và đặt ngân sách cho các danh mục chi tiêu khác nhau và cung cấp cảnh báo và thông báo khi vượt quá ngân sách</string>
+    <string name="desc_three">Cho phép bạn đặt và theo dõi mục tiêu tiết kiệm và cung cấp phản hồi trực quan về tiến độ đạt được mục tiêu đó</string>
+    <string name="desc_fourth">Đảm bảo rằng dữ liệu của bạn được bảo vệ bằng cách triển khai các giao thức xác thực và mã hóa an toàn và cung cấp tùy chọn cho cài đặt bảo mật và riêng tư</string>
+    <string name="desc_fifth">Cung cấp cho bạn báo cáo chi tiêu chi tiết và phân tích thói quen chi tiêu , giúp xác định các lĩnh vực mà bạn có thể tiết kiệm</string>
+    <string name="TODO">TODO</string>
+    <string name="Mnemonic">Ghi chú</string>
+    <string name="MoneySpent">Tiền chi là</string>
+    <string name="ChooseEvent">Chọn sự kiện</string>
 </resources>

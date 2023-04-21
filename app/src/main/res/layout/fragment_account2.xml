@@ -33,7 +33,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="Account Information"
+                        android:text="Thông tin tài khoản"
                         android:textAppearance="?android:textAppearanceLarge" />
                 </RelativeLayout>
             </LinearLayout>
@@ -51,7 +51,7 @@
         app:cardElevation="20dp">
         <TextView
             android:layout_width="match_parent"
-            android:text="Account Details"
+            android:text="Thông tin chi tiết"
             android:gravity="center"
             android:textAppearance="?android:textAppearanceMedium"
             android:layout_height="wrap_content"/>
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="40dp"
                 android:layout_height="wrap_content"
-                android:text="Date of Account Creation"
+                android:text="Ngày khởi tạo"
                 android:textAppearance="?android:textAppearanceMedium" />
 
             <EditText
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="40dp"
                 android:layout_height="wrap_content"
-                android:text="Time of Account Creation"
+                android:text="Thời gian khởi tạo"
                 android:textAppearance="?android:textAppearanceMedium" />
 
             <EditText
@@ -107,7 +107,7 @@
                 android:layout_width="match_parent"
                 android:layout_marginTop="40dp"
                 android:layout_height="wrap_content"
-                android:text="Last Sign In At"
+                android:text="Lần đăng nhập cuối"
                 android:textAppearance="?android:textAppearanceMedium" />
 
             <EditText

@@ -30,7 +30,7 @@
                  android:layout_gravity="center"
                  android:textAlignment="center"
                  android:textColor="@android:color/holo_orange_dark"
-                 android:text="Income VS Expense"/>
+                 android:text="THU NHẬP SO VỚI CHI TIÊU"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                     android:textAppearance="?android:textAppearanceMedium"
                     android:layout_gravity="center"
                     android:textAlignment="center"
-                    android:text="Income Per Day"
+                    android:text="THU NHẬP TRONG NGÀY"
                     android:textColor="@android:color/holo_orange_dark"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
@@ -68,7 +68,7 @@
                 android:textAppearance="?android:textAppearanceMedium"
                 android:layout_gravity="center"
                 android:textAlignment="center"
-                android:text="Expense Per Day"
+                android:text="CHI TIÊU TRONG NGÀY"
                 android:textColor="@android:color/holo_orange_dark"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

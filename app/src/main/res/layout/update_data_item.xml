@@ -27,7 +27,7 @@
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="AMOUNT:"
+                        android:text="GIÁ TIỀN:"
 
                         android:layout_height="wrap_content"
                         />
@@ -42,7 +42,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/amount"
-                        android:hint="Enter Amount"
+                        android:hint="(Nhập giá tiền)"
                         />
                 </RelativeLayout>
             </LinearLayout>
@@ -61,7 +61,7 @@
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="TYPE:"
+                        android:text="NHÓM CHI TIÊU:"
 
                         android:layout_height="wrap_content"
                         />
@@ -72,12 +72,18 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="2">
-                    <EditText
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/type_edt"
-                        android:hint="Enter Type Of Transaction"
-                        />
+                        android:layout_height="match_parent">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/autoCompleteTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:inputType="none"
+                            android:text="Đồ ăn" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -94,7 +100,7 @@
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="NOTE:"
+                        android:text="GHI CHÚ:"
 
                         android:layout_height="wrap_content"
                         />
@@ -109,7 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/note_edt"
-                        android:hint="Notes if any"
+                        android:hint="(Ghi chú bắt buộc)"
                         />
                 </RelativeLayout>
             </LinearLayout>
@@ -132,7 +138,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@android:color/holo_red_dark"
-                        android:text="DELETE"
+                        android:text="XOÁ"
                         android:textAppearance="?android:textAppearanceMedium"
                         app:backgroundTint="#D31717" />
                 </RelativeLayout>
@@ -150,7 +156,7 @@
                         android:background="@android:color/holo_green_dark"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:backgroundTint="@android:color/holo_green_dark"
-                        android:text="UPDATE"
+                        android:text="CẬP NHẬT"
                         app:backgroundTint="#22CF29" />
                 </RelativeLayout>
 
