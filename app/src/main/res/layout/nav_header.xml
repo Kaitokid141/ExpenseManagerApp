@@ -8,8 +8,13 @@
     android:orientation="vertical"
     app:theme = "@style/ThemeOverlay.AppCompat.Dark"
     android:background="#1ca87a"
-    android:layout_height="200dp">
+    android:layout_height="250dp">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_app_theme"
+        android:layout_weight="1"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,10 +22,8 @@
         android:textAppearance="?android:textAppearanceMedium"
         android:textColor="@color/white"
         android:textSize="30sp"
-        android:gravity="center">
-
-
+        android:gravity="center"
+        android:layout_weight="0.1">
     </TextView>
-
 
 </LinearLayout>

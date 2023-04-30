@@ -8,6 +8,10 @@
         android:title="Thống kê chi tiêu"
         android:icon="@drawable/baseline_insights_24"/>
 
+    <item android:id="@+id/budget"
+        android:title="Ngân sách"
+        android:icon="@drawable/ic_report"/>
+
     <item android:id="@+id/income"
         android:title="Thu nhập"
         android:icon="@drawable/ic_income"/>

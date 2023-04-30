@@ -23,11 +23,12 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:gravity="right"
+                    android:gravity="center"
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="GIÁ TIỀN:"
+                        android:text="HẠN MỨC:"
+
                         android:layout_height="wrap_content"
                         />
                 </RelativeLayout>
@@ -40,8 +41,8 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/amount_budget"
                         android:inputType="number"
-                        android:id="@+id/amount"
                         android:hint="(Nhập giá tiền)"
                         />
                 </RelativeLayout>
@@ -57,7 +58,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:gravity="right"
+                    android:gravity="center"
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
@@ -72,18 +73,20 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="2">
+
                     <com.google.android.material.textfield.TextInputLayout
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <AutoCompleteTextView
-                            android:id="@+id/autoCompleteTextView"
+                            android:id="@+id/autoCompleteTextView_budget"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="none"
-                            android:text="Chọn loại"/>
+                            android:text="Chọn loại" />
                     </com.google.android.material.textfield.TextInputLayout>
+
                 </RelativeLayout>
             </LinearLayout>
 
@@ -96,7 +99,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:gravity="right"
+                    android:gravity="center"
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
@@ -114,7 +117,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/note_edt"
+                        android:id="@+id/note_edt_budget"
                         android:hint="(Ghi chú bắt buộc)"
                         />
                 </RelativeLayout>
@@ -134,14 +137,13 @@
                     android:layout_weight="2">
 
                     <Button
-                        android:id="@+id/btnUpdDelete"
+                        android:id="@+id/btnCancel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="XOÁ"
-                        android:textAppearance="?android:textAppearanceMedium"
-                        app:backgroundTint="#E74646"
                         android:background="@drawable/btn_rounded_accent"
-                        android:padding="10dp"/>
+                        android:text="HỦY"
+                        android:textAppearance="?android:textAppearanceMedium"
+                        app:backgroundTint="#E74646" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -151,15 +153,14 @@
                     android:layout_weight="2">
 
                     <Button
-                        android:id="@+id/btnUpdUpdate"
+                        android:id="@+id/btnSave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/btn_rounded_accent"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:backgroundTint="@android:color/holo_green_dark"
-                        android:text="CẬP NHẬT"
-                        app:backgroundTint="#1ca87a"
-                        android:background="@drawable/btn_rounded_accent"
-                        android:padding="10dp"/>
+                        android:text="LƯU"
+                        app:backgroundTint="#1ca87a" />
                 </RelativeLayout>
 
             </LinearLayout>

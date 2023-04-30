@@ -12,6 +12,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string-array name="typesOfTransactions">
+        <item>Thêm</item>
         <item>Ăn uống</item>
         <item>Di chuyển</item>
         <item>Thuê nhà</item>
@@ -41,14 +42,13 @@
         <item>Cho vay</item>
         <item>Trả nợ</item>
         <item>Trả lãi</item>
-        <item>Khác</item>
     </string-array>
 
     <string-array name="typesOfIncome">
+        <item>Thêm</item>
         <item>Lương</item>
         <item>Làm thêm</item>
         <item>Thu nợ</item>
-        <item>Khác</item>
     </string-array>
 
     /Headings
@@ -68,4 +68,13 @@
     <string name="Mnemonic">Ghi chú</string>
     <string name="MoneySpent">Tiền chi là</string>
     <string name="ChooseEvent">Chọn sự kiện</string>
+    <string name="title_activity_budget">BudgetActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

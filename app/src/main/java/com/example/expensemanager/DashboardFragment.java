@@ -1,7 +1,11 @@
 package com.example.expensemanager;
 
 import android.app.AlertDialog;
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.drawable.Animatable;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,13 +13,17 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.LocaleList;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -40,6 +48,7 @@ import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DashboardFragment extends Fragment {
 
@@ -286,6 +295,15 @@ public class DashboardFragment extends Fragment {
 
                 mIncomeDatabase.child(id).setValue(data);
 
+                // get the current string array resource
+                String[] currentArray = getResources().getStringArray(R.array.typesOfIncome);
+
+                // create a new string array with the desired modifications
+                String[] modifiedArray = new String[currentArray.length + 1];
+                System.arraycopy(currentArray, 0, modifiedArray, 0, currentArray.length);
+                modifiedArray[modifiedArray.length - 1] = type; // add a new item to the end of the array
+                updateStringArrayResource(R.array.typesOfIncome, modifiedArray);
+
                 Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
 
                 dialog.dismiss();
@@ -306,6 +324,19 @@ public class DashboardFragment extends Fragment {
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 myview.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(arrayAdapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // first item selected
+                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
+                    textView.setText(""); // set text to empty string
+                    textView.setHint("Thêm"); // set hint to "more"
+                }else{
+                    textView.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
+
     }
 
 
@@ -345,7 +376,6 @@ public class DashboardFragment extends Fragment {
                     return;
                 }
                 int amountInInt= Integer.parseInt(amount);
-
                 //Create random ID inside database
                 String id=mExpenseDatabase.push().getKey();
 
@@ -354,6 +384,17 @@ public class DashboardFragment extends Fragment {
                 Data data=new Data(amountInInt, type, note, id, mDate);
 
                 mExpenseDatabase.child(id).setValue(data);
+
+                // get the current string array resource
+                String[] currentArray = getResources().getStringArray(R.array.typesOfTransactions);
+
+                // create a new string array with the desired modifications
+                String[] modifiedArray = new String[currentArray.length + 1];
+                System.arraycopy(currentArray, 0, modifiedArray, 0, currentArray.length);
+                modifiedArray[modifiedArray.length - 1] = type; // add a new item to the end of the array
+
+                updateStringArrayResource(R.array.typesOfTransactions, modifiedArray);
+
 
                 Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
 
@@ -375,6 +416,18 @@ public class DashboardFragment extends Fragment {
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 myview.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(arrayAdapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // first item selected
+                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
+                    textView.setText(""); // set text to empty string
+                    textView.setHint("Thêm"); // set hint to "more"
+                }else{
+                    textView.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
     }
 
 
@@ -478,5 +531,32 @@ public class DashboardFragment extends Fragment {
             TextView mNote=mExpenseView.findViewById(R.id.note_Expense_ds);
             mNote.setText(note);
         }
+    }
+    private void updateStringArrayResource(int resourceId, String[] newArray) {
+        // get the current configuration
+        Configuration configuration = getResources().getConfiguration();
+
+        // create a new context with the updated string array resource
+        Context updatedContext = createConfigurationContext(configuration, newArray);
+
+        // get the updated resources and update the string array resource
+        Resources res = updatedContext.getResources();
+        res.getStringArray(resourceId);
+    }
+
+    private Context createConfigurationContext(Configuration configuration, String[] newArray) {
+        // create a new configuration with the updated string array resource
+        Configuration newConfig = new Configuration(configuration);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            LocaleList localeList = new LocaleList(Locale.getDefault());
+            newConfig.setLocales(localeList);
+        } else {
+            newConfig.locale = Locale.getDefault();
+        }
+        newConfig.setLocales(configuration.getLocales());
+
+        // create a new context with the updated configuration
+        Context context = new ContextThemeWrapper(getContext(), R.style.AppTheme);
+        return context.createConfigurationContext(newConfig);
     }
 }
