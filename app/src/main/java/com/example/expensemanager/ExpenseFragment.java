@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -231,7 +233,11 @@ public class ExpenseFragment extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myview = inflater.inflate(R.layout.update_data_item, null);
         mydialog.setView(myview);
-
+        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
+        AutoCompleteTextView textView = (AutoCompleteTextView)
+                myview.findViewById(R.id.autoCompleteTextView);
+        textView.setAdapter(arrayAdapter);
         edtAmount = myview.findViewById(R.id.amount);
         edtNote = myview.findViewById(R.id.note_edt);
         edtType = myview.findViewById(R.id.autoCompleteTextView);

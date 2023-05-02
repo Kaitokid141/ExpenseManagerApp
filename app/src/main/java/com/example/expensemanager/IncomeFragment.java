@@ -14,6 +14,8 @@ import android.provider.SearchRecentSuggestions;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -134,6 +136,7 @@ public class IncomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
+
         mIncomeDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -240,7 +243,11 @@ public class IncomeFragment extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myview = inflater.inflate(R.layout.update_data_item,  null);
         mydialog.setView(myview);
-
+         String[] transaction = getResources().getStringArray(R.array.typesOfIncome);
+         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
+         AutoCompleteTextView textView = (AutoCompleteTextView)
+                 myview.findViewById(R.id.autoCompleteTextView);
+         textView.setAdapter(arrayAdapter);
         edtAmount = myview.findViewById(R.id.amount);
         edtType = myview.findViewById(R.id.autoCompleteTextView);
         edtNote = myview.findViewById(R.id.note_edt);

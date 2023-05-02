@@ -62,7 +62,10 @@
         android:text="Tạo người dùng"
         app:layout_constraintBottom_toBottomOf="@+id/slideViewPager"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:backgroundTint="#1ca87a"
+        android:background="@drawable/btn_rounded_accent"
+        android:padding="10dp"/>
 
     <LinearLayout
         android:id="@+id/indicator_layout"

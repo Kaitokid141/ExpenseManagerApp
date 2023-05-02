@@ -62,7 +62,7 @@
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
-                        android:text="NHÓM CHI TIÊU:"
+                        android:text="NHÓM GIAO DỊCH:"
 
                         android:layout_height="wrap_content"
                         />
@@ -84,7 +84,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:inputType="none"
-                            android:text="Đồ ăn" />
+                            android:text="Chọn loại" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </RelativeLayout>
@@ -140,10 +140,10 @@
                         android:id="@+id/btnCancel"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/holo_red_dark"
+                        android:background="@drawable/btn_rounded_accent"
                         android:text="HỦY"
                         android:textAppearance="?android:textAppearanceMedium"
-                        app:backgroundTint="#D31717" />
+                        app:backgroundTint="#E74646" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -156,11 +156,11 @@
                         android:id="@+id/btnSave"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/holo_green_dark"
+                        android:background="@drawable/btn_rounded_accent"
                         android:textAppearance="?android:textAppearanceMedium"
                         android:backgroundTint="@android:color/holo_green_dark"
                         android:text="LƯU"
-                        app:backgroundTint="#22CF29" />
+                        app:backgroundTint="#1ca87a" />
                 </RelativeLayout>
 
             </LinearLayout>

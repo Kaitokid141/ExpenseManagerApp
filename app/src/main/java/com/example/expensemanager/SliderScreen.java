@@ -45,85 +45,83 @@ public class SliderScreen extends AppCompatActivity {
         } else {
             // Display the introduction slider
             setContentView(R.layout.activity_slider);
-        }
+            backbtn = findViewById(R.id.backbtn);
+            nextbtn = findViewById(R.id.nextbtn);
+            ellipse2 = findViewById(R.id.ellipse2);
+            ellipse1 = findViewById(R.id.ellipse1);
+            btn_add_user = findViewById(R.id.btn_add_user);
 
-        backbtn = findViewById(R.id.backbtn);
-        nextbtn = findViewById(R.id.nextbtn);
-        ellipse2 = findViewById(R.id.ellipse2);
-        ellipse1 = findViewById(R.id.ellipse1);
-        btn_add_user = findViewById(R.id.btn_add_user);
+            backbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        backbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    if (getitem(0) > 0){
 
-                if (getitem(0) > 0){
+                        mSLideViewPager.setCurrentItem(getitem(-1),true);
 
-                    mSLideViewPager.setCurrentItem(getitem(-1),true);
+                    }
 
                 }
+            });
 
-            }
-        });
+            nextbtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
-        nextbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                    if (getitem(0) < 4)
+                        mSLideViewPager.setCurrentItem(getitem(1),true);
+                    else {
 
-                if (getitem(0) < 4)
-                    mSLideViewPager.setCurrentItem(getitem(1),true);
-                else {
+                        Intent i = new Intent(SliderScreen.this, SliderScreen.class);
+                        startActivity(i);
+                        finish();
+
+                    }
+
+                }
+            });
+
+            ellipse1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
 
                     Intent i = new Intent(SliderScreen.this, SliderScreen.class);
                     startActivity(i);
                     finish();
 
                 }
+            });
 
-            }
-        });
-
-        ellipse1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            ellipse2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
 
-                Intent i = new Intent(SliderScreen.this, SliderScreen.class);
-                startActivity(i);
-                finish();
+                    Intent i = new Intent(SliderScreen.this, SliderScreen.class);
+                    startActivity(i);
+                    finish();
 
-            }
-        });
+                }
+            });
 
-        ellipse2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            btn_add_user.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    switchActivities();
+                }
+            });
 
+            mSLideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
+            mDotLayout = (LinearLayout) findViewById(R.id.indicator_layout);
 
-                Intent i = new Intent(SliderScreen.this, SliderScreen.class);
-                startActivity(i);
-                finish();
+            viewPagerAdapter = new ViewPagerAdapter(this);
 
-            }
-        });
+            mSLideViewPager.setAdapter(viewPagerAdapter);
 
-        btn_add_user.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                switchActivities();
-            }
-        });
-
-        mSLideViewPager = (ViewPager) findViewById(R.id.slideViewPager);
-        mDotLayout = (LinearLayout) findViewById(R.id.indicator_layout);
-
-        viewPagerAdapter = new ViewPagerAdapter(this);
-
-        mSLideViewPager.setAdapter(viewPagerAdapter);
-
-        setUpindicator(0);
-        mSLideViewPager.addOnPageChangeListener(viewListener);
-
+            setUpindicator(0);
+            mSLideViewPager.addOnPageChangeListener(viewListener);
+        }
     }
 
     private void switchActivities() {

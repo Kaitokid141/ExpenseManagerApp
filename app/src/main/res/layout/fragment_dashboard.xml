@@ -28,6 +28,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:textAppearance="?android:textAppearanceLarge"
                         android:gravity="center"
                         android:textColor="@android:color/holo_green_dark"
@@ -43,6 +44,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:textColor="@android:color/holo_red_dark"
                         android:textAppearance="?android:textAppearanceLarge"
@@ -109,34 +111,13 @@
                 android:orientation="vertical"
                 android:layout_marginTop="10dp"
                 android:layout_height="wrap_content">
-                <LinearLayout
+                <TextView
                     android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Mức thu nhập:"
-                        android:textAppearance="?android:textAppearanceLarge"
-                        android:padding="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textAlignment="center"
-                        android:inputType="number"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-
-                <ProgressBar
-                    android:id="@+id/progressBarIncome"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:max="100"
-                    android:progress="50" />
-
+                    android:layout_weight="1"
+                    android:text="Thu nhập:"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:padding="10dp"/>
                 <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:id="@+id/recycler_income"
@@ -145,36 +126,17 @@
 
                     </androidx.recyclerview.widget.RecyclerView>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_height="wrap_content">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Mức chi tiêu:"
+                        android:text="Chi tiêu:"
                         android:textAppearance="?android:textAppearanceLarge"
                         android:padding="10dp"/>
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textAlignment="center"
-                        android:inputType="number"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-                <ProgressBar
-                    android:id="@+id/progressBarExpense"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:max="100"
-                    android:progress="50"/>
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:id="@+id/recycler_expense"
+                    android:backgroundTint="@color/grey_90"
                     android:layout_height="180dp"
                     />
 
@@ -198,7 +160,7 @@
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
                 android:padding="5dp"
-                android:text="Expense"
+                android:text="Chi tiêu"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:visibility="invisible" />
             <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -225,7 +187,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Income"
+                android:text="Thu nhập"
                 android:id="@+id/income_ft_text"
                 android:padding="5dp"
                 android:layout_gravity="center"
@@ -248,14 +210,14 @@
         </LinearLayout>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
             android:id="@+id/fb_main_plus_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
-            android:layout_marginBottom="16dp"
             android:layout_marginRight="20dp"
-            app:fabSize="normal"
+            android:layout_marginBottom="16dp"
             android:src="@drawable/income"
-            android:layout_height="wrap_content"/>
+            app:fabSize="normal" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

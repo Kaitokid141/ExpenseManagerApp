@@ -16,7 +16,17 @@
         <item name="windowNoTitle">true</item>
         <item name="drawerArrowStyle">@style/DrawerIconStyle</item>
     </style>
+
     <style name="DrawerIconStyle" parent="Widget.AppCompat.DrawerArrowToggle">
         <item name="color">@android:color/white</item>
     </style>
+
+    <style name="Theme.ExpenseManager.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.ExpenseManager.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.ExpenseManager.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

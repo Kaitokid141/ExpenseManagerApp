@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:text="Nhóm:"
             android:gravity="center"
-            android:padding="5dp"
+            android:padding="1dp"
             android:id="@+id/type_Income_ds"
             android:textAppearance="?android:textAppearanceLarge"
             />
@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:gravity="center"
             android:text="Giá trị:"
-            android:padding="5dp"
+            android:padding="1dp"
             android:layout_marginTop="10dp"
             android:textColor="@android:color/holo_green_dark"
             android:textAppearance="?android:textAppearanceMedium"
@@ -41,13 +41,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Ngày/Tháng/Năm"
-            android:padding="5dp"
+            android:padding="1dp"
             android:textAppearance="?android:textAppearanceMedium"
             android:gravity="center"
 
             android:id="@+id/date_Income_ds"
             android:layout_marginTop="10dp"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ghi chú"
+            android:padding="1dp"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:gravity="center"
+            android:id="@+id/note_Income_ds"
+            android:layout_marginTop="10dp"/>
 
     </LinearLayout>
 

@@ -54,6 +54,9 @@
                 android:layout_margin="10dp"
                 android:text="Đăng ký"
                 android:id="@+id/btn_signup"
+                app:backgroundTint="#1ca87a"
+                android:background="@drawable/btn_rounded_accent"
+                android:padding="10dp"
                 android:textAppearance="?android:textAppearanceLarge"
                 />
             <TextView
