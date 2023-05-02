@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:cardElevation="5dp"
     android:elevation="5dp"
+    android:id="@+id/budget_cardview"
     android:layout_margin="5dp"
     android:layout_height="wrap_content"
     android:backgroundTint="@color/white">
@@ -23,21 +24,37 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:background="@drawable/edittext_background">
-
-                <TextView
-                    android:id="@+id/date_txt_expense"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_weight="1"
-                    android:text="Nhóm:"
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:textColor="@color/date_colour"
-                    android:textStyle="bold" />
-
+                    android:background="@drawable/edittext_background">
+                    <TextView
+                        android:id="@+id/type_txt_budget"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Nhóm:"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="@color/date_colour"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:id="@+id/amount_txt_budget"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="Hạn mức:"
+                        android:textAppearance="?android:textAppearanceSmall"
+                        android:textColor="@color/date_colour"
+                        android:textStyle="bold" />
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -52,6 +69,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
+                        android:id="@+id/date_txt_budget_start"
                         android:layout_weight="1"
                         android:text="Ngày tháng:"
                         android:textAppearance="?android:textAppearanceSmall"
@@ -65,6 +83,7 @@
                         android:layout_marginTop="5dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginBottom="5dp"
+                        android:id="@+id/date_txt_budget_end"
                         android:layout_weight="1"
                         android:text="Ngày tháng:"
                         android:textAppearance="?android:textAppearanceSmall"
@@ -96,7 +115,7 @@
                     android:layout_marginStart="5dp"
                     android:layout_marginTop="7dp"
                     android:layout_marginBottom="5dp"
-                    android:progress="60"/>
+                    android:progress="0"/>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -105,14 +124,14 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="5dp"
                     android:layout_marginBottom="5dp"
-                    android:text="60%"
+                    android:text="0%"
                     android:textAlignment="center"
                     android:maxLines="1"
                     android:layout_weight="9"
                     android:textColor="@color/date_colour"
                     android:textAppearance="?android:textAppearanceSmall"
                     android:textStyle="bold"
-                    android:id="@+id/type_txt_expense"
+                    android:id="@+id/percent_txt_budget"
                     />
             </LinearLayout>
 

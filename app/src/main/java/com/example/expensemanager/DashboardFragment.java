@@ -298,6 +298,10 @@ public class DashboardFragment extends Fragment {
                 // get the current string array resource
                 String[] currentArray = getResources().getStringArray(R.array.typesOfIncome);
 
+                for(String s : currentArray){
+                    if(s.equals(note)) return;
+                }
+
                 // create a new string array with the desired modifications
                 String[] modifiedArray = new String[currentArray.length + 1];
                 System.arraycopy(currentArray, 0, modifiedArray, 0, currentArray.length);

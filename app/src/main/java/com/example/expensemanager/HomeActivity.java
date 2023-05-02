@@ -37,6 +37,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private IncomeFragment incomeFragment;
     private ExpenseFragment expenseFragment;
     private StatsFragment statsFragment;
+    private BudgetFragment budgetFragment;
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +74,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         incomeFragment=new IncomeFragment();
         expenseFragment=new ExpenseFragment();
         statsFragment=new StatsFragment();
+        budgetFragment=new BudgetFragment();
 
         setFragment(dashboardFragment);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -92,7 +94,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     case R.id.stats:
                         setFragment(statsFragment);
                         return true;
-
+                    case R.id.budget:
+                        setFragment(budgetFragment);
+                        return true;
                     default:
                         return false;
 
@@ -148,6 +152,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 bottomNavigationView.findViewById(R.id.stats).performClick();
                 bottomNavigationView.performClick();
                 fragment=new StatsFragment();
+                break;
+            case R.id.budget:
+                bottomNavigationView.setSelectedItemId(R.id.budget);
+                fragment=new BudgetFragment();
                 break;
             case R.id.account:
                 fragment=new AccountFragment();
