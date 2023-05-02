@@ -61,14 +61,15 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_height="wrap_content">
+
                     <TextView
+                        android:id="@+id/income_set_result"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:textAppearanceLarge"
                         android:gravity="center"
-                        android:id="@+id/income_set_result"
-                        android:textColor="@android:color/holo_green_dark"
-                        android:text="0.000000"/>
+                        android:text="0"
+                        android:textAppearance="?android:textAppearanceLarge"
+                        android:textColor="@android:color/holo_green_dark" />
 
 
                 </RelativeLayout>
@@ -77,14 +78,15 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:layout_height="wrap_content">
+
                     <TextView
+                        android:id="@+id/expense_set_result"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:id="@+id/expense_set_result"
-                        android:textColor="@android:color/holo_red_dark"
+                        android:text="0"
                         android:textAppearance="?android:textAppearanceLarge"
-                        android:text="0.00000"/>
+                        android:textColor="@android:color/holo_red_dark" />
 
 
                 </RelativeLayout>

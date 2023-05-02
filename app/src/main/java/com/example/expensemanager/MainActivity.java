@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String email=mEmail.getText().toString().trim();
                 String password=mPassword.getText().toString().trim();
-
                 if(TextUtils.isEmpty(email)){
                     mEmail.setError("Email cannot be empty. Please enter a valid Email id");
                     return;
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                     mPassword.setError("Password cannot be empty.");
                     return;
                 }
-
                 mDialog.setMessage("Processing");
                 mDialog.show();
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -94,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),ResetPasswordActivity.class));
-
             }
         });
     }

@@ -1,5 +1,4 @@
 package com.example.expensemanager;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
 public class RegistrationActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword;
@@ -34,7 +32,6 @@ public class RegistrationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
         mDialog = new ProgressDialog(this);
-
         signup();
     }
     private void signup(){
@@ -78,12 +75,9 @@ public class RegistrationActivity extends AppCompatActivity {
         });
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-
-
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
-
     }
 }

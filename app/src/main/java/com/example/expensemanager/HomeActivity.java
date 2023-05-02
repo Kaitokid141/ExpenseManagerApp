@@ -80,7 +80,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
-
                     case R.id.dashboard:
                         setFragment(dashboardFragment);
                         return true;
@@ -93,22 +92,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     case R.id.stats:
                         setFragment(statsFragment);
                         return true;
-
                     default:
                         return false;
-
-
                 }
             }
         });
     }
-
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawerLayout=findViewById(R.id.drawer_layout);
@@ -119,9 +113,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         else{
             super.onBackPressed();
         }
-
     }
-
     public void displaySelectedListener(int itemId){
         Fragment fragment = null;
 
