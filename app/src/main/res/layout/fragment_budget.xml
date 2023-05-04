@@ -47,7 +47,7 @@
             android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fb_budget_plus_btn"
+            android:id="@+id/fab_budget_plus_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignRight="@id/recycler_budget"
