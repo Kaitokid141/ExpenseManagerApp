@@ -8,17 +8,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.expensemanager.Model.Data;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -107,6 +113,8 @@ public class BudgetFragment extends Fragment {
     private float amount;
     private String post_key;
 
+    private FloatingActionButton fab_budget_plus_btn;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -154,6 +162,8 @@ public class BudgetFragment extends Fragment {
             }
         });
 
+        fab_budget_plus_btn = myview.findViewById(R.id.fab_budget_plus_btn);
+
         return myview;
     }
 
@@ -175,6 +185,7 @@ public class BudgetFragment extends Fragment {
                 viewHolder.setNote(model.getNote());
                 viewHolder.setDate(model.getDate());
                 viewHolder.setAmount(model.getAmount());
+                viewHolder.setProgress(model.getAmount(), Float.parseFloat((String) expenseSumResult.getText()));
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -193,6 +204,12 @@ public class BudgetFragment extends Fragment {
         };
 
         recyclerView.setAdapter(adapter);
+        fab_budget_plus_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insertDataItem();
+            }
+        });
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -223,6 +240,12 @@ public class BudgetFragment extends Fragment {
             TextView mAmount = mView.findViewById(R.id.amount_txt_budget);
             String smAmount = String.valueOf(amount);
             mAmount.setText(smAmount);
+        }
+
+        private void setProgress(float amount, float total){
+            ProgressBar progressBar = mView.findViewById(R.id.progressBar);
+            int percent = (int)(amount / total)*100;
+            progressBar.setProgress(percent);
         }
 
     }
@@ -286,6 +309,83 @@ public class BudgetFragment extends Fragment {
         });
 
         dialog.show();
+    }
+
+    public void insertDataItem(){
+        AlertDialog.Builder mydialog=new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater=LayoutInflater.from(getActivity());
+
+        View myview=inflater.inflate(R.layout.custom_layout_for_budgetdata, null);
+        mydialog.setView(myview);
+
+        final AlertDialog dialog=mydialog.create();
+        dialog.setCancelable(false);
+        EditText edtamount=myview.findViewById(R.id.amount_budget);
+        EditText edttype=myview.findViewById(R.id.autoCompleteTextView_budget);
+        EditText edtnote=myview.findViewById(R.id.note_edt_budget);
+
+        Button saveBtn=myview.findViewById(R.id.btnSave_budget);
+        Button cancelBtn=myview.findViewById(R.id.btnCancel_budget);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amount=edtamount.getText().toString().trim();
+                String type=edttype.getText().toString().trim();
+                String note=edtnote.getText().toString().trim();
+
+                if(TextUtils.isEmpty(type)){
+                    edttype.setError("Please Enter A Type");
+                    return;
+                }
+                if(TextUtils.isEmpty(amount)){
+                    edtamount.setError("Please Enter Amount");
+                    return;
+                }
+                if(TextUtils.isEmpty(note)){
+                    edtnote.setError("Please Enter A Note");
+                    return;
+                }
+                int amountInInt= Integer.parseInt(amount);
+                //Create random ID inside database
+                String id=mExpenseDatabase.push().getKey();
+
+                String mDate= DateFormat.getDateInstance().format(new Date());
+
+                Data data=new Data(amountInInt, type, note, id, mDate);
+
+                mExpenseDatabase.child(id).setValue(data);
+
+                Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
+        AutoCompleteTextView textView = (AutoCompleteTextView)
+                myview.findViewById(R.id.autoCompleteTextView_budget);
+        textView.setAdapter(arrayAdapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // first item selected
+                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
+                    textView.setText(""); // set text to empty string
+                    textView.setHint("Thêm"); // set hint to "more"
+                }else{
+                    textView.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
     }
 
 }
