@@ -30,15 +30,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ExpenseFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ExpenseFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -47,11 +41,11 @@ public class ExpenseFragment extends Fragment {
     private String mParam2;
 
     public ExpenseFragment() {
-        // Required empty public constructor
+
     }
 
     /**
-     * Use this factory method to create a new instance of
+     * Method to create a new instance of
      * this fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
@@ -78,21 +72,17 @@ public class ExpenseFragment extends Fragment {
     }
 
     //Firebase database
-
     private FirebaseAuth mAuth;
     private DatabaseReference mExpenseDatabase;
 
     //Recyclerview
-
     private RecyclerView recyclerView;
 
     //TextView
-
     private TextView expenseSumResult;
 
 
     //Edit data item
-
     private EditText edtAmount;
     private EditText edtType;
     private EditText edtNote;
@@ -101,12 +91,10 @@ public class ExpenseFragment extends Fragment {
     private Button btnDelete;
 
     //Data variable
-
     private String type;
     private String note;
     private float amount;
     private String post_key;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -119,13 +107,10 @@ public class ExpenseFragment extends Fragment {
         String uid = mUser.getUid();
 
         mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
-
         expenseSumResult = myview.findViewById(R.id.expense_txt_result);
-
         recyclerView = myview.findViewById(R.id.recycler_id_expense);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
@@ -144,7 +129,7 @@ public class ExpenseFragment extends Fragment {
                     totalvalue += data.getAmount();
 
                     String stotal = String.valueOf(totalvalue);
-                    expenseSumResult.setText(stotal+".00");
+                    expenseSumResult.setText(stotal);
                 }
             }
 
@@ -153,7 +138,6 @@ public class ExpenseFragment extends Fragment {
 
             }
         });
-
         return myview;
     }
 
@@ -188,10 +172,8 @@ public class ExpenseFragment extends Fragment {
                         updateDataItem();
                     }
                 });
-
             }
         };
-
         recyclerView.setAdapter(adapter);
     }
 
@@ -268,11 +250,8 @@ public class ExpenseFragment extends Fragment {
                 int intamount = Integer.parseInt(stamount);
 
                 String mDate = DateFormat.getDateInstance().format(new Date());
-
                 Data data = new Data(intamount, type, note, post_key, mDate);
-
                 mExpenseDatabase.child(post_key).setValue(data);
-
                 dialog.dismiss();
             }
         });

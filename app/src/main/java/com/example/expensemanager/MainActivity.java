@@ -29,26 +29,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         mAuth = FirebaseAuth.getInstance();
-
         if(mAuth.getCurrentUser()!=null){
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         }
         mDialog = new ProgressDialog(this);
         login();
     }
+
+    // Login
     private void login(){
-        mEmail=findViewById(R.id.email_login);
-        mPassword=findViewById(R.id.password_login);
-        loginButton=findViewById(R.id.btn_login);
-        mForgotPassword=findViewById(R.id.forgot_password);
-        mSignup=findViewById(R.id.signup);
+        mEmail = findViewById(R.id.email_login);
+        mPassword = findViewById(R.id.password_login);
+        loginButton = findViewById(R.id.btn_login);
+        mForgotPassword = findViewById(R.id.forgot_password);
+        mSignup = findViewById(R.id.signup);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email=mEmail.getText().toString().trim();
-                String password=mPassword.getText().toString().trim();
+                String email = mEmail.getText().toString().trim();
+                String password = mPassword.getText().toString().trim();
                 if(TextUtils.isEmpty(email)){
                     mEmail.setError("Email cannot be empty. Please enter a valid Email id");
                     return;
@@ -62,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-
                         if(task.isSuccessful())
                         {
                             mDialog.dismiss();
@@ -79,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Redirect to SignUp activity
+        // SignUp activity
         mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Redirect to reset password activity
+        // Reset password activity
         mForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

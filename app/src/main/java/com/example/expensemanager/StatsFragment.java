@@ -61,7 +61,6 @@ import java.util.TreeMap;
 
 import com.github.mikephil.charting.charts.PieChart;
 
-
 public class StatsFragment extends Fragment {
 
     // Firebase
@@ -74,12 +73,10 @@ public class StatsFragment extends Fragment {
     private Map<Date, Integer> DateWiseExpense = new TreeMap<Date, Integer>();
     private static Set<Pair<Integer,Integer>> DateWiseIncomeSorter= new HashSet<Pair<Integer,Integer>>();;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View myView = inflater.inflate(R.layout.fragment_stats, container, false);
         mAuth = FirebaseAuth.getInstance();
 
@@ -107,7 +104,6 @@ public class StatsFragment extends Fragment {
                         e.printStackTrace();
                     }
                     DateWiseIncome.put(date,DateWiseIncome.getOrDefault(date,0)+data.getAmount());
-
                 }
             }
             @Override
@@ -169,7 +165,6 @@ public class StatsFragment extends Fragment {
         pieChart.getDescription().setEnabled(false);
         pieChart.invalidate();
 
-
         //Line Chart 1
         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
         String[] xAxisValues = new String[DateWiseIncome.size()];
@@ -216,7 +211,6 @@ public class StatsFragment extends Fragment {
         mLineGraph.getLegend().setEnabled(false);
         mLineGraph.invalidate();
         mLineGraph.getDescription().setEnabled(false);
-
 
         ArrayList<ILineDataSet> dataSets1 = new ArrayList<>();
         String[] xAxisValues1 = new String[DateWiseExpense.size()];

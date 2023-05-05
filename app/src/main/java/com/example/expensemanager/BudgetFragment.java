@@ -84,21 +84,17 @@ public class BudgetFragment extends Fragment {
     }
 
     //Firebase database
-
     private FirebaseAuth mAuth;
     private DatabaseReference mExpenseDatabase;
 
     //Recyclerview
-
     private RecyclerView recyclerView;
 
     //TextView
-
     private TextView expenseSumResult;
 
 
     //Edit data item
-
     private EditText edtAmount;
     private EditText edtType;
     private EditText edtNote;
@@ -107,63 +103,46 @@ public class BudgetFragment extends Fragment {
     private Button btnDelete;
 
     //Data variable
-
     private String type;
     private String note;
     private float amount;
     private String post_key;
-
     private FloatingActionButton fab_budget_plus_btn;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View myview =  inflater.inflate(R.layout.fragment_budget, container, false);
 
+        View myview =  inflater.inflate(R.layout.fragment_budget, container, false);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uid = mUser.getUid();
-
         mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
-
         expenseSumResult = myview.findViewById(R.id.sum_budget_expense);
-
         recyclerView = myview.findViewById(R.id.recycler_budget);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-
         mExpenseDatabase.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 int totalvalue = 0;
-
                 for(DataSnapshot mysnapshot: snapshot.getChildren()){
                     Data data = mysnapshot.getValue(Data.class);
-
                     totalvalue += data.getAmount();
-
                     String stotal = String.valueOf(totalvalue);
                     expenseSumResult.setText(stotal+".00");
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
         fab_budget_plus_btn = myview.findViewById(R.id.fab_budget_plus_btn);
-
         return myview;
     }
 
@@ -171,7 +150,6 @@ public class BudgetFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
-
         FirebaseRecyclerAdapter<Data, MyViewHolder>adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(
                 Data.class,
                 R.layout.budget_recycler_data,
@@ -180,7 +158,6 @@ public class BudgetFragment extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(MyViewHolder viewHolder, final Data model, final int position) {
-
                 viewHolder.setType(model.getType());
                 viewHolder.setNote(model.getNote());
                 viewHolder.setDate(model.getDate());
@@ -190,16 +167,13 @@ public class BudgetFragment extends Fragment {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         post_key = getRef(position).getKey();
                         type = model.getType();
                         note = model.getNote();
                         amount = model.getAmount();
-
                         updateDataItem();
                     }
                 });
-
             }
         };
 
@@ -213,45 +187,36 @@ public class BudgetFragment extends Fragment {
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-
         View mView;
-
         public MyViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
-
         private void setType(String type){
             TextView mType = mView.findViewById(R.id.type_txt_budget);
             mType.setText(type);
         }
-
         private void setNote(String note){
             TextView mNote = mView.findViewById(R.id.date_txt_budget_end);
             mNote.setText(note);
         }
-
         private void setDate(String date){
             TextView mDate = mView.findViewById(R.id.date_txt_budget_start);
             mDate.setText(date);
         }
-
         private void setAmount(float amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_budget);
             String smAmount = String.valueOf(amount);
             mAmount.setText(smAmount);
         }
-
         private void setProgress(float amount, float total){
             ProgressBar progressBar = mView.findViewById(R.id.progressBar);
             int percent = (int)(amount / total)*100;
             progressBar.setProgress(percent);
         }
-
     }
 
     private void updateDataItem(){
-
         AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myview = inflater.inflate(R.layout.update_data_item, null);
@@ -278,24 +243,18 @@ public class BudgetFragment extends Fragment {
         btnDelete = myview.findViewById(R.id.btnUpdDelete);
 
         final AlertDialog dialog = mydialog.create();
-
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 type = edtType.getText().toString().trim();
                 note = edtNote.getText().toString().trim();
-
                 String stamount = String.valueOf(amount);
                 stamount = edtAmount.getText().toString().trim();
                 int intamount = Integer.parseInt(stamount);
 
                 String mDate = DateFormat.getDateInstance().format(new Date());
-
                 Data data = new Data(intamount, type, note, post_key, mDate);
-
                 mExpenseDatabase.child(post_key).setValue(data);
-
                 dialog.dismiss();
             }
         });
@@ -348,16 +307,11 @@ public class BudgetFragment extends Fragment {
                 }
                 int amountInInt= Integer.parseInt(amount);
                 //Create random ID inside database
-                String id=mExpenseDatabase.push().getKey();
-
-                String mDate= DateFormat.getDateInstance().format(new Date());
-
+                String id = mExpenseDatabase.push().getKey();
+                String mDate = DateFormat.getDateInstance().format(new Date());
                 Data data=new Data(amountInInt, type, note, id, mDate);
-
                 mExpenseDatabase.child(id).setValue(data);
-
                 Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
-
                 dialog.dismiss();
             }
         });
@@ -387,5 +341,4 @@ public class BudgetFragment extends Fragment {
             }
         });
     }
-
 }

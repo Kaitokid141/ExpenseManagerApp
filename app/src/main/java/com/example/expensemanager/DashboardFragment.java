@@ -45,28 +45,21 @@ public class DashboardFragment extends Fragment {
 
 
     //Floating Button
-
     private FloatingActionButton fab_main;
     private FloatingActionButton fab_income;
     private FloatingActionButton fab_expense;
 
     //Floating Button TextView
-
     private TextView fab_income_text;
     private  TextView fab_expense_text;
-
-
     private  boolean  isOpen=false;
-
 
     // animation class objects
     private Animation fadeOpen, fadeClose;
 
     //Dashboard income and expense result
-
     private TextView totalIncomResult;
     private TextView totalExpenseResult;
-
 
     // Firebase
     private FirebaseAuth mAuth;
@@ -86,15 +79,15 @@ public class DashboardFragment extends Fragment {
         mAuth=FirebaseAuth.getInstance();
 
         FirebaseUser mUser=mAuth.getCurrentUser();
-        String uid=mUser.getUid();
+        String uid = mUser.getUid();
 
         mIncomeDatabase= FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
         mExpenseDatabase=FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
 
         mIncomeDatabase.keepSynced(true);
         mExpenseDatabase.keepSynced(true);
-        //Connect Floating Button to layout
 
+        //Connect Floating Button to layout
         fab_main=myview.findViewById(R.id.fb_main_plus_btn);
         fab_income=myview.findViewById(R.id.income_ft_btn);
         fab_expense=myview.findViewById(R.id.expense_ft_btn);
@@ -104,17 +97,14 @@ public class DashboardFragment extends Fragment {
         fab_expense_text=myview.findViewById(R.id.expense_ft_text);
 
         //Total income and expense
-
         totalIncomResult = myview.findViewById(R.id.income_set_result);
         totalExpenseResult = myview.findViewById(R.id.expense_set_result);
 
         //Recycler
-
         mRecyclerIncome = myview.findViewById(R.id.recycler_income);
         mRecyclerExpense = myview.findViewById(R.id.recycler_expense);
 
         //Animations
-
         fadeOpen= AnimationUtils.loadAnimation(getActivity(),R.anim.fade_open);
         fadeClose=AnimationUtils.loadAnimation(getActivity(),R.anim.fade_close);
 
@@ -127,24 +117,16 @@ public class DashboardFragment extends Fragment {
         });
 
         //Calculate total income
-
         mIncomeDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 int total = 0;
-
                 for(DataSnapshot mysnap: snapshot.getChildren()){
                     Data data = mysnap.getValue(Data.class);
-
                     total += data.getAmount();
-
                     String stResult = String.valueOf(total);
-
-                    totalIncomResult.setText(stResult+".00");
-
+                    totalIncomResult.setText(stResult);
                 }
-
             }
 
             @Override
@@ -154,22 +136,15 @@ public class DashboardFragment extends Fragment {
         });
 
         //Calculate total expense
-
         mExpenseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 int total= 0;
-
                 for(DataSnapshot mysnap: snapshot.getChildren()){
-
                     Data data = mysnap.getValue(Data.class);
-
                     total += data.getAmount();
-
                     String stResult = String.valueOf(total);
-
-                    totalExpenseResult.setText(stResult+".00");
+                    totalExpenseResult.setText(stResult);
                 }
             }
 
@@ -180,9 +155,7 @@ public class DashboardFragment extends Fragment {
         });
 
         //Recycler
-
         LinearLayoutManager layoutManagerIncome = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-
         layoutManagerIncome.setStackFromEnd(true);
         layoutManagerIncome.setReverseLayout(true);
         mRecyclerIncome.setHasFixedSize(true);
@@ -194,12 +167,10 @@ public class DashboardFragment extends Fragment {
         layoutManagerExpense.setReverseLayout(true);
         mRecyclerExpense.setHasFixedSize(true);
         mRecyclerExpense.setLayoutManager(layoutManagerExpense);
-
-
         return myview;
     }
-    //Floating button animation
 
+    //Floating button animation
     private void floatingButtonAnimation(){
         if(isOpen){
             fab_income.startAnimation(fadeClose);
@@ -241,6 +212,7 @@ public class DashboardFragment extends Fragment {
         });
     }
 
+    //Insert data Income
     public void insertIncomeData(){
         AlertDialog.Builder mydialog= new AlertDialog.Builder(getActivity());
         LayoutInflater inflater=LayoutInflater.from(getActivity());
@@ -279,15 +251,10 @@ public class DashboardFragment extends Fragment {
 
                 //Create random ID inside database
                 String id=mIncomeDatabase.push().getKey();
-
                 String mDate= DateFormat.getDateInstance().format(new Date());
-
                 Data data=new Data(amountInInt, type, note, id, mDate);
-
                 mIncomeDatabase.child(id).setValue(data);
-
                 Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
-
                 dialog.dismiss();
                 floatingButtonAnimation();
             }
@@ -308,7 +275,7 @@ public class DashboardFragment extends Fragment {
         textView.setAdapter(arrayAdapter);
     }
 
-
+    //Insert data Expense
     public void insertExpenseData(){
         AlertDialog.Builder mydialog=new AlertDialog.Builder(getActivity());
         LayoutInflater inflater=LayoutInflater.from(getActivity());
@@ -347,16 +314,12 @@ public class DashboardFragment extends Fragment {
                 int amountInInt= Integer.parseInt(amount);
 
                 //Create random ID inside database
-                String id=mExpenseDatabase.push().getKey();
+                String id = mExpenseDatabase.push().getKey();
 
-                String mDate= DateFormat.getDateInstance().format(new Date());
-
-                Data data=new Data(amountInInt, type, note, id, mDate);
-
+                String mDate = DateFormat.getDateInstance().format(new Date());
+                Data data = new Data(amountInInt, type, note, id, mDate);
                 mExpenseDatabase.child(id).setValue(data);
-
                 Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
-
                 dialog.dismiss();
                 floatingButtonAnimation();
             }
@@ -377,7 +340,6 @@ public class DashboardFragment extends Fragment {
         textView.setAdapter(arrayAdapter);
     }
 
-
     @Override
     public void onStart(){
         super.onStart();
@@ -393,7 +355,6 @@ public class DashboardFragment extends Fragment {
                 incomeViewHolder.setIncomeType(data.getType());
                 incomeViewHolder.setIncomeAmount(data.getAmount());
                 incomeViewHolder.setIncomeDate(data.getDate());
-
             }
         };
         mRecyclerIncome.setAdapter(incomeAdapter);
@@ -415,7 +376,6 @@ public class DashboardFragment extends Fragment {
     }
 
     // For income Data
-
     public static class IncomeViewHolder extends RecyclerView.ViewHolder{
             View mIncomeView;
         public IncomeViewHolder(@NonNull View itemView) {
@@ -440,11 +400,9 @@ public class DashboardFragment extends Fragment {
             Log.i("DATE", date);
             mDate.setText(date);
         }
-
     }
 
     // For expense Data
-
     public static class ExpenseViewHolder extends  RecyclerView.ViewHolder{
 
         View mExpenseView;
