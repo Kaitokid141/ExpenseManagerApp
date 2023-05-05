@@ -229,7 +229,6 @@ public class IncomeFragment extends Fragment {
 
                 String mdamount = String.valueOf(amount);
                 mdamount = edtAmount.getText().toString().trim();
-<<<<<<< HEAD
 
                 float myAmount = Float.parseFloat(mdamount);
 
@@ -237,11 +236,9 @@ public class IncomeFragment extends Fragment {
 
                 Data data = new Data((int)myAmount, type, note, post_key, mDate);
 
-=======
-                int myAmount = Integer.parseInt(mdamount);
-                String mDate = DateFormat.getDateInstance().format(new Date());
-                Data data = new Data(myAmount, type, note, post_key, mDate);
->>>>>>> 302152d96640eff829562d1e9f8c6c8682348741
+//                int myAmount = Integer.parseInt(mdamount);
+//                String mDate = DateFormat.getDateInstance().format(new Date());
+//                Data data = new Data(myAmount, type, note, post_key, mDate);
                 mIncomeDatabase.child(post_key).setValue(data);
                 dialog.dismiss();
             }

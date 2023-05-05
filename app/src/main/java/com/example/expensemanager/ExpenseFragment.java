@@ -252,13 +252,11 @@ public class ExpenseFragment extends Fragment {
                 float intamount = Float.parseFloat(stamount);
 
                 String mDate = DateFormat.getDateInstance().format(new Date());
-<<<<<<< HEAD
 
                 Data data = new Data((int)intamount, type, note, post_key, mDate);
 
-=======
-                Data data = new Data(intamount, type, note, post_key, mDate);
->>>>>>> 302152d96640eff829562d1e9f8c6c8682348741
+//                Data data = new Data(intamount, type, note, post_key, mDate);
+
                 mExpenseDatabase.child(post_key).setValue(data);
                 dialog.dismiss();
             }

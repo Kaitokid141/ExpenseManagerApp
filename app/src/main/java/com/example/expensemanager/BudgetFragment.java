@@ -273,13 +273,10 @@ public class BudgetFragment extends Fragment{
                 float intamount = Float.parseFloat(stamount);
 
                 String mDate = DateFormat.getDateInstance().format(new Date());
-<<<<<<< HEAD
 
                 Data data = new Data((int)intamount, type, note, post_key, mDate);
 
-=======
-                Data data = new Data(intamount, type, note, post_key, mDate);
->>>>>>> 302152d96640eff829562d1e9f8c6c8682348741
+//                Data data = new Data(intamount, type, note, post_key, mDate);
                 mExpenseDatabase.child(post_key).setValue(data);
                 dialog.dismiss();
             }
@@ -415,8 +412,6 @@ public class BudgetFragment extends Fragment{
             }
         });
     }
-<<<<<<< HEAD
-
     private void updateSelectedDateTextView_start() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         selectedDateTextView_start.setText(dateFormat.format(calendar.getTime()));
@@ -426,7 +421,4 @@ public class BudgetFragment extends Fragment{
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         selectedDateTextView_end.setText(dateFormat.format(calendar.getTime()));
     }
-
-=======
->>>>>>> 302152d96640eff829562d1e9f8c6c8682348741
 }

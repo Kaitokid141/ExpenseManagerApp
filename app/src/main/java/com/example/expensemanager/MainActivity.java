@@ -42,15 +42,13 @@ public class MainActivity extends AppCompatActivity {
         login();
     }
 
-<<<<<<< HEAD
-    private void login(){
-        mEmail=findViewById(R.id.email_login);
-        mPassword=findViewById(R.id.password_login);
-        loginButton=findViewById(R.id.btn_login);
-        mForgotPassword=findViewById(R.id.forgot_password);
-        mSignup=findViewById(R.id.signup);
+//    private void login(){
+//        mEmail=findViewById(R.id.email_login);
+//        mPassword=findViewById(R.id.password_login);
+//        loginButton=findViewById(R.id.btn_login);
+//        mForgotPassword=findViewById(R.id.forgot_password);
+//        mSignup=findViewById(R.id.signup);
 
-=======
     // Login
     private void login(){
         mEmail = findViewById(R.id.email_login);
@@ -58,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.btn_login);
         mForgotPassword = findViewById(R.id.forgot_password);
         mSignup = findViewById(R.id.signup);
->>>>>>> 302152d96640eff829562d1e9f8c6c8682348741
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     mPassword.setError("Password cannot be empty.");
                     return;
                 }
-<<<<<<< HEAD
+
 
                 // Check if the account is locked
                 if(lockTimeMillis > System.currentTimeMillis()) {
@@ -80,8 +77,6 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
-=======
->>>>>>> 302152d96640eff829562d1e9f8c6c8682348741
                 mDialog.setMessage("Processing");
                 mDialog.show();
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
