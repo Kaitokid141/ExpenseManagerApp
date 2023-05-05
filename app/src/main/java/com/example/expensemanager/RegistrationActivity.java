@@ -1,5 +1,4 @@
 package com.example.expensemanager;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,7 +17,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
 public class RegistrationActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword;
@@ -26,22 +24,23 @@ public class RegistrationActivity extends AppCompatActivity {
     private TextView mLogin;
     private ProgressDialog mDialog;
 
-    //Firebase...
+    //Firebase
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
         mAuth = FirebaseAuth.getInstance();
         mDialog = new ProgressDialog(this);
-
         signup();
     }
     private void signup(){
-        mEmail=findViewById(R.id.email_signup);
-        mPassword=findViewById(R.id.password_signup);
-        signupButton=findViewById(R.id.btn_signup);
-        mLogin=findViewById(R.id.login);
+        mEmail = findViewById(R.id.email_signup);
+        mPassword = findViewById(R.id.password_signup);
+        signupButton = findViewById(R.id.btn_signup);
+        mLogin = findViewById(R.id.login);
+
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,8 +55,12 @@ public class RegistrationActivity extends AppCompatActivity {
                     mPassword.setError("Password cannot be empty.");
                     return;
                 }
-                Log.i("val", email);
-                Log.i("val", password);
+                if (password.length() < 6) {
+                    Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //Log.i("val", email);
+                //Log.i("val", password);
                 mDialog.setMessage("Please wait while we process your data");
                 mDialog.show();
                 mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -76,14 +79,13 @@ public class RegistrationActivity extends AppCompatActivity {
                 });
             }
         });
+
+        // Login
         mLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-
-
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });
-
     }
 }

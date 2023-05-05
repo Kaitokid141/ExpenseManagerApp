@@ -19,19 +19,12 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccountFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AccountFragment extends Fragment {
     private FirebaseAuth mAuth;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View myView= inflater.inflate(R.layout.fragment_account2, container, false);
         EditText emailUser=myView.findViewById(R.id.email_account);
         EditText dateofCreation=myView.findViewById(R.id.dateofCreation);
@@ -54,10 +47,6 @@ public class AccountFragment extends Fragment {
         SimpleDateFormat jdf2 = new SimpleDateFormat("dd MMM yyyy    HH:mm:ss z");
         String SignInAt = jdf2.format(date2);
         signInAt.setText(SignInAt);
-
-
-
-
         return myView;
     }
 }

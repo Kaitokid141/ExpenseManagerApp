@@ -38,18 +38,22 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private ExpenseFragment expenseFragment;
     private StatsFragment statsFragment;
     private BudgetFragment budgetFragment;
+
+    //Firebase
     private FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mAuth=FirebaseAuth.getInstance();
-        Toolbar toolbar=findViewById(R.id.my_toolbar);
+
+        Toolbar toolbar = findViewById(R.id.my_toolbar);
+        toolbar.setTitle("Expense Manager");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        DrawerLayout drawerLayout=findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle= new ActionBarDrawerToggle
                 (
                         this,
@@ -70,18 +74,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         bottomNavigationView=findViewById(R.id.bottomNavbar);
         frameLayout=findViewById(R.id.main_frame);
 
-        dashboardFragment=new DashboardFragment();
-        incomeFragment=new IncomeFragment();
-        expenseFragment=new ExpenseFragment();
-        statsFragment=new StatsFragment();
-        budgetFragment=new BudgetFragment();
+        dashboardFragment = new DashboardFragment();
+        incomeFragment = new IncomeFragment();
+        expenseFragment = new ExpenseFragment();
+        statsFragment = new StatsFragment();
+        budgetFragment = new BudgetFragment();
 
         setFragment(dashboardFragment);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()){
-
                     case R.id.dashboard:
                         setFragment(dashboardFragment);
                         return true;
@@ -99,19 +102,15 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         return true;
                     default:
                         return false;
-
-
                 }
             }
         });
     }
-
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction=getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
     }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawerLayout=findViewById(R.id.drawer_layout);
@@ -122,9 +121,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         else{
             super.onBackPressed();
         }
-
     }
-
     public void displaySelectedListener(int itemId){
         Fragment fragment = null;
 
@@ -155,7 +152,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.budget:
                 bottomNavigationView.setSelectedItemId(R.id.budget);
-                fragment=new BudgetFragment();
+                fragment = new BudgetFragment();
                 break;
             case R.id.account:
                 fragment=new AccountFragment();
@@ -170,11 +167,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             ft.replace(R.id.main_frame, fragment);
             ft.commit();
         }
-
         DrawerLayout drawerLayout=findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         Log.i("ITEM ID", Integer.toString(item.getItemId()));

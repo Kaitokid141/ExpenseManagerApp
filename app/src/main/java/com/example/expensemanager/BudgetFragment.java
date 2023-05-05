@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +18,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.app.Dialog;
+import android.app.Activity;
+import android.app.DatePickerDialog;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import com.example.expensemanager.Model.Data;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -33,15 +42,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link ExpenseFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BudgetFragment extends Fragment {
+public class BudgetFragment extends Fragment{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,21 +96,25 @@ public class BudgetFragment extends Fragment {
     }
 
     //Firebase database
-
     private FirebaseAuth mAuth;
     private DatabaseReference mExpenseDatabase;
 
     //Recyclerview
-
     private RecyclerView recyclerView;
 
     //TextView
-
     private TextView expenseSumResult;
 
 
-    //Edit data item
+    //Calender
+    private Button pickDateButton_start;
+    private TextView selectedDateTextView_start;
 
+    private Button pickDateButton_end;
+    private TextView selectedDateTextView_end;
+    private Calendar calendar;
+
+    //Edit data item
     private EditText edtAmount;
     private EditText edtType;
     private EditText edtNote;
@@ -107,63 +123,46 @@ public class BudgetFragment extends Fragment {
     private Button btnDelete;
 
     //Data variable
-
     private String type;
     private String note;
     private float amount;
     private String post_key;
-
     private FloatingActionButton fab_budget_plus_btn;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View myview =  inflater.inflate(R.layout.fragment_budget, container, false);
 
+        View myview =  inflater.inflate(R.layout.fragment_budget, container, false);
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uid = mUser.getUid();
-
         mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
-
         expenseSumResult = myview.findViewById(R.id.sum_budget_expense);
-
         recyclerView = myview.findViewById(R.id.recycler_budget);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-
         mExpenseDatabase.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 int totalvalue = 0;
-
                 for(DataSnapshot mysnapshot: snapshot.getChildren()){
                     Data data = mysnapshot.getValue(Data.class);
-
                     totalvalue += data.getAmount();
-
                     String stotal = String.valueOf(totalvalue);
                     expenseSumResult.setText(stotal+".00");
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
         fab_budget_plus_btn = myview.findViewById(R.id.fab_budget_plus_btn);
-
         return myview;
     }
 
@@ -171,7 +170,6 @@ public class BudgetFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
-
         FirebaseRecyclerAdapter<Data, MyViewHolder>adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(
                 Data.class,
                 R.layout.budget_recycler_data,
@@ -180,7 +178,6 @@ public class BudgetFragment extends Fragment {
         ) {
             @Override
             protected void populateViewHolder(MyViewHolder viewHolder, final Data model, final int position) {
-
                 viewHolder.setType(model.getType());
                 viewHolder.setNote(model.getNote());
                 viewHolder.setDate(model.getDate());
@@ -190,16 +187,13 @@ public class BudgetFragment extends Fragment {
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         post_key = getRef(position).getKey();
                         type = model.getType();
                         note = model.getNote();
                         amount = model.getAmount();
-
                         updateDataItem();
                     }
                 });
-
             }
         };
 
@@ -213,45 +207,36 @@ public class BudgetFragment extends Fragment {
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-
         View mView;
-
         public MyViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
-
         private void setType(String type){
             TextView mType = mView.findViewById(R.id.type_txt_budget);
             mType.setText(type);
         }
-
         private void setNote(String note){
             TextView mNote = mView.findViewById(R.id.date_txt_budget_end);
             mNote.setText(note);
         }
-
         private void setDate(String date){
             TextView mDate = mView.findViewById(R.id.date_txt_budget_start);
             mDate.setText(date);
         }
-
         private void setAmount(float amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_budget);
             String smAmount = String.valueOf(amount);
             mAmount.setText(smAmount);
         }
-
         private void setProgress(float amount, float total){
             ProgressBar progressBar = mView.findViewById(R.id.progressBar);
-            int percent = (int)(amount / total)*100;
+            int percent = (int)((amount / total)*100);
             progressBar.setProgress(percent);
         }
-
     }
 
     private void updateDataItem(){
-
         AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myview = inflater.inflate(R.layout.update_data_item, null);
@@ -259,11 +244,11 @@ public class BudgetFragment extends Fragment {
         String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
         AutoCompleteTextView textView = (AutoCompleteTextView)
-                myview.findViewById(R.id.autoCompleteTextView);
+                myview.findViewById(R.id.autoCompleteTextView_update);
         textView.setAdapter(arrayAdapter);
         edtAmount = myview.findViewById(R.id.amount);
         edtNote = myview.findViewById(R.id.note_edt);
-        edtType = myview.findViewById(R.id.autoCompleteTextView);
+        edtType = myview.findViewById(R.id.autoCompleteTextView_update);
 
         edtType.setText(type);
         edtType.setSelection(type.length());
@@ -278,24 +263,24 @@ public class BudgetFragment extends Fragment {
         btnDelete = myview.findViewById(R.id.btnUpdDelete);
 
         final AlertDialog dialog = mydialog.create();
-
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 type = edtType.getText().toString().trim();
                 note = edtNote.getText().toString().trim();
-
                 String stamount = String.valueOf(amount);
                 stamount = edtAmount.getText().toString().trim();
-                int intamount = Integer.parseInt(stamount);
+                float intamount = Float.parseFloat(stamount);
 
                 String mDate = DateFormat.getDateInstance().format(new Date());
+<<<<<<< HEAD
 
+                Data data = new Data((int)intamount, type, note, post_key, mDate);
+
+=======
                 Data data = new Data(intamount, type, note, post_key, mDate);
-
+>>>>>>> 302152d96640eff829562d1e9f8c6c8682348741
                 mExpenseDatabase.child(post_key).setValue(data);
-
                 dialog.dismiss();
             }
         });
@@ -318,11 +303,59 @@ public class BudgetFragment extends Fragment {
         View myview=inflater.inflate(R.layout.custom_layout_for_budgetdata, null);
         mydialog.setView(myview);
 
+        pickDateButton_start = myview.findViewById(R.id.setDateBtn_start);
+        selectedDateTextView_start = myview.findViewById(R.id.set_date_start);
+
+        pickDateButton_end = myview.findViewById(R.id.setDateBtn_end);
+        selectedDateTextView_end = myview.findViewById(R.id.set_date_end);
+
+        calendar = Calendar.getInstance();
+
+        pickDateButton_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new instance of the DatePickerDialog class
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update the selected date text view
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateSelectedDateTextView_start();
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                // Show the dialog
+                datePicker.show();
+            }
+        });
+
+        pickDateButton_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new instance of the DatePickerDialog class
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update the selected date text view
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateSelectedDateTextView_end();
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                // Show the dialog
+                datePicker.show();
+            }
+        });
+
         final AlertDialog dialog=mydialog.create();
         dialog.setCancelable(false);
         EditText edtamount=myview.findViewById(R.id.amount_budget);
         EditText edttype=myview.findViewById(R.id.autoCompleteTextView_budget);
-        EditText edtnote=myview.findViewById(R.id.note_edt_budget);
+        EditText edtnote=myview.findViewById(R.id.set_date_start);
 
         Button saveBtn=myview.findViewById(R.id.btnSave_budget);
         Button cancelBtn=myview.findViewById(R.id.btnCancel_budget);
@@ -348,16 +381,11 @@ public class BudgetFragment extends Fragment {
                 }
                 int amountInInt= Integer.parseInt(amount);
                 //Create random ID inside database
-                String id=mExpenseDatabase.push().getKey();
-
-                String mDate= DateFormat.getDateInstance().format(new Date());
-
+                String id = mExpenseDatabase.push().getKey();
+                String mDate = DateFormat.getDateInstance().format(new Date());
                 Data data=new Data(amountInInt, type, note, id, mDate);
-
                 mExpenseDatabase.child(id).setValue(data);
-
                 Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
-
                 dialog.dismiss();
             }
         });
@@ -387,5 +415,18 @@ public class BudgetFragment extends Fragment {
             }
         });
     }
+<<<<<<< HEAD
 
+    private void updateSelectedDateTextView_start() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        selectedDateTextView_start.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    private void updateSelectedDateTextView_end() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        selectedDateTextView_end.setText(dateFormat.format(calendar.getTime()));
+    }
+
+=======
+>>>>>>> 302152d96640eff829562d1e9f8c6c8682348741
 }

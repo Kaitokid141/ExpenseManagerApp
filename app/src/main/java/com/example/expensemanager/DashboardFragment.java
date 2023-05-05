@@ -1,11 +1,7 @@
 package com.example.expensemanager;
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.graphics.drawable.Animatable;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,17 +9,13 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.LocaleList;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -48,34 +40,26 @@ import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class DashboardFragment extends Fragment {
 
 
     //Floating Button
-
     private FloatingActionButton fab_main;
     private FloatingActionButton fab_income;
     private FloatingActionButton fab_expense;
 
     //Floating Button TextView
-
     private TextView fab_income_text;
     private  TextView fab_expense_text;
-
-
     private  boolean  isOpen=false;
-
 
     // animation class objects
     private Animation fadeOpen, fadeClose;
 
     //Dashboard income and expense result
-
     private TextView totalIncomResult;
     private TextView totalExpenseResult;
-
 
     // Firebase
     private FirebaseAuth mAuth;
@@ -95,15 +79,15 @@ public class DashboardFragment extends Fragment {
         mAuth=FirebaseAuth.getInstance();
 
         FirebaseUser mUser=mAuth.getCurrentUser();
-        String uid=mUser.getUid();
+        String uid = mUser.getUid();
 
         mIncomeDatabase= FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
         mExpenseDatabase=FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
 
         mIncomeDatabase.keepSynced(true);
         mExpenseDatabase.keepSynced(true);
-        //Connect Floating Button to layout
 
+        //Connect Floating Button to layout
         fab_main=myview.findViewById(R.id.fb_main_plus_btn);
         fab_income=myview.findViewById(R.id.income_ft_btn);
         fab_expense=myview.findViewById(R.id.expense_ft_btn);
@@ -113,17 +97,14 @@ public class DashboardFragment extends Fragment {
         fab_expense_text=myview.findViewById(R.id.expense_ft_text);
 
         //Total income and expense
-
         totalIncomResult = myview.findViewById(R.id.income_set_result);
         totalExpenseResult = myview.findViewById(R.id.expense_set_result);
 
         //Recycler
-
         mRecyclerIncome = myview.findViewById(R.id.recycler_income);
         mRecyclerExpense = myview.findViewById(R.id.recycler_expense);
 
         //Animations
-
         fadeOpen= AnimationUtils.loadAnimation(getActivity(),R.anim.fade_open);
         fadeClose=AnimationUtils.loadAnimation(getActivity(),R.anim.fade_close);
 
@@ -136,24 +117,16 @@ public class DashboardFragment extends Fragment {
         });
 
         //Calculate total income
-
         mIncomeDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 int total = 0;
-
                 for(DataSnapshot mysnap: snapshot.getChildren()){
                     Data data = mysnap.getValue(Data.class);
-
                     total += data.getAmount();
-
                     String stResult = String.valueOf(total);
-
-                    totalIncomResult.setText(stResult+".00");
-
+                    totalIncomResult.setText(stResult);
                 }
-
             }
 
             @Override
@@ -163,22 +136,15 @@ public class DashboardFragment extends Fragment {
         });
 
         //Calculate total expense
-
         mExpenseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 int total= 0;
-
                 for(DataSnapshot mysnap: snapshot.getChildren()){
-
                     Data data = mysnap.getValue(Data.class);
-
                     total += data.getAmount();
-
                     String stResult = String.valueOf(total);
-
-                    totalExpenseResult.setText(stResult+".00");
+                    totalExpenseResult.setText(stResult);
                 }
             }
 
@@ -189,9 +155,7 @@ public class DashboardFragment extends Fragment {
         });
 
         //Recycler
-
         LinearLayoutManager layoutManagerIncome = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-
         layoutManagerIncome.setStackFromEnd(true);
         layoutManagerIncome.setReverseLayout(true);
         mRecyclerIncome.setHasFixedSize(true);
@@ -203,12 +167,10 @@ public class DashboardFragment extends Fragment {
         layoutManagerExpense.setReverseLayout(true);
         mRecyclerExpense.setHasFixedSize(true);
         mRecyclerExpense.setLayoutManager(layoutManagerExpense);
-
-
         return myview;
     }
-    //Floating button animation
 
+    //Floating button animation
     private void floatingButtonAnimation(){
         if(isOpen){
             fab_income.startAnimation(fadeClose);
@@ -250,6 +212,7 @@ public class DashboardFragment extends Fragment {
         });
     }
 
+    //Insert data Income
     public void insertIncomeData(){
         AlertDialog.Builder mydialog= new AlertDialog.Builder(getActivity());
         LayoutInflater inflater=LayoutInflater.from(getActivity());
@@ -288,28 +251,10 @@ public class DashboardFragment extends Fragment {
 
                 //Create random ID inside database
                 String id=mIncomeDatabase.push().getKey();
-
                 String mDate= DateFormat.getDateInstance().format(new Date());
-
                 Data data=new Data(amountInInt, type, note, id, mDate);
-
                 mIncomeDatabase.child(id).setValue(data);
-
-                // get the current string array resource
-                String[] currentArray = getResources().getStringArray(R.array.typesOfIncome);
-
-                for(String s : currentArray){
-                    if(s.equals(note)) return;
-                }
-
-                // create a new string array with the desired modifications
-                String[] modifiedArray = new String[currentArray.length + 1];
-                System.arraycopy(currentArray, 0, modifiedArray, 0, currentArray.length);
-                modifiedArray[modifiedArray.length - 1] = type; // add a new item to the end of the array
-                updateStringArrayResource(R.array.typesOfIncome, modifiedArray);
-
                 Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
-
                 dialog.dismiss();
                 floatingButtonAnimation();
             }
@@ -323,27 +268,14 @@ public class DashboardFragment extends Fragment {
             }
         });
         dialog.show();
-        String[] transaction = getResources().getStringArray(R.array.typesOfIncome);
+        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 myview.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(arrayAdapter);
-        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) { // first item selected
-                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
-                    textView.setText(""); // set text to empty string
-                    textView.setHint("Thêm"); // set hint to "more"
-                }else{
-                    textView.setInputType(InputType.TYPE_NULL);
-                }
-            }
-        });
-
     }
 
-
+    //Insert data Expense
     public void insertExpenseData(){
         AlertDialog.Builder mydialog=new AlertDialog.Builder(getActivity());
         LayoutInflater inflater=LayoutInflater.from(getActivity());
@@ -380,28 +312,14 @@ public class DashboardFragment extends Fragment {
                     return;
                 }
                 int amountInInt= Integer.parseInt(amount);
+
                 //Create random ID inside database
-                String id=mExpenseDatabase.push().getKey();
+                String id = mExpenseDatabase.push().getKey();
 
-                String mDate= DateFormat.getDateInstance().format(new Date());
-
-                Data data=new Data(amountInInt, type, note, id, mDate);
-
+                String mDate = DateFormat.getDateInstance().format(new Date());
+                Data data = new Data(amountInInt, type, note, id, mDate);
                 mExpenseDatabase.child(id).setValue(data);
-
-                // get the current string array resource
-                String[] currentArray = getResources().getStringArray(R.array.typesOfTransactions);
-
-                // create a new string array with the desired modifications
-                String[] modifiedArray = new String[currentArray.length + 1];
-                System.arraycopy(currentArray, 0, modifiedArray, 0, currentArray.length);
-                modifiedArray[modifiedArray.length - 1] = type; // add a new item to the end of the array
-
-                updateStringArrayResource(R.array.typesOfTransactions, modifiedArray);
-
-
                 Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
-
                 dialog.dismiss();
                 floatingButtonAnimation();
             }
@@ -420,20 +338,7 @@ public class DashboardFragment extends Fragment {
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 myview.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(arrayAdapter);
-        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) { // first item selected
-                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
-                    textView.setText(""); // set text to empty string
-                    textView.setHint("Thêm"); // set hint to "more"
-                }else{
-                    textView.setInputType(InputType.TYPE_NULL);
-                }
-            }
-        });
     }
-
 
     @Override
     public void onStart(){
@@ -450,8 +355,6 @@ public class DashboardFragment extends Fragment {
                 incomeViewHolder.setIncomeType(data.getType());
                 incomeViewHolder.setIncomeAmount(data.getAmount());
                 incomeViewHolder.setIncomeDate(data.getDate());
-                incomeViewHolder.setNoteDate(data.getNote());
-
             }
         };
         mRecyclerIncome.setAdapter(incomeAdapter);
@@ -467,14 +370,12 @@ public class DashboardFragment extends Fragment {
                 expenseViewHolder.setExpenseType(data.getType());
                 expenseViewHolder.setExpenseAmount(data.getAmount());
                 expenseViewHolder.setExpenseDate(data.getDate());
-                expenseViewHolder.setExpenseNote(data.getNote());
             }
         };
         mRecyclerExpense.setAdapter(expenseAdapter);
     }
 
     // For income Data
-
     public static class IncomeViewHolder extends RecyclerView.ViewHolder{
             View mIncomeView;
         public IncomeViewHolder(@NonNull View itemView) {
@@ -499,16 +400,9 @@ public class DashboardFragment extends Fragment {
             Log.i("DATE", date);
             mDate.setText(date);
         }
-        public void setNoteDate(String note){
-            TextView mNote=mIncomeView.findViewById(R.id.note_Income_ds);
-            Log.i("NOTE", note);
-            mNote.setText(note);
-        }
-
     }
 
     // For expense Data
-
     public static class ExpenseViewHolder extends  RecyclerView.ViewHolder{
 
         View mExpenseView;
@@ -530,37 +424,5 @@ public class DashboardFragment extends Fragment {
             TextView mDate=mExpenseView.findViewById(R.id.date_Expense_ds);
             mDate.setText(date);
         }
-
-        public void setExpenseNote(String note){
-            TextView mNote=mExpenseView.findViewById(R.id.note_Expense_ds);
-            mNote.setText(note);
-        }
-    }
-    private void updateStringArrayResource(int resourceId, String[] newArray) {
-        // get the current configuration
-        Configuration configuration = getResources().getConfiguration();
-
-        // create a new context with the updated string array resource
-        Context updatedContext = createConfigurationContext(configuration, newArray);
-
-        // get the updated resources and update the string array resource
-        Resources res = updatedContext.getResources();
-        res.getStringArray(resourceId);
-    }
-
-    private Context createConfigurationContext(Configuration configuration, String[] newArray) {
-        // create a new configuration with the updated string array resource
-        Configuration newConfig = new Configuration(configuration);
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            LocaleList localeList = new LocaleList(Locale.getDefault());
-            newConfig.setLocales(localeList);
-        } else {
-            newConfig.locale = Locale.getDefault();
-        }
-        newConfig.setLocales(configuration.getLocales());
-
-        // create a new context with the updated configuration
-        Context context = new ContextThemeWrapper(getContext(), R.style.AppTheme);
-        return context.createConfigurationContext(newConfig);
     }
 }

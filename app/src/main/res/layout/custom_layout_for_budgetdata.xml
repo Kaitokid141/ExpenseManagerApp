@@ -102,12 +102,10 @@
                     android:layout_weight="1">
                     <TextView
                         android:layout_width="wrap_content"
+                        android:text="BẮT ĐẦU TỪ"
+                        android:layout_margin="10dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:text="BẮT ĐẦU TỪ" />
+                        />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -115,11 +113,24 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="2">
-                    <EditText
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        />
+                        android:orientation="horizontal">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/set_date_start"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/setDateBtn_start"
+                            android:text="Set"
+                            android:backgroundTint="#1ca87a"
+                            android:layout_weight="2"/>
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
 
@@ -137,7 +148,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:text="THỜI GIAN CUỐI"
-
+                        android:layout_marginTop="10dp"
                         android:layout_height="wrap_content"
                         />
                 </RelativeLayout>
@@ -147,12 +158,24 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:layout_weight="2">
-                    <EditText
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/note_edt_budget"
-                        android:hint="(Ghi chú bắt buộc)"
-                        />
+                        android:orientation="horizontal">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:id="@+id/set_date_end"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            />
+                        <Button
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/setDateBtn_end"
+                            android:text="Set"
+                            android:backgroundTint="#1ca87a"
+                            android:layout_weight="2"/>
+                    </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
 

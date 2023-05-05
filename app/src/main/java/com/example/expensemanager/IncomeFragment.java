@@ -33,16 +33,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.Date;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link IncomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class IncomeFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // parameters (eg: ARG_ITEM_NUMBER)
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -51,12 +45,12 @@ public class IncomeFragment extends Fragment {
     private String mParam2;
 
     public IncomeFragment() {
-        // Required empty public constructor
+
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
+     * Method to create a new instance of
+     * Fragment using the provided parameters.
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
@@ -82,53 +76,42 @@ public class IncomeFragment extends Fragment {
     }
 
     //Firebase database
-
     private FirebaseAuth mAuth;
     private DatabaseReference mIncomeDatabase;
 
     //Recyclerview
-
     private RecyclerView recyclerView;
 
     //Text view
-
     private TextView incomeTotalSum;
 
     //Update edit text
-
     private EditText edtAmount;
     private EditText edtType;
     private EditText edtNote;
 
     //button for update and delete
-
     private Button btnUpdate;
     private Button btnDelete;
 
     //Data item value
-
     private String type;
     private String note;
     private float amount;
     private String post_key;
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View myview =  inflater.inflate(R.layout.fragment_income, container, false);
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uid = mUser.getUid();
         mIncomeDatabase = FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
-
         incomeTotalSum = myview.findViewById(R.id.income_txt_result);
-
-
         recyclerView = myview.findViewById(R.id.recycler_id_income);
-
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
         layoutManager.setReverseLayout(true);
@@ -136,32 +119,22 @@ public class IncomeFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-
         mIncomeDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 int totalvalue = 0;
-
                 for (DataSnapshot mysnapshot: snapshot.getChildren()){
                     Data data = mysnapshot.getValue(Data.class);
                     totalvalue += data.getAmount();
-
                     String sTotalvalue = String.valueOf(totalvalue);
-
-                    incomeTotalSum.setText(sTotalvalue+".00");
+                    incomeTotalSum.setText(sTotalvalue);
                 }
-
-
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-
-
         return myview;
     }
 
@@ -169,7 +142,6 @@ public class IncomeFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
-
         FirebaseRecyclerAdapter<Data, MyViewHolder>adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(
                 Data.class,
                 R.layout.income_recycler_data,
@@ -182,53 +154,38 @@ public class IncomeFragment extends Fragment {
                 viewHolder.setNote(model.getNote());
                 viewHolder.setDate(model.getDate());
                 viewHolder.setAmount(model.getAmount());
-
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         post_key = getRef(position).getKey();
-
                         type = model.getType();
                         note = model.getNote();
                         amount = model.getAmount();
-
                         updateDataItem();
                     }
                 });
-
             }
         };
-
         recyclerView.setAdapter(adapter);
-
     }
-
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-
          View mView;
-
         public MyViewHolder(View itemView){
             super(itemView);
             mView = itemView;
         }
-
-
         private void setType(String type){
             TextView mType = mView.findViewById(R.id.type_txt_income);
             mType.setText(type);
         }
-
         private void setNote(String note){
             TextView mNote = mView.findViewById(R.id.note_txt_income);
             mNote.setText(note);
         }
-
         private void setDate(String date){
             TextView mDate = mView.findViewById(R.id.date_txt_income);
             mDate.setText(date);
         }
-
         private void setAmount(float amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_income);
             String smAmount = String.valueOf(amount);
@@ -236,24 +193,21 @@ public class IncomeFragment extends Fragment {
         }
 
     }
-
      private void updateDataItem(){
-
         AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myview = inflater.inflate(R.layout.update_data_item,  null);
         mydialog.setView(myview);
-         String[] transaction = getResources().getStringArray(R.array.typesOfIncome);
+         String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
          ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
          AutoCompleteTextView textView = (AutoCompleteTextView)
-                 myview.findViewById(R.id.autoCompleteTextView);
+                 myview.findViewById(R.id.autoCompleteTextView_update);
          textView.setAdapter(arrayAdapter);
         edtAmount = myview.findViewById(R.id.amount);
-        edtType = myview.findViewById(R.id.autoCompleteTextView);
+        edtType = myview.findViewById(R.id.autoCompleteTextView_update);
         edtNote = myview.findViewById(R.id.note_edt);
 
         //Set data to edit text
-
         edtType.setText(type);
         edtType.setSelection(type.length());
 
@@ -263,12 +217,10 @@ public class IncomeFragment extends Fragment {
         edtAmount.setText(String.valueOf(amount));
         edtAmount.setSelection(String.valueOf(amount).length());
 
-
         btnUpdate = myview.findViewById(R.id.btnUpdUpdate);
         btnDelete = myview.findViewById(R.id.btnUpdDelete);
 
         final AlertDialog dialog = mydialog.create();
-
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -277,31 +229,30 @@ public class IncomeFragment extends Fragment {
 
                 String mdamount = String.valueOf(amount);
                 mdamount = edtAmount.getText().toString().trim();
+<<<<<<< HEAD
 
-                int myAmount = Integer.parseInt(mdamount);
+                float myAmount = Float.parseFloat(mdamount);
 
                 String mDate = DateFormat.getDateInstance().format(new Date());
 
-                Data data = new Data(myAmount, type, note, post_key, mDate);
+                Data data = new Data((int)myAmount, type, note, post_key, mDate);
 
+=======
+                int myAmount = Integer.parseInt(mdamount);
+                String mDate = DateFormat.getDateInstance().format(new Date());
+                Data data = new Data(myAmount, type, note, post_key, mDate);
+>>>>>>> 302152d96640eff829562d1e9f8c6c8682348741
                 mIncomeDatabase.child(post_key).setValue(data);
                 dialog.dismiss();
             }
         });
-
         btnDelete.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-
                 mIncomeDatabase.child(post_key).removeValue();
-
                 dialog.dismiss();
             }
         });
-
         dialog.show();
-
     }
-
-
 }

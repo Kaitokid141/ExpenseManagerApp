@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Expense Manager</string>
     <string name="forgot_password">Quên mật khẩu?</string>
-    <string name="welcome_back">Bonjour User</string>
+    <string name="welcome_back">XIN CHÀO</string>
     <string name="don_t_have_an_account_yet_signup_now">Bạn chưa có tài khoản? Hãy đăng ký</string>
     <string name="you_seem_new_here_signup">Chưa có tài khoản? Hãy đăng ký</string>
 
