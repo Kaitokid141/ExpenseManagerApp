@@ -268,7 +268,7 @@ public class DashboardFragment extends Fragment {
             }
         });
         dialog.show();
-        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
+        String[] transaction = getResources().getStringArray(R.array.typesOfIncome);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 myview.findViewById(R.id.autoCompleteTextView);

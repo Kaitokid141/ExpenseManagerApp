@@ -191,7 +191,7 @@ public class BudgetFragment extends Fragment{
                         type = model.getType();
                         note = model.getNote();
                         amount = model.getAmount();
-                        updateDataItem();
+                        insertDataItem();
                     }
                 });
             }
