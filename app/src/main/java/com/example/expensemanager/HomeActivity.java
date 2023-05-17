@@ -129,6 +129,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case android.R.id.home:
                 DrawerLayout drawerLayout=findViewById(R.id.drawer_layout);
                 drawerLayout.openDrawer(GravityCompat.START);
+                fragment = new StatsFragment();
                 return;
             case R.id.dashboard:
                 bottomNavigationView.setSelectedItemId(R.id.dashboard);

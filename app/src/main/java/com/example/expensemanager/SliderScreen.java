@@ -125,7 +125,7 @@ public class SliderScreen extends AppCompatActivity {
     }
 
     private void switchActivities() {
-        Intent switchActivityIntent = new Intent(this, SliderScreen.class);
+        Intent switchActivityIntent = new Intent(this, MainActivity.class);
         startActivity(switchActivityIntent);
     }
 

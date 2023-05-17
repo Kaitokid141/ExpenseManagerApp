@@ -231,8 +231,10 @@ public class BudgetFragment extends Fragment{
         }
         private void setProgress(float amount, float total){
             ProgressBar progressBar = mView.findViewById(R.id.progressBar);
+            TextView percent_txt_budget = mView.findViewById(R.id.percent_txt_budget);
             int percent = (int)((amount / total)*100);
             progressBar.setProgress(percent);
+            percent_txt_budget.setText(Integer.toString(percent)+"%");
         }
     }
 

@@ -121,7 +121,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:id="@+id/recycler_income"
-                        android:layout_height="180dp">
+                        android:layout_height="200dp">
 
 
                     </androidx.recyclerview.widget.RecyclerView>
@@ -136,8 +136,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
                     android:id="@+id/recycler_expense"
-                    android:backgroundTint="@color/grey_90"
-                    android:layout_height="180dp"
+                    android:layout_height="200dp"
                     />
 
 

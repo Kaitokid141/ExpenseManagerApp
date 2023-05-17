@@ -18,6 +18,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import java.util.Date;
+import org.mindrot.jbcrypt.BCrypt;
 public class MainActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword;
@@ -79,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
                 mDialog.setMessage("Processing");
                 mDialog.show();
+                // Use bcrypt to hash the password
+                String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
                 mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -122,5 +126,4 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-}
+    }}
