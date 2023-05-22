@@ -95,12 +95,11 @@ public class ExpenseFragment extends Fragment {
     //Data variable
     private String type;
     private String note;
-    private float amount;
+    private int amount;
     private String post_key;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View myview =  inflater.inflate(R.layout.fragment_expense, container, false);
 
@@ -119,17 +118,12 @@ public class ExpenseFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         mExpenseDatabase.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 int totalvalue = 0;
-
                 for(DataSnapshot mysnapshot: snapshot.getChildren()){
                     Data data = mysnapshot.getValue(Data.class);
-
                     totalvalue += data.getAmount();
-
                     String stotal = String.valueOf(totalvalue);
                     expenseSumResult.setText(stotal);
                 }
@@ -147,7 +141,6 @@ public class ExpenseFragment extends Fragment {
     public void onStart()
     {
         super.onStart();
-
         FirebaseRecyclerAdapter<Data, MyViewHolder>adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(
                         Data.class,
                         R.layout.expense_recycler_data,
@@ -156,21 +149,17 @@ public class ExpenseFragment extends Fragment {
                 ) {
             @Override
             protected void populateViewHolder(MyViewHolder viewHolder, final Data model, final int position) {
-
                 viewHolder.setType(model.getType());
                 viewHolder.setNote(model.getNote());
                 viewHolder.setDate(model.getDate());
                 viewHolder.setAmount(model.getAmount());
-
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         post_key = getRef(position).getKey();
                         type = model.getType();
                         note = model.getNote();
                         amount = model.getAmount();
-
                         updateDataItem();
                     }
                 });
@@ -180,9 +169,7 @@ public class ExpenseFragment extends Fragment {
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-
         View mView;
-
         public MyViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
@@ -203,25 +190,23 @@ public class ExpenseFragment extends Fragment {
             mDate.setText(date);
         }
         
-        private void setAmount(float amount){
+        private void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_expense);
             String smAmount = String.valueOf(amount);
             mAmount.setText(smAmount);
         }
-
     }
 
     private void updateDataItem(){
-
         AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myview = inflater.inflate(R.layout.update_data_item, null);
         mydialog.setView(myview);
         String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                myview.findViewById(R.id.autoCompleteTextView_update);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_update);
         textView.setAdapter(arrayAdapter);
+
         edtAmount = myview.findViewById(R.id.amount);
         edtNote = myview.findViewById(R.id.note_edt);
         edtType = myview.findViewById(R.id.autoCompleteTextView_update);
@@ -239,25 +224,19 @@ public class ExpenseFragment extends Fragment {
         btnDelete = myview.findViewById(R.id.btnUpdDelete);
 
         final AlertDialog dialog = mydialog.create();
-
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 type = edtType.getText().toString().trim();
                 note = edtNote.getText().toString().trim();
 
                 String stamount = String.valueOf(amount);
                 stamount = String.valueOf(edtAmount.getText());
                 System.out.print(stamount);
-                float intamount = Float.parseFloat(stamount);
+                int intamount = Integer.parseInt(stamount);
 
                 String mDate = DateFormat.getDateInstance().format(new Date());
-
-                Data data = new Data((int)intamount, type, note, post_key, mDate);
-
-//                Data data = new Data(intamount, type, note, post_key, mDate);
-
+                Data data = new Data(intamount, type, note, post_key, mDate);
                 mExpenseDatabase.child(post_key).setValue(data);
                 dialog.dismiss();
             }
@@ -270,7 +249,6 @@ public class ExpenseFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-
         dialog.show();
     }
 

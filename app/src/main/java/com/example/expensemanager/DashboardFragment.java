@@ -42,8 +42,6 @@ import java.text.DateFormat;
 import java.util.Date;
 
 public class DashboardFragment extends Fragment {
-
-
     //Floating Button
     private FloatingActionButton fab_main;
     private FloatingActionButton fab_income;
@@ -76,25 +74,25 @@ public class DashboardFragment extends Fragment {
         // Inflate the layout for this fragment
         View myview = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser mUser=mAuth.getCurrentUser();
+        FirebaseUser mUser = mAuth.getCurrentUser();
         String uid = mUser.getUid();
 
-        mIncomeDatabase= FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
-        mExpenseDatabase=FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
+        mIncomeDatabase = FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
+        mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
 
         mIncomeDatabase.keepSynced(true);
         mExpenseDatabase.keepSynced(true);
 
         //Connect Floating Button to layout
-        fab_main=myview.findViewById(R.id.fb_main_plus_btn);
-        fab_income=myview.findViewById(R.id.income_ft_btn);
-        fab_expense=myview.findViewById(R.id.expense_ft_btn);
+        fab_main = myview.findViewById(R.id.fb_main_plus_btn);
+        fab_income = myview.findViewById(R.id.income_ft_btn);
+        fab_expense = myview.findViewById(R.id.expense_ft_btn);
 
         // Connect floating text
-        fab_income_text=myview.findViewById(R.id.income_ft_text);
-        fab_expense_text=myview.findViewById(R.id.expense_ft_text);
+        fab_income_text = myview.findViewById(R.id.income_ft_text);
+        fab_expense_text = myview.findViewById(R.id.expense_ft_text);
 
         //Total income and expense
         totalIncomResult = myview.findViewById(R.id.income_set_result);
@@ -105,8 +103,8 @@ public class DashboardFragment extends Fragment {
         mRecyclerExpense = myview.findViewById(R.id.recycler_expense);
 
         //Animations
-        fadeOpen= AnimationUtils.loadAnimation(getActivity(),R.anim.fade_open);
-        fadeClose=AnimationUtils.loadAnimation(getActivity(),R.anim.fade_close);
+        fadeOpen = AnimationUtils.loadAnimation(getActivity(),R.anim.fade_open);
+        fadeClose = AnimationUtils.loadAnimation(getActivity(),R.anim.fade_close);
 
         fab_main.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,7 +137,7 @@ public class DashboardFragment extends Fragment {
         mExpenseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int total= 0;
+                int total = 0;
                 for(DataSnapshot mysnap: snapshot.getChildren()){
                     Data data = mysnap.getValue(Data.class);
                     total += data.getAmount();
@@ -214,26 +212,26 @@ public class DashboardFragment extends Fragment {
 
     //Insert data Income
     public void insertIncomeData(){
-        AlertDialog.Builder mydialog= new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater=LayoutInflater.from(getActivity());
 
-        View myview=inflater.inflate(R.layout.custom_layout_for_insertdata, null);
+        View myview = inflater.inflate(R.layout.custom_layout_for_insertdata, null);
         mydialog.setView(myview);
-        final AlertDialog dialog=mydialog.create();
+        final AlertDialog dialog = mydialog.create();
         dialog.setCancelable(false);
-        EditText edtamount=myview.findViewById(R.id.amount);
-        EditText edtType=myview.findViewById(R.id.autoCompleteTextView);
-        EditText edtNote=myview.findViewById(R.id.note_edt);
+        EditText edtamount = myview.findViewById(R.id.amount);
+        EditText edtType = myview.findViewById(R.id.autoCompleteTextView);
+        EditText edtNote = myview.findViewById(R.id.note_edt);
 
-        Button saveBtn=myview.findViewById(R.id.btnSave);
-        Button cancelBtn=myview.findViewById(R.id.btnCancel);
+        Button saveBtn = myview.findViewById(R.id.btnSave);
+        Button cancelBtn = myview.findViewById(R.id.btnCancel);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String type=edtType.getText().toString().trim();
-                String amount=edtamount.getText().toString().trim();
-                String note=edtNote.getText().toString().trim();
+                String type = edtType.getText().toString().trim();
+                String amount = edtamount.getText().toString().trim();
+                String note = edtNote.getText().toString().trim();
 
                 if(TextUtils.isEmpty(type)){
                     edtType.setError("Please Enter A Type");
@@ -250,9 +248,9 @@ public class DashboardFragment extends Fragment {
                 int amountInInt=Integer.parseInt(amount);
 
                 //Create random ID inside database
-                String id=mIncomeDatabase.push().getKey();
-                String mDate= DateFormat.getDateInstance().format(new Date());
-                Data data=new Data(amountInInt, type, note, id, mDate);
+                String id = mIncomeDatabase.push().getKey();
+                String mDate = DateFormat.getDateInstance().format(new Date());
+                Data data = new Data(amountInInt, type, note, id, mDate);
                 mIncomeDatabase.child(id).setValue(data);
                 Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
@@ -270,34 +268,33 @@ public class DashboardFragment extends Fragment {
         dialog.show();
         String[] transaction = getResources().getStringArray(R.array.typesOfIncome);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                myview.findViewById(R.id.autoCompleteTextView);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(arrayAdapter);
     }
 
     //Insert data Expense
     public void insertExpenseData(){
-        AlertDialog.Builder mydialog=new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater=LayoutInflater.from(getActivity());
 
-        View myview=inflater.inflate(R.layout.custom_layout_for_insertdata, null);
+        View myview = inflater.inflate(R.layout.custom_layout_for_insertdata, null);
         mydialog.setView(myview);
 
-        final AlertDialog dialog=mydialog.create();
+        final AlertDialog dialog = mydialog.create();
         dialog.setCancelable(false);
-        EditText edtamount=myview.findViewById(R.id.amount);
-        EditText edttype=myview.findViewById(R.id.autoCompleteTextView);
-        EditText edtnote=myview.findViewById(R.id.note_edt);
+        EditText edtamount = myview.findViewById(R.id.amount);
+        EditText edttype = myview.findViewById(R.id.autoCompleteTextView);
+        EditText edtnote = myview.findViewById(R.id.note_edt);
 
-        Button saveBtn=myview.findViewById(R.id.btnSave);
-        Button cancelBtn=myview.findViewById(R.id.btnCancel);
+        Button saveBtn = myview.findViewById(R.id.btnSave);
+        Button cancelBtn = myview.findViewById(R.id.btnCancel);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String amount=edtamount.getText().toString().trim();
-                String type=edttype.getText().toString().trim();
-                String note=edtnote.getText().toString().trim();
+                String amount = edtamount.getText().toString().trim();
+                String type = edttype.getText().toString().trim();
+                String note = edtnote.getText().toString().trim();
 
                 if(TextUtils.isEmpty(type)){
                     edttype.setError("Please Enter A Type");
@@ -311,11 +308,10 @@ public class DashboardFragment extends Fragment {
                     edtnote.setError("Please Enter A Note");
                     return;
                 }
-                int amountInInt= Integer.parseInt(amount);
+                int amountInInt = Integer.parseInt(amount);
 
                 //Create random ID inside database
                 String id = mExpenseDatabase.push().getKey();
-
                 String mDate = DateFormat.getDateInstance().format(new Date());
                 Data data = new Data(amountInInt, type, note, id, mDate);
                 mExpenseDatabase.child(id).setValue(data);
@@ -335,8 +331,7 @@ public class DashboardFragment extends Fragment {
         dialog.show();
         String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                myview.findViewById(R.id.autoCompleteTextView);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(arrayAdapter);
     }
 

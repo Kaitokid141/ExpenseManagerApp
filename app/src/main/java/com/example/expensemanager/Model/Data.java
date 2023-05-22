@@ -1,12 +1,14 @@
 package com.example.expensemanager.Model;
 
 public class Data {
+    private String id;
     private int amount;
     private String type;
     private String note;
-    private String id;
     private String date;
+    public Data(){
 
+    }
     public Data(int amount, String type, String note, String id, String date) {
         this.amount = amount;
         this.type = type;
@@ -55,8 +57,5 @@ public class Data {
         this.date = date;
     }
 
-    public Data(){
-
-    }
 }
 

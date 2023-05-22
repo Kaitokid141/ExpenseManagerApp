@@ -122,18 +122,20 @@ public class BudgetFragment extends Fragment{
 
     private Button btnUpdate;
     private Button btnDelete;
+    private Button btnCancel;
+    private Button btnSave;
 
     //Data variable
     private String type;
     private String dateStart;
     private String dateEnd;
-    private float amount;
+    private int amount;
     private String post_key;
     private FloatingActionButton fab_budget_plus_btn;
 
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View myview =  inflater.inflate(R.layout.fragment_budget, container, false);
 
         //Firebase
@@ -182,21 +184,21 @@ public class BudgetFragment extends Fragment{
                 mBudgetDatabase
         ) {
             @Override
-            protected void populateViewHolder(MyViewHolder viewHolder, final Category model, final int position) {
-                viewHolder.setType(model.getType());
-                viewHolder.setDateEnd(model.getDateEnd());
-                viewHolder.setDateStart(model.getDateStart());
-                viewHolder.setAmount(model.getLimitAmount());
-                viewHolder.setProgress(model.getLimitAmount(), Float.parseFloat((String) expenseSumResult.getText()));
+            protected void populateViewHolder(MyViewHolder viewHolder, final Category category, final int position) {
+                viewHolder.setType(category.getType());
+                viewHolder.setDateEnd(category.getDateEnd());
+                viewHolder.setDateStart(category.getDateStart());
+                viewHolder.setAmount(category.getLimitAmount());
+                viewHolder.setProgress(category.getLimitAmount(), 10000000);
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         post_key = getRef(position).getKey();
-                        amount = model.getLimitAmount();
-                        type = model.getType();
-                        dateEnd = model.getDateEnd();
-                        dateStart = model.getDateStart();
+                        amount = category.getLimitAmount();
+                        type = category.getType();
+                        dateEnd = category.getDateEnd();
+                        dateStart = category.getDateStart();
                         updateDataItem();
                     }
                 });
@@ -230,12 +232,12 @@ public class BudgetFragment extends Fragment{
             TextView mNote = mView.findViewById(R.id.date_txt_budget_end);
             mNote.setText(dateEnd);
         }
-        private void setAmount(float amount){
+        private void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_budget);
             String smAmount = String.valueOf(amount);
             mAmount.setText(smAmount);
         }
-        private void setProgress(float amount, float total){
+        private void setProgress(int amount, int total){
             ProgressBar progressBar = mView.findViewById(R.id.progressBar);
             TextView percent_txt_budget = mView.findViewById(R.id.percent_txt_budget);
             int percent = (int)(amount * 100 / total);
@@ -319,10 +321,10 @@ public class BudgetFragment extends Fragment{
         EditText edtDateStart = myview.findViewById(R.id.set_date_start);
         EditText edtDateEnd = myview.findViewById(R.id.set_date_end);
 
-        Button saveBtn = myview.findViewById(R.id.btnSave_budget);
-        Button cancelBtn = myview.findViewById(R.id.btnCancel_budget);
+        btnSave = myview.findViewById(R.id.btnSave_budget);
+        btnCancel = myview.findViewById(R.id.btnCancel_budget);
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String amount = edtamount.getText().toString().trim();
@@ -357,7 +359,7 @@ public class BudgetFragment extends Fragment{
             }
         });
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
