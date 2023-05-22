@@ -97,14 +97,12 @@ public class IncomeFragment extends Fragment {
     //Data item value
     private String type;
     private String note;
-    private float amount;
+    private int amount;
     private String post_key;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View myview =  inflater.inflate(R.layout.fragment_income, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View myview = inflater.inflate(R.layout.fragment_income, container, false);
         mAuth = FirebaseAuth.getInstance();
 
         FirebaseUser mUser = mAuth.getCurrentUser();
@@ -186,7 +184,7 @@ public class IncomeFragment extends Fragment {
             TextView mDate = mView.findViewById(R.id.date_txt_income);
             mDate.setText(date);
         }
-        private void setAmount(float amount){
+        private void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_income);
             String smAmount = String.valueOf(amount);
             mAmount.setText(smAmount);
@@ -198,11 +196,10 @@ public class IncomeFragment extends Fragment {
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View myview = inflater.inflate(R.layout.update_data_item,  null);
         mydialog.setView(myview);
-         String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
-         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
-         AutoCompleteTextView textView = (AutoCompleteTextView)
-                 myview.findViewById(R.id.autoCompleteTextView_update);
-         textView.setAdapter(arrayAdapter);
+        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_update);
+        textView.setAdapter(arrayAdapter);
         edtAmount = myview.findViewById(R.id.amount);
         edtType = myview.findViewById(R.id.autoCompleteTextView_update);
         edtNote = myview.findViewById(R.id.note_edt);
@@ -229,16 +226,11 @@ public class IncomeFragment extends Fragment {
 
                 String mdamount = String.valueOf(amount);
                 mdamount = edtAmount.getText().toString().trim();
-
-                float myAmount = Float.parseFloat(mdamount);
+                int myAmount = Integer.parseInt(mdamount);
 
                 String mDate = DateFormat.getDateInstance().format(new Date());
 
-                Data data = new Data((int)myAmount, type, note, post_key, mDate);
-
-//                int myAmount = Integer.parseInt(mdamount);
-//                String mDate = DateFormat.getDateInstance().format(new Date());
-//                Data data = new Data(myAmount, type, note, post_key, mDate);
+                Data data = new Data(myAmount, type, note, post_key, mDate);
                 mIncomeDatabase.child(post_key).setValue(data);
                 dialog.dismiss();
             }

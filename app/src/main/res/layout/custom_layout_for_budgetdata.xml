@@ -43,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/amount_budget"
                         android:inputType="number"
-                        android:hint="(Nhập giá tiền)"
+                        android:hint="Nhập giá tiền"
                         />
                 </RelativeLayout>
             </LinearLayout>

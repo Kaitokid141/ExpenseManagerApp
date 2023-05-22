@@ -54,7 +54,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setHomeButtonEnabled(true);
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle= new ActionBarDrawerToggle
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle
                 (
                         this,
                         drawerLayout,
@@ -68,11 +68,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         toggle.syncState();
 
-        NavigationView navigationView=findViewById(R.id.navView);
+        NavigationView navigationView = findViewById(R.id.navView);
         navigationView.setNavigationItemSelectedListener(this);
 
-        bottomNavigationView=findViewById(R.id.bottomNavbar);
-        frameLayout=findViewById(R.id.main_frame);
+        bottomNavigationView = findViewById(R.id.bottomNavbar);
+        frameLayout = findViewById(R.id.main_frame);
 
         dashboardFragment = new DashboardFragment();
         incomeFragment = new IncomeFragment();
@@ -113,7 +113,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     }
     @Override
     public void onBackPressed() {
-        DrawerLayout drawerLayout=findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
 
         if(drawerLayout.isDrawerOpen(GravityCompat.END)){
             drawerLayout.closeDrawer(GravityCompat.END);
@@ -127,7 +127,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         switch(itemId){
             case android.R.id.home:
-                DrawerLayout drawerLayout=findViewById(R.id.drawer_layout);
+                DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
                 drawerLayout.openDrawer(GravityCompat.START);
                 fragment = new StatsFragment();
                 return;
@@ -143,32 +143,32 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
             case R.id.expense:
                 bottomNavigationView.setSelectedItemId(R.id.expense);
-                fragment=new ExpenseFragment();
+                fragment = new ExpenseFragment();
                 break;
             case R.id.stats:
                 bottomNavigationView.setSelectedItemId(R.id.stats);
                 bottomNavigationView.findViewById(R.id.stats).performClick();
                 bottomNavigationView.performClick();
-                fragment=new StatsFragment();
+                fragment = new StatsFragment();
                 break;
             case R.id.budget:
                 bottomNavigationView.setSelectedItemId(R.id.budget);
                 fragment = new BudgetFragment();
                 break;
             case R.id.account:
-                fragment=new AccountFragment();
+                fragment = new AccountFragment();
                 break;
             case R.id.logout:
                 mAuth.signOut();
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 break;
         }
-        if(fragment!=null){
-            FragmentTransaction ft=getSupportFragmentManager().beginTransaction();
+        if(fragment != null){
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.main_frame, fragment);
             ft.commit();
         }
-        DrawerLayout drawerLayout=findViewById(R.id.drawer_layout);
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
     }
     @Override

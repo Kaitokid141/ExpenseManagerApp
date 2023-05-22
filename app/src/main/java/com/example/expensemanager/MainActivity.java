@@ -44,13 +44,6 @@ public class MainActivity extends AppCompatActivity {
         login();
     }
 
-//    private void login(){
-//        mEmail=findViewById(R.id.email_login);
-//        mPassword=findViewById(R.id.password_login);
-//        loginButton=findViewById(R.id.btn_login);
-//        mForgotPassword=findViewById(R.id.forgot_password);
-//        mSignup=findViewById(R.id.signup);
-
     // Login
     private void login(){
         mEmail = findViewById(R.id.email_login);
@@ -71,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                     mPassword.setError("Password cannot be empty.");
                     return;
                 }
-
 
                 // Check if the account is locked
                 if(lockTimeMillis > System.currentTimeMillis()) {

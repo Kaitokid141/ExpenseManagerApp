@@ -22,19 +22,20 @@ import java.util.TimeZone;
 public class AccountFragment extends Fragment {
     private FirebaseAuth mAuth;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View myView = inflater.inflate(R.layout.fragment_account2, container, false);
 
-        View myView= inflater.inflate(R.layout.fragment_account2, container, false);
-        EditText emailUser=myView.findViewById(R.id.email_account);
-        EditText dateofCreation=myView.findViewById(R.id.dateofCreation);
-        EditText timeOfCreation=myView.findViewById(R.id.timeOfCreation);
-        EditText signInAt=myView.findViewById(R.id.lastSignInAt);
+        EditText emailUser = myView.findViewById(R.id.email_account);
+        EditText dateofCreation = myView.findViewById(R.id.dateofCreation);
+        EditText timeOfCreation = myView.findViewById(R.id.timeOfCreation);
+        EditText signInAt = myView.findViewById(R.id.lastSignInAt);
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         emailUser.setText(user.getEmail());
-        Long timestampCreate=user.getMetadata().getCreationTimestamp();
+
+        Long timestampCreate = user.getMetadata().getCreationTimestamp();
         Date date1 = new Date(timestampCreate);
-        SimpleDateFormat jdf = new SimpleDateFormat("dd MMM yyyy");
+        SimpleDateFormat jdf = new SimpleDateFormat("MMM d, yyyy");
         String java_date = jdf.format(date1);
 
         SimpleDateFormat jdf1 = new SimpleDateFormat("HH:mm:ss z");
@@ -44,7 +45,7 @@ public class AccountFragment extends Fragment {
         Long lastSignInTS=user.getMetadata().getLastSignInTimestamp();
 
         Date date2 = new Date(lastSignInTS);
-        SimpleDateFormat jdf2 = new SimpleDateFormat("dd MMM yyyy    HH:mm:ss z");
+        SimpleDateFormat jdf2 = new SimpleDateFormat("MMM d, yyyy    HH:mm:ss z");
         String SignInAt = jdf2.format(date2);
         signInAt.setText(SignInAt);
         return myView;

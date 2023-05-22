@@ -43,7 +43,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/amount"
                         android:inputType="number"
-                        android:hint="(Nhập giá tiền)"
+                        android:hint="Nhập giá tiền"
                         />
                 </RelativeLayout>
             </LinearLayout>
@@ -118,7 +118,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/note_edt"
-                        android:hint="(Ghi chú bắt buộc)"
+                        android:hint="Ghi chú bắt buộc"
                         />
                 </RelativeLayout>
             </LinearLayout>
