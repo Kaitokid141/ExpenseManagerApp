@@ -1,6 +1,7 @@
 package com.example.expensemanager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.expensemanager.Model.PinActivity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -90,8 +91,8 @@ public class MainActivity extends AppCompatActivity {
                         {
                             mDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Login Successful!",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-                            finish();
+                            startActivity(new Intent(getApplicationContext(), PinActivity.class));
+
                         }
                         else{
                             mDialog.dismiss();

@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -273,6 +275,18 @@ public class DashboardFragment extends Fragment {
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 myview.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(arrayAdapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // first item selected
+                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
+                    textView.setText(""); // set text to empty string
+                    textView.setHint("Thêm"); // set hint to "more"
+                }else{
+                    textView.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
     }
 
     //Insert data Expense
@@ -338,6 +352,18 @@ public class DashboardFragment extends Fragment {
         AutoCompleteTextView textView = (AutoCompleteTextView)
                 myview.findViewById(R.id.autoCompleteTextView);
         textView.setAdapter(arrayAdapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // first item selected
+                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
+                    textView.setText(""); // set text to empty string
+                    textView.setHint("Thêm"); // set hint to "more"
+                }else{
+                    textView.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
     }
 
     @Override
