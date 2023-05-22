@@ -31,6 +31,7 @@ import android.app.DatePickerDialog;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import com.example.expensemanager.Model.Category;
 import com.example.expensemanager.Model.Data;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -65,7 +66,7 @@ public class BudgetFragment extends Fragment{
     private String mParam2;
 
     public BudgetFragment() {
-        // Required empty public constructor
+
     }
 
     /**
@@ -98,6 +99,7 @@ public class BudgetFragment extends Fragment{
     //Firebase database
     private FirebaseAuth mAuth;
     private DatabaseReference mExpenseDatabase;
+    private DatabaseReference mBudgetDatabase;
 
     //Recyclerview
     private RecyclerView recyclerView;
@@ -105,26 +107,26 @@ public class BudgetFragment extends Fragment{
     //TextView
     private TextView expenseSumResult;
 
-
     //Calender
     private Button pickDateButton_start;
-    private TextView selectedDateTextView_start;
-
     private Button pickDateButton_end;
+    private TextView selectedDateTextView_start;
     private TextView selectedDateTextView_end;
     private Calendar calendar;
 
     //Edit data item
     private EditText edtAmount;
     private EditText edtType;
-    private EditText edtNote;
+    private EditText edtDateStart;
+    private EditText edtDateEnd;
 
     private Button btnUpdate;
     private Button btnDelete;
 
     //Data variable
     private String type;
-    private String note;
+    private String dateStart;
+    private String dateEnd;
     private float amount;
     private String post_key;
     private FloatingActionButton fab_budget_plus_btn;
@@ -132,16 +134,19 @@ public class BudgetFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View myview =  inflater.inflate(R.layout.fragment_budget, container, false);
+
+        //Firebase
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uid = mUser.getUid();
+        mBudgetDatabase = FirebaseDatabase.getInstance().getReference().child("BudgetExpense").child(uid);
         mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
+
         expenseSumResult = myview.findViewById(R.id.sum_budget_expense);
         recyclerView = myview.findViewById(R.id.recycler_budget);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         layoutManager.setReverseLayout(true);
         layoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
@@ -154,7 +159,7 @@ public class BudgetFragment extends Fragment{
                     Data data = mysnapshot.getValue(Data.class);
                     totalvalue += data.getAmount();
                     String stotal = String.valueOf(totalvalue);
-                    expenseSumResult.setText(stotal+".00");
+                    expenseSumResult.setText(stotal);
                 }
             }
             @Override
@@ -170,28 +175,29 @@ public class BudgetFragment extends Fragment{
     public void onStart()
     {
         super.onStart();
-        FirebaseRecyclerAdapter<Data, MyViewHolder>adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(
-                Data.class,
+        FirebaseRecyclerAdapter<Category, MyViewHolder>adapter = new FirebaseRecyclerAdapter<Category, MyViewHolder>(
+                Category.class,
                 R.layout.budget_recycler_data,
                 MyViewHolder.class,
-                mExpenseDatabase
+                mBudgetDatabase
         ) {
             @Override
-            protected void populateViewHolder(MyViewHolder viewHolder, final Data model, final int position) {
+            protected void populateViewHolder(MyViewHolder viewHolder, final Category model, final int position) {
                 viewHolder.setType(model.getType());
-                viewHolder.setNote(model.getNote());
-                viewHolder.setDate(model.getDate());
-                viewHolder.setAmount(model.getAmount());
-                viewHolder.setProgress(model.getAmount(), Float.parseFloat((String) expenseSumResult.getText()));
+                viewHolder.setDateEnd(model.getDateEnd());
+                viewHolder.setDateStart(model.getDateStart());
+                viewHolder.setAmount(model.getLimitAmount());
+                viewHolder.setProgress(model.getLimitAmount(), Float.parseFloat((String) expenseSumResult.getText()));
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         post_key = getRef(position).getKey();
+                        amount = model.getLimitAmount();
                         type = model.getType();
-                        note = model.getNote();
-                        amount = model.getAmount();
-                        insertDataItem();
+                        dateEnd = model.getDateEnd();
+                        dateStart = model.getDateStart();
+                        updateDataItem();
                     }
                 });
             }
@@ -216,13 +222,13 @@ public class BudgetFragment extends Fragment{
             TextView mType = mView.findViewById(R.id.type_txt_budget);
             mType.setText(type);
         }
-        private void setNote(String note){
-            TextView mNote = mView.findViewById(R.id.date_txt_budget_end);
-            mNote.setText(note);
-        }
-        private void setDate(String date){
+        private void setDateStart(String dateStart){
             TextView mDate = mView.findViewById(R.id.date_txt_budget_start);
-            mDate.setText(date);
+            mDate.setText(dateStart);
+        }
+        private void setDateEnd(String dateEnd){
+            TextView mNote = mView.findViewById(R.id.date_txt_budget_end);
+            mNote.setText(dateEnd);
         }
         private void setAmount(float amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_budget);
@@ -232,54 +238,57 @@ public class BudgetFragment extends Fragment{
         private void setProgress(float amount, float total){
             ProgressBar progressBar = mView.findViewById(R.id.progressBar);
             TextView percent_txt_budget = mView.findViewById(R.id.percent_txt_budget);
-            int percent = (int)((amount / total)*100);
+            int percent = (int)(amount * 100 / total);
             progressBar.setProgress(percent);
-            percent_txt_budget.setText(Integer.toString(percent)+"%");
+            percent_txt_budget.setText(Integer.toString(percent) + "%");
         }
     }
 
     private void updateDataItem(){
         AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
-        View myview = inflater.inflate(R.layout.update_data_item, null);
+        View myview = inflater.inflate(R.layout.update_data_item_budget, null);
         mydialog.setView(myview);
         String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                myview.findViewById(R.id.autoCompleteTextView_update);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_budget_update);
         textView.setAdapter(arrayAdapter);
-        edtAmount = myview.findViewById(R.id.amount);
-        edtNote = myview.findViewById(R.id.note_edt);
-        edtType = myview.findViewById(R.id.autoCompleteTextView_update);
 
-        edtType.setText(type);
-        edtType.setSelection(type.length());
+        selectDateUpdateData(myview);
 
-        edtNote.setText(note);
-        edtNote.setSelection(note.length());
+        edtAmount = myview.findViewById(R.id.amount_budget_update);
+        edtType = myview.findViewById(R.id.autoCompleteTextView_budget_update);
+        edtDateStart = myview.findViewById(R.id.set_date_start_update);
+        edtDateEnd = myview.findViewById(R.id.set_date_end_update);
 
         edtAmount.setText(String.valueOf(amount));
         edtAmount.setSelection(String.valueOf(amount).length());
 
-        btnUpdate = myview.findViewById(R.id.btnUpdUpdate);
-        btnDelete = myview.findViewById(R.id.btnUpdDelete);
+        edtType.setText(type);
+        edtType.setSelection(type.length());
+
+        edtDateStart.setText(dateStart);
+        edtDateStart.setSelection(dateStart.length());
+
+        edtDateEnd.setText(dateEnd);
+        edtDateEnd.setSelection(dateEnd.length());
+
+        btnUpdate = myview.findViewById(R.id.btnUpdate_budget);
+        btnDelete = myview.findViewById(R.id.btnDelete_budget);
 
         final AlertDialog dialog = mydialog.create();
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                type = edtType.getText().toString().trim();
-                note = edtNote.getText().toString().trim();
                 String stamount = String.valueOf(amount);
                 stamount = edtAmount.getText().toString().trim();
-                float intamount = Float.parseFloat(stamount);
+                int intamount = Integer.parseInt(stamount);
+                type = edtType.getText().toString().trim();
+                dateStart = edtDateStart.getText().toString().trim();
+                dateEnd = edtDateEnd.getText().toString().trim();
 
-                String mDate = DateFormat.getDateInstance().format(new Date());
-
-                Data data = new Data((int)intamount, type, note, post_key, mDate);
-
-//                Data data = new Data(intamount, type, note, post_key, mDate);
-                mExpenseDatabase.child(post_key).setValue(data);
+                Category data = new Category(post_key, intamount, type, dateStart, dateEnd);
+                mBudgetDatabase.child(post_key).setValue(data);
                 dialog.dismiss();
             }
         });
@@ -287,27 +296,98 @@ public class BudgetFragment extends Fragment{
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mExpenseDatabase.child(post_key).removeValue();
+                mBudgetDatabase.child(post_key).removeValue();
                 dialog.dismiss();
             }
         });
-
         dialog.show();
     }
 
     public void insertDataItem(){
-        AlertDialog.Builder mydialog=new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater=LayoutInflater.from(getActivity());
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
 
         View myview=inflater.inflate(R.layout.custom_layout_for_budgetdata, null);
         mydialog.setView(myview);
 
-        pickDateButton_start = myview.findViewById(R.id.setDateBtn_start);
-        selectedDateTextView_start = myview.findViewById(R.id.set_date_start);
+        selectDateInsertData(myview);
 
-        pickDateButton_end = myview.findViewById(R.id.setDateBtn_end);
-        selectedDateTextView_end = myview.findViewById(R.id.set_date_end);
+        final AlertDialog dialog = mydialog.create();
+        dialog.setCancelable(false);
+        EditText edtamount = myview.findViewById(R.id.amount_budget);
+        EditText edttype = myview.findViewById(R.id.autoCompleteTextView_budget);
+        EditText edtDateStart = myview.findViewById(R.id.set_date_start);
+        EditText edtDateEnd = myview.findViewById(R.id.set_date_end);
 
+        Button saveBtn = myview.findViewById(R.id.btnSave_budget);
+        Button cancelBtn = myview.findViewById(R.id.btnCancel_budget);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amount = edtamount.getText().toString().trim();
+                String type = edttype.getText().toString().trim();
+                String dateStart = edtDateStart.getText().toString().trim();
+                String dateEnd = edtDateEnd.getText().toString().trim();
+
+                if(TextUtils.isEmpty(amount)){
+                    edtamount.setError("Please Enter Amount");
+                    return;
+                }
+                if(TextUtils.isEmpty(type)){
+                    edttype.setError("Please Enter A Type");
+                    return;
+                }
+                if(TextUtils.isEmpty(dateStart)){
+                    edtDateStart.setError("Please Enter A Note");
+                    return;
+                }
+                if(TextUtils.isEmpty(dateEnd)){
+                    edtDateEnd.setError("Please Enter A Note");
+                    return;
+                }
+
+                int amountInInt= Integer.parseInt(amount);
+                //Create random ID inside database
+                String id = mBudgetDatabase.push().getKey();
+                Category data = new Category(id, amountInInt, type, dateStart, dateEnd);
+                mBudgetDatabase.child(id).setValue(data);
+                Toast.makeText(getActivity(), "Added Successfully!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_budget);
+        textView.setAdapter(arrayAdapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // first item selected
+                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
+                    textView.setText(""); // set text to empty string
+                    textView.setHint("Thêm"); // set hint to "more"
+                }else{
+                    textView.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
+    }
+
+    //Set date start and end
+    public void selectDateUpdateData(View myview){
+        pickDateButton_start = myview.findViewById(R.id.setDateBtn_start_update);
+        selectedDateTextView_start = myview.findViewById(R.id.set_date_start_update);
+        pickDateButton_end = myview.findViewById(R.id.setDateBtn_end_update);
+        selectedDateTextView_end = myview.findViewById(R.id.set_date_end_update);
         calendar = Calendar.getInstance();
 
         pickDateButton_start.setOnClickListener(new View.OnClickListener() {
@@ -349,78 +429,61 @@ public class BudgetFragment extends Fragment{
                 datePicker.show();
             }
         });
+    }
+    public void selectDateInsertData(View myview){
+        pickDateButton_start = myview.findViewById(R.id.setDateBtn_start);
+        selectedDateTextView_start = myview.findViewById(R.id.set_date_start);
+        pickDateButton_end = myview.findViewById(R.id.setDateBtn_end);
+        selectedDateTextView_end = myview.findViewById(R.id.set_date_end);
+        calendar = Calendar.getInstance();
 
-        final AlertDialog dialog=mydialog.create();
-        dialog.setCancelable(false);
-        EditText edtamount=myview.findViewById(R.id.amount_budget);
-        EditText edttype=myview.findViewById(R.id.autoCompleteTextView_budget);
-        EditText edtnote=myview.findViewById(R.id.set_date_start);
-
-        Button saveBtn=myview.findViewById(R.id.btnSave_budget);
-        Button cancelBtn=myview.findViewById(R.id.btnCancel_budget);
-
-        saveBtn.setOnClickListener(new View.OnClickListener() {
+        pickDateButton_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String amount=edtamount.getText().toString().trim();
-                String type=edttype.getText().toString().trim();
-                String note=edtnote.getText().toString().trim();
+                // Create a new instance of the DatePickerDialog class
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update the selected date text view
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateSelectedDateTextView_start();
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
 
-                if(TextUtils.isEmpty(type)){
-                    edttype.setError("Please Enter A Type");
-                    return;
-                }
-                if(TextUtils.isEmpty(amount)){
-                    edtamount.setError("Please Enter Amount");
-                    return;
-                }
-                if(TextUtils.isEmpty(note)){
-                    edtnote.setError("Please Enter A Note");
-                    return;
-                }
-                int amountInInt= Integer.parseInt(amount);
-                //Create random ID inside database
-                String id = mExpenseDatabase.push().getKey();
-                String mDate = DateFormat.getDateInstance().format(new Date());
-                Data data=new Data(amountInInt, type, note, id, mDate);
-                mExpenseDatabase.child(id).setValue(data);
-                Toast.makeText(getActivity(), "Transaction Added Successfully!", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
+                // Show the dialog
+                datePicker.show();
             }
         });
 
-        cancelBtn.setOnClickListener(new View.OnClickListener() {
+        pickDateButton_end.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
-        AutoCompleteTextView textView = (AutoCompleteTextView)
-                myview.findViewById(R.id.autoCompleteTextView_budget);
-        textView.setAdapter(arrayAdapter);
-        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) { // first item selected
-                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
-                    textView.setText(""); // set text to empty string
-                    textView.setHint("Thêm"); // set hint to "more"
-                }else{
-                    textView.setInputType(InputType.TYPE_NULL);
-                }
+                // Create a new instance of the DatePickerDialog class
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update the selected date text view
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateSelectedDateTextView_end();
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                // Show the dialog
+                datePicker.show();
             }
         });
     }
     private void updateSelectedDateTextView_start() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
         selectedDateTextView_start.setText(dateFormat.format(calendar.getTime()));
     }
 
     private void updateSelectedDateTextView_end() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
         selectedDateTextView_end.setText(dateFormat.format(calendar.getTime()));
     }
 }
