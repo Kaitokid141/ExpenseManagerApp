@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
+    android:id="@+id/budget_cardview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/budget_cardview"
-    app:cardBackgroundColor="@android:color/transparent"
-    android:layout_height="wrap_content">
-    <androidx.cardview.widget.CardView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        app:cardElevation="5dp"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="10dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/grey_90">
+    app:cardElevation="5dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="14dp"
+    android:layout_height="wrap_content"
+    android:backgroundTint="#403ddc84">
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -144,5 +138,4 @@
             </RelativeLayout>
         </LinearLayout>
 
-    </androidx.cardview.widget.CardView>
 </androidx.cardview.widget.CardView>

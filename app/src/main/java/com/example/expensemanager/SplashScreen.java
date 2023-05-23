@@ -11,14 +11,14 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_slider_layout);
+        setContentView(R.layout.background);
 //        getSupportActionBar().hide();
         new Handler().postDelayed(new Runnable() {
             public void run() {
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), SliderScreen.class));
                 finish();
             }
-        },  300);
+        },  1000);
 
     }
 }

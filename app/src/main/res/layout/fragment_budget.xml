@@ -24,6 +24,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:layout_gravity="center"
+                android:layout_weight="0.1"
                 android:text="Hạn mức chi tiêu"/>
 
             <TextView
@@ -32,7 +33,20 @@
                 android:id="@+id/sum_budget_expense"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:visibility="invisible"
+                android:layout_weight="0"
                 android:text="0.000000"/>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:layout_weight="1">
+                <ImageButton
+                    android:id="@+id/btn_filter_budget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:background="@drawable/baseline_filter_list_24" />
+            </RelativeLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -20,47 +20,14 @@
 
     </androidx.viewpager.widget.ViewPager>
 
-    <ImageView
-        android:id="@+id/ellipse1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/main_activity_ellipse1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/ellipse2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/main_activity_ellipse2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <Button
-        android:id="@+id/backbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/nextbtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#00000000"
-        android:text="Next"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/ellipse2" />
-
     <Button
         android:id="@+id/btn_add_user"
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:fontFamily="@font/poppins_regular"
-        android:text="Đăng kí tài khoản"
-        app:layout_constraintBottom_toBottomOf="@+id/slideViewPager"
+        android:textStyle="bold"
+        android:text="Đăng ký"
+        app:layout_constraintBottom_toTopOf="@+id/btn_log_in"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:backgroundTint="#1ca87a"
@@ -68,17 +35,19 @@
         android:padding="10dp"/>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btn_log_in"
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/btn_rounded_accent"
-        android:padding="10dp"
+        android:fontFamily="@font/poppins_bold"
+        android:textStyle="bold"
         android:text="Đăng nhập"
-        app:backgroundTint="#1ca87a"
-        app:layout_constraintBottom_toTopOf="@+id/btn_add_user"
+        android:textColor="#1ca87a"
+        app:layout_constraintBottom_toBottomOf="@+id/slideViewPager"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:backgroundTint="#7AD5C1"
+        android:background="@drawable/btn_rounded_accent"
+        android:padding="10dp"/>
 
     <LinearLayout
         android:id="@+id/indicator_layout"
