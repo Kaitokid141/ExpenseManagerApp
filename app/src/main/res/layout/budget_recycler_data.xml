@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
+    android:id="@+id/budget_cardview"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/budget_cardview"
+
     app:cardBackgroundColor="@android:color/transparent"
     android:layout_height="wrap_content">
     <androidx.cardview.widget.CardView
@@ -97,8 +98,6 @@
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
-
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -140,9 +139,7 @@
                         android:id="@+id/percent_txt_budget"
                         />
                 </LinearLayout>
-
             </RelativeLayout>
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 </androidx.cardview.widget.CardView>

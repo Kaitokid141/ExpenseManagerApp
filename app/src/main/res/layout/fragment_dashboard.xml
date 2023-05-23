@@ -172,7 +172,7 @@
                 android:visibility="invisible"
                 app:pressedTranslationZ="12dp"
                 android:src="@drawable/expense"
-
+                android:backgroundTint="@android:color/holo_red_light"
                 />
         </LinearLayout>
 

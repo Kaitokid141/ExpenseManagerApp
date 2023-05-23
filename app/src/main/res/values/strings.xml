@@ -3,7 +3,7 @@
     <string name="forgot_password">Quên mật khẩu?</string>
     <string name="welcome_back">XIN CHÀO</string>
     <string name="don_t_have_an_account_yet_signup_now">Bạn chưa có tài khoản? Hãy đăng ký</string>
-    <string name="you_seem_new_here_signup">Chưa có tài khoản? Hãy đăng ký</string>
+    <string name="you_seem_new_here_signup">Đăng ký</string>
 
     <string name="navigation_drawer_open">Open Navigation Drawer</string>
     <string name="navigation_drawer_close">Close Navigation Drawer</string>

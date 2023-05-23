@@ -118,7 +118,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:id="@+id/note_edt"
-                        android:hint="Ghi chú bắt buộc"
+                        android:hint="Nhập thông tin liên quan"
                         />
                 </RelativeLayout>
             </LinearLayout>

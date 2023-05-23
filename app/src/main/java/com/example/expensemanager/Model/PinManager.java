@@ -1,7 +1,5 @@
 package com.example.expensemanager.Model;
 
-
-
 import android.content.Context;
 import android.content.SharedPreferences;
 

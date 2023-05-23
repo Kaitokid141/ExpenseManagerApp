@@ -1,16 +1,24 @@
 package com.example.expensemanager;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+
+import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.appcompat.view.menu.MenuPopupHelper;
+import androidx.fragment.app.DialogFragment;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +27,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -122,6 +132,10 @@ public class BudgetFragment extends Fragment{
     private Button btnCancel;
     private Button btnSave;
 
+
+    private Button btnFilter;
+    private ImageButton btn_filter_budget;
+
     //Data variable
     private String type;
     private String dateStart;
@@ -173,6 +187,16 @@ public class BudgetFragment extends Fragment{
 //            }
 //        });
         fab_budget_plus_btn = myview.findViewById(R.id.fab_budget_plus_btn);
+        fab_budget_plus_btn = myview.findViewById(R.id.fab_budget_plus_btn);
+        btn_filter_budget = myview.findViewById(R.id.btn_filter_budget);
+        btn_filter_budget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                View menuItemView = myview.findViewById(R.id.btn_filter_budget);
+//                showPopup(menuItemView);
+                insertDataFilterItem();
+            }
+        });
         return myview;
     }
 
@@ -267,6 +291,7 @@ public class BudgetFragment extends Fragment{
             TextView mDateEnd = mView.findViewById(R.id.date_txt_budget_end);
             mDateEnd.setText("Ngày: " + dateEnd);
         }
+
         private void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_budget);
             String smAmount = String.valueOf(amount);
@@ -422,6 +447,61 @@ public class BudgetFragment extends Fragment{
         });
     }
 
+    public void insertDataFilterItem(){
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+
+        View myview=inflater.inflate(R.layout.filter_searching, null);
+        mydialog.setView(myview);
+
+        final AlertDialog dialog = mydialog.create();
+        dialog.setCancelable(false);
+        EditText edtamount = myview.findViewById(R.id.amount_filter);
+        EditText edttype = myview.findViewById(R.id.autoCompleteTextView_filter);
+        EditText edtDateStart = myview.findViewById(R.id.set_date_start_filter);
+        EditText edtDateEnd = myview.findViewById(R.id.set_date_end_filter);
+
+        btnFilter = myview.findViewById(R.id.btnFilter);
+        btnCancel = myview.findViewById(R.id.btnCancel_filter);
+
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amount = edtamount.getText().toString().trim();
+                String type = edttype.getText().toString().trim();
+                String dateStart = edtDateStart.getText().toString().trim();
+                String dateEnd = edtDateEnd.getText().toString().trim();
+
+                int amountInInt= Integer.parseInt(amount);
+                dialog.dismiss();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_filter);
+        textView.setAdapter(arrayAdapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // first item selected
+                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
+                    textView.setText(""); // set text to empty string
+                    textView.setHint("Thêm"); // set hint to "more"
+                }else{
+                    textView.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
+    }
+
     //Set date start and end
     public void selectDateUpdateData(View myview){
         pickDateButton_start = myview.findViewById(R.id.setDateBtn_start_update);
@@ -517,6 +597,7 @@ public class BudgetFragment extends Fragment{
             }
         });
     }
+
     private void updateSelectedDateTextView_start() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
         selectedDateTextView_start.setText(dateFormat.format(calendar.getTime()));
@@ -526,4 +607,14 @@ public class BudgetFragment extends Fragment{
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
         selectedDateTextView_end.setText(dateFormat.format(calendar.getTime()));
     }
+
+//    public void showPopup(View v) {
+//        //added library level 25
+//        //may conflict with later updates
+//        PopupMenu popup = new PopupMenu(getContext(), v, Gravity.END);
+//        popup.setGravity(Gravity.END);
+//        MenuInflater menuInflater = popup.getMenuInflater();
+//        menuInflater.inflate(R.menu.filtermenu, popup.getMenu());
+//        popup.show();
+//    }
 }

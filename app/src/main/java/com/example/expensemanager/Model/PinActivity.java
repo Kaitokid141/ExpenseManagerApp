@@ -36,10 +36,11 @@ public class PinActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mPinManager = new PinManager(this);
 
-        if (mAuth.getCurrentUser() != null) {
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            finish();
-        } else if (!mPinManager.isPinSet()) {
+//        if (mAuth.getCurrentUser() != null) {
+//            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//            finish();
+//        } else
+            if (!mPinManager.isPinSet()) {
             // Nếu PIN chưa được tạo, chuyển đến màn hình tạo PIN
             setContentView(R.layout.pin_create_layout);
             setupPinCreateLayout();
@@ -92,7 +93,7 @@ public class PinActivity extends AppCompatActivity {
 
                 if (mPinManager.checkPin(pin)) {
                     Toast.makeText(getApplicationContext(), "PIN authentication successful", Toast.LENGTH_SHORT).show();
-
+                    finish();
                     // Chuyển đến màn hình HomeActivity
                     startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                     finish();

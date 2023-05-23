@@ -1,20 +1,29 @@
 package com.example.expensemanager;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +38,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class ExpenseFragment extends Fragment {
 
@@ -83,6 +95,13 @@ public class ExpenseFragment extends Fragment {
     //TextView
     private TextView expenseSumResult;
 
+    //Calender
+    private Button pickDateButton_start;
+    private Button pickDateButton_end;
+    private TextView selectedDateTextView_start;
+    private TextView selectedDateTextView_end;
+    private Calendar calendar;
+
 
     //Edit data item
     private EditText edtAmount;
@@ -91,6 +110,12 @@ public class ExpenseFragment extends Fragment {
 
     private Button btnUpdate;
     private Button btnDelete;
+
+    private Button btnFilter;
+
+    private Button btnCancel;
+
+    private ImageButton btn_filter_expense;
 
     //Data variable
     private String type;
@@ -134,6 +159,15 @@ public class ExpenseFragment extends Fragment {
 
             }
         });
+
+        btn_filter_expense = myview.findViewById(R.id.btn_filter_expense);
+
+        btn_filter_expense.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                insertDataFilterItem();
+            }
+        });
         return myview;
     }
 
@@ -153,6 +187,143 @@ public class ExpenseFragment extends Fragment {
                 viewHolder.setNote(model.getNote());
                 viewHolder.setDate(model.getDate());
                 viewHolder.setAmount(model.getAmount());
+
+                Drawable drawable;
+                String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
+                for(int i = 0; i < transaction.length; i++){
+                    if(model.getType().equals(transaction[i])) {
+                        switch (i) {
+                            case 1:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.restaurant);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 2:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.shipped);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 3:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.house);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 4:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.faucet);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 5:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.electricity_bill);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 6:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.phone);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 7:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.flame);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 8:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.television);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 9:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.internet);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 10:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.bill);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 11:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.support);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 12:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.car);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 13:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.heart_beat);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 14:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.insurance);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 15:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.education);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 16:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.storage_box);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 17:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.furniture);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 18:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.pawprint);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 19:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.public_service);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 20:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.expenses);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 21:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.sports);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 22:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.salon);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 23:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.solidarity);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 24:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.customer_support);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 25:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.party);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 26:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.party);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 27:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.investment);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 28:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.party);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 29:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.lending);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 30:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.lending);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            case 31:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.lending);
+                                viewHolder.setIcon(drawable);
+                                break;
+                            default:
+                                drawable = ContextCompat.getDrawable(getContext(), R.drawable.transaction);
+                                viewHolder.setIcon(drawable);
+                                break;
+                        }
+                    }
+                }
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -193,7 +364,12 @@ public class ExpenseFragment extends Fragment {
         private void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_expense);
             String smAmount = String.valueOf(amount);
-            mAmount.setText(smAmount);
+            mAmount.setText(smAmount + " đ");
+        }
+
+        private void setIcon(Drawable drawable){
+            ImageView mIcon = mView.findViewById(R.id.icon_expense);
+            mIcon.setBackground(drawable);
         }
     }
 
@@ -250,5 +426,135 @@ public class ExpenseFragment extends Fragment {
             }
         });
         dialog.show();
+    }
+
+    public void selectDateInsertData(View myview){
+        pickDateButton_start = myview.findViewById(R.id.setDateBtn_start);
+        selectedDateTextView_start = myview.findViewById(R.id.set_date_start);
+        pickDateButton_end = myview.findViewById(R.id.setDateBtn_end);
+        selectedDateTextView_end = myview.findViewById(R.id.set_date_end);
+        calendar = Calendar.getInstance();
+
+        pickDateButton_start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new instance of the DatePickerDialog class
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update the selected date text view
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateSelectedDateTextView_start();
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                // Show the dialog
+                datePicker.show();
+            }
+        });
+
+        pickDateButton_end.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Create a new instance of the DatePickerDialog class
+                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update the selected date text view
+                        calendar.set(Calendar.YEAR, year);
+                        calendar.set(Calendar.MONTH, month);
+                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                        updateSelectedDateTextView_end();
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+
+                // Show the dialog
+                datePicker.show();
+            }
+        });
+    }
+
+    private void updateSelectedDateTextView_start() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
+        selectedDateTextView_start.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    private void updateSelectedDateTextView_end() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
+        selectedDateTextView_end.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    public void insertDataFilterItem(){
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+
+        View myview=inflater.inflate(R.layout.filter_searching, null);
+        mydialog.setView(myview);
+
+        final AlertDialog dialog = mydialog.create();
+        dialog.setCancelable(false);
+        EditText edtamount = myview.findViewById(R.id.amount_filter);
+        EditText edttype = myview.findViewById(R.id.autoCompleteTextView_filter);
+        EditText edtDateStart = myview.findViewById(R.id.set_date_start_filter);
+        EditText edtDateEnd = myview.findViewById(R.id.set_date_end_filter);
+
+        btnFilter = myview.findViewById(R.id.btnFilter);
+        btnCancel = myview.findViewById(R.id.btnCancel_filter);
+
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amount = edtamount.getText().toString().trim();
+                String type = edttype.getText().toString().trim();
+                String dateStart = edtDateStart.getText().toString().trim();
+                String dateEnd = edtDateEnd.getText().toString().trim();
+
+//                if(TextUtils.isEmpty(amount)){
+//                    edtamount.setError("Please Enter Amount");
+//                    return;
+//                }
+//                if(TextUtils.isEmpty(type)){
+//                    edttype.setError("Please Enter A Type");
+//                    return;
+//                }
+//                if(TextUtils.isEmpty(dateStart)){
+//                    edtDateStart.setError("Please Enter A Note");
+//                    return;
+//                }
+//                if(TextUtils.isEmpty(dateEnd)){
+//                    edtDateEnd.setError("Please Enter A Note");
+//                    return;
+//                }
+
+                int amountInInt= Integer.parseInt(amount);
+                dialog.dismiss();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_filter);
+        textView.setAdapter(arrayAdapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // first item selected
+                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
+                    textView.setText(""); // set text to empty string
+                    textView.setHint("Thêm"); // set hint to "more"
+                }else{
+                    textView.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
     }
 }

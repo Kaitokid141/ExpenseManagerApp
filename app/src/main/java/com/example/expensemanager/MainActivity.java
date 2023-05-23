@@ -1,7 +1,7 @@
 package com.example.expensemanager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.expensemanager.Model.PinActivity;
+
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.expensemanager.Model.PinActivity;
 import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -38,7 +39,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser()!=null){
-            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+            startActivity(new Intent(getApplicationContext(), PinActivity.class));
         }
         mDialog = new ProgressDialog(this);
         login();
@@ -65,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 // Check if the account is locked
                 if(lockTimeMillis > System.currentTimeMillis()) {
                     Toast.makeText(getApplicationContext(),"Your account has been locked. Please try again later.",Toast.LENGTH_SHORT).show();
@@ -83,8 +86,9 @@ public class MainActivity extends AppCompatActivity {
                         {
                             mDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Login Successful!",Toast.LENGTH_SHORT).show();
-                            //startActivity(new Intent(getApplicationContext(), PinActivity.class));
-                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+
+                            startActivity(new Intent(getApplicationContext(), PinActivity.class));
+                            finish();
                         }
                         else{
                             mDialog.dismiss();
