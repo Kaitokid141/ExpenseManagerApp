@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
                         {
                             mDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Login Successful!",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(), PinActivity.class));
-
+                            //startActivity(new Intent(getApplicationContext(), PinActivity.class));
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         }
                         else{
                             mDialog.dismiss();

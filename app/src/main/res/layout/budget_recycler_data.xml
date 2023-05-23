@@ -13,8 +13,8 @@
         app:cardElevation="5dp"
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/grey_90">
+        android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -77,7 +77,7 @@
                             android:layout_marginBottom="5dp"
                             android:id="@+id/date_txt_budget_start"
                             android:layout_weight="1"
-                            android:text="Ngày tháng:"
+                            android:text="Ngày:"
                             android:textAppearance="?android:textAppearanceSmall"
                             android:textColor="@color/date_colour"
                             android:textStyle="bold" />
@@ -91,7 +91,7 @@
                             android:layout_marginBottom="5dp"
                             android:id="@+id/date_txt_budget_end"
                             android:layout_weight="1"
-                            android:text="Ngày tháng:"
+                            android:text="Ngày:"
                             android:textAppearance="?android:textAppearanceSmall"
                             android:textColor="@color/date_colour"
                             android:textStyle="bold" />

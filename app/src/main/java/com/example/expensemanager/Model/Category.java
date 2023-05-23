@@ -1,49 +1,27 @@
 package com.example.expensemanager.Model;
 
 public class Category {
-    private String id;
-    private int limitAmount;
-    private String type;
-    private String dateStart;
-    private String dateEnd;
+    private int id;
+    private String name;
 
-    public Category(){}
-    public Category(String id, int limitAmount, String type, String dateStart, String dateEnd){
+    public Category(){
+
+    }
+    public Category(int id, String name){
         this.id = id;
-        this.limitAmount = limitAmount;
-        this.type = type;
-        this.dateStart = dateStart;
-        this.dateEnd = dateEnd;
+        this.name = name;
     }
 
-    public String getId(){
+    public int getId(){
         return id;
     }
-    public void setId(String id){
+    public void setId(int id){
         this.id = id;
     }
-    public int getLimitAmount(){
-        return limitAmount;
+    public String getName(){
+        return name;
     }
-    public void setLimitAmount(int limitAmount){
-        this.limitAmount = limitAmount;
-    }
-    public String getType(){
-        return type;
-    }
-    public void setType(String type){
-        this.type = type;
-    }
-    public String getDateStart(){
-        return dateStart;
-    }
-    public void setDateStart(String dateStart){
-        this.dateStart = dateStart;
-    }
-    public String getDateEnd(){
-        return dateEnd;
-    }
-    public void setDateEnd(String dateEnd){
-        this.dateEnd = dateEnd;
+    public void setName(String name){
+        this.name = name;
     }
 }
