@@ -1,4 +1,4 @@
-package com.example.expensemanager.Model;
+package com.example.expensemanager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.beautycoder.pflockscreen.PFFLockScreenConfiguration;
 import com.beautycoder.pflockscreen.fragments.PFLockScreenFragment;
 import com.example.expensemanager.HomeActivity;
+import com.example.expensemanager.Model.PinManager;
 import com.example.expensemanager.R;
 import com.google.firebase.auth.FirebaseAuth;
 

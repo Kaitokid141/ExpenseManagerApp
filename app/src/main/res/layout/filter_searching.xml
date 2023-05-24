@@ -43,6 +43,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/amount_filter"
                         android:inputType="number"
+                        android:text=""
                         android:hint="Nhập giá tiền"
                         />
                 </RelativeLayout>
@@ -123,6 +124,7 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:id="@+id/set_date_start_filter"
+                            android:text=""
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             />
@@ -167,6 +169,7 @@
                         <EditText
                             android:layout_width="match_parent"
                             android:id="@+id/set_date_end_filter"
+                            android:text=""
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             />
