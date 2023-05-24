@@ -165,27 +165,6 @@ public class BudgetFragment extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
 
-//        mBudgetDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for(DataSnapshot mysnapshot: snapshot.getChildren()){
-//                    Budget data = mysnapshot.getValue(Budget.class);
-//
-////                    String stotal = String.valueOf(totalvalue);
-////                    expenseSumResult.setText(stotal);
-//                    calculateExpense(data.getType().toString().trim(), new YourCallback() {
-//                        @Override
-//                        public void onResult(int result) {
-//
-//                        }
-//                    });
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
         fab_budget_plus_btn = myview.findViewById(R.id.fab_budget_plus_btn);
         fab_budget_plus_btn = myview.findViewById(R.id.fab_budget_plus_btn);
         btn_filter_budget = myview.findViewById(R.id.btn_filter_budget);
@@ -607,14 +586,4 @@ public class BudgetFragment extends Fragment{
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
         selectedDateTextView_end.setText(dateFormat.format(calendar.getTime()));
     }
-
-//    public void showPopup(View v) {
-//        //added library level 25
-//        //may conflict with later updates
-//        PopupMenu popup = new PopupMenu(getContext(), v, Gravity.END);
-//        popup.setGravity(Gravity.END);
-//        MenuInflater menuInflater = popup.getMenuInflater();
-//        menuInflater.inflate(R.menu.filtermenu, popup.getMenu());
-//        popup.show();
-//    }
 }
