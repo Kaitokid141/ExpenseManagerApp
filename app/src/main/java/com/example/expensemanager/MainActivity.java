@@ -13,8 +13,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.expensemanager.Model.PinActivity;
-import com.firebase.client.Firebase;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -40,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser()!=null){
 //            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            startActivity(new Intent(getApplicationContext(), PinActivity.class));
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         }
         mDialog = new ProgressDialog(this);
         login();
@@ -87,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
                             mDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Login Successful!",Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(getApplicationContext(), PinActivity.class));
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             finish();
                         }
                         else{

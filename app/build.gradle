@@ -63,6 +63,9 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation('com.github.omadahealth:lollipin:2.1.0@aar') {
+        transitive = true
+    }
     androidTestImplementation 'com.android.support:support-annotations:23.3.0'
     androidTestImplementation 'com.android.support.test:runner:0.3'
     androidTestImplementation 'com.android.support.test:rules:0.3'
