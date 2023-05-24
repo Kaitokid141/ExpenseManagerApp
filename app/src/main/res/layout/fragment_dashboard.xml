@@ -14,87 +14,123 @@
         android:layout_height="wrap_content">
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:layout_height="wrap_content">
-            <LinearLayout
+            <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                android:layout_weight="1"
+                android:layout_centerInParent="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content">
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="#007A00"
+                        android:layout_weight="0.3">
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:cardCornerRadius="10dp"
+                            android:layout_margin="8dp"
+                            android:backgroundTint="@android:color/white"
+                            android:layout_centerInParent="true">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/income_theme"/>
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:layout_height="wrap_content"
+                        android:background="#007A00">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textAppearance="?android:textAppearanceLarge"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:text="Thu nhập"/>
+                        <TextView
+                            android:id="@+id/income_set_result"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textAppearance="?android:textAppearanceLarge"
+                            android:textColor="@android:color/white" />
+
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_margin="10dp"
                 android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:cardCornerRadius="20dp"
+                android:layout_weight="1"
+                android:backgroundTint="@android:color/white"
+                android:layout_centerInParent="true">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
                     android:layout_weight="1"
-                    android:gravity="center"
                     android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textAppearance="?android:textAppearanceLarge"
+                    <RelativeLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:background="#E74646"
+                        android:layout_weight="0.3">
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:cardCornerRadius="10dp"
+                            android:layout_margin="8dp"
+                            android:layout_centerInParent="true">
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/expenses_theme"/>
+                        </androidx.cardview.widget.CardView>
+                    </RelativeLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
                         android:gravity="center"
-                        android:textColor="@android:color/holo_green_dark"
-                        android:text="Thu nhập"/>
-
-
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
-                    <TextView
-                        android:layout_width="match_parent"
+                        android:orientation="vertical"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:textColor="@android:color/holo_red_dark"
-                        android:textAppearance="?android:textAppearanceLarge"
-                        android:text="Chi tiêu"/>
+                        android:background="#E74646">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:textAppearance="?android:textAppearanceLarge"
+                            android:gravity="center"
+                            android:textColor="@android:color/white"
+                            android:text="Chi tiêu"/>
+                        <TextView
+                            android:id="@+id/expense_set_result"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="0"
+                            android:textAppearance="?android:textAppearanceLarge"
+                            android:textColor="@android:color/white" />
 
+                    </LinearLayout>
+                </LinearLayout>
 
-                </RelativeLayout>
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/income_set_result"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textAppearance="?android:textAppearanceLarge"
-                        android:textColor="@android:color/holo_green_dark" />
-
-
-                </RelativeLayout>
-                <RelativeLayout
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/expense_set_result"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="0"
-                        android:textAppearance="?android:textAppearanceLarge"
-                        android:textColor="@android:color/holo_red_dark" />
-
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>

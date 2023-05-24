@@ -431,64 +431,6 @@ public class ExpenseFragment extends Fragment {
         dialog.show();
     }
 
-    public void selectDateInsertData(View myview){
-        pickDateButton_start = myview.findViewById(R.id.setDateBtn_start);
-        selectedDateTextView_start = myview.findViewById(R.id.set_date_start);
-        pickDateButton_end = myview.findViewById(R.id.setDateBtn_end);
-        selectedDateTextView_end = myview.findViewById(R.id.set_date_end);
-        calendar = Calendar.getInstance();
-
-        pickDateButton_start.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create a new instance of the DatePickerDialog class
-                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Update the selected date text view
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, month);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        updateSelectedDateTextView_start();
-                    }
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-                // Show the dialog
-                datePicker.show();
-            }
-        });
-
-        pickDateButton_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create a new instance of the DatePickerDialog class
-                DatePickerDialog datePicker = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Update the selected date text view
-                        calendar.set(Calendar.YEAR, year);
-                        calendar.set(Calendar.MONTH, month);
-                        calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                        updateSelectedDateTextView_end();
-                    }
-                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
-
-                // Show the dialog
-                datePicker.show();
-            }
-        });
-    }
-
-    private void updateSelectedDateTextView_start() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
-        selectedDateTextView_start.setText(dateFormat.format(calendar.getTime()));
-    }
-
-    private void updateSelectedDateTextView_end() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
-        selectedDateTextView_end.setText(dateFormat.format(calendar.getTime()));
-    }
-
     public void insertDataFilterItem(){
         AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
@@ -507,6 +449,7 @@ public class ExpenseFragment extends Fragment {
         btnCancel = myview.findViewById(R.id.btnCancel_filter);
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 String amount = edtamount.getText().toString().trim();
@@ -530,6 +473,9 @@ public class ExpenseFragment extends Fragment {
 //                    edtDateEnd.setError("Please Enter A Note");
 //                    return;
 //                }
+                for(int i = 0; i < recyclerView.getAdapter().getItemCount(); i++){
+
+                }
 
                 int amountInInt= Integer.parseInt(amount);
                 dialog.dismiss();
