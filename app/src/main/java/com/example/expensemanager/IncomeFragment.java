@@ -397,7 +397,7 @@ public class IncomeFragment extends Fragment {
                     else
                         temp[2] = dateStart1;
                     if(dateEnd1.isEmpty())
-                        temp[3] = "May 30, 2023";
+                        temp[3] = "May 30, 2050";
                     else
                         temp[3] = dateEnd1;
                     if (data.getAmount() >= Integer.parseInt(temp[0]) && data.getType().equals(temp[1]) && checkDays(data.getDate(), temp[2], temp[3]))
