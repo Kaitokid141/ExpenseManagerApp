@@ -125,100 +125,101 @@
                         pieChart.animateXY(2000, 2000);
 
                         // ... Rest of your chart setup code ...
+                        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                        String[] xAxisValues = new String[DateWiseIncome.size()];
+                        ArrayList<Entry> incomeEntries = new ArrayList<>();
+                        int i=0;
+                        for (Map.Entry<Date, Integer> entry : DateWiseIncome.entrySet()){
+                            Format formatter = new SimpleDateFormat("MMM d, yyyy");
+                            String s = formatter.format(entry.getKey());
+                            xAxisValues[i]=s;
+                            incomeEntries.add(new Entry(i,entry.getValue()));
+                            i++;
+                            Log.i("DATE", xAxisValues[i-1]);
+                            Log.i("AMOUNT", String.valueOf(entry.getValue()));
+                        }
+                        dataSets = new ArrayList<>();
+                        LineDataSet set1;
+
+                        set1 = new LineDataSet(incomeEntries, "Income");
+                        set1.setColor(0xFF1CA87A);
+                        set1.setValueTextColor(Color.BLUE);
+                        set1.setValueTextSize(20);
+                        set1.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+                        dataSets.add(set1);
+                        LineChart mLineGraph = myView.findViewById(R.id.linechart);
+                        YAxis rightYAxis = mLineGraph.getAxisRight();
+                        rightYAxis.setTextColor(Color.BLUE);
+                        YAxis leftYAxis = mLineGraph.getAxisLeft();
+                        leftYAxis.setEnabled(true);
+                        leftYAxis.setTextColor(Color.BLUE);
+                        XAxis topXAxis = mLineGraph.getXAxis();
+                        topXAxis.setEnabled(true);
+                        topXAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        set1.setLineWidth(4f);
+                        set1.setCircleRadius(3f);
+                        XAxis xAxis = mLineGraph.getXAxis();
+                        xAxis.setTextColor(Color.BLUE);
+                        mLineGraph.getXAxis().setLabelCount(DateWiseIncome.size());
+                        mLineGraph.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
+
+                        LineData data2 = new LineData(dataSets);
+                        mLineGraph.setData(data2);
+
+                        mLineGraph.animateX(3000);
+                        mLineGraph.getLegend().setEnabled(false);
+                        mLineGraph.invalidate();
+                        mLineGraph.getDescription().setEnabled(false);
+
+
+
+                        ArrayList<ILineDataSet> dataSets1;
+                        String[] xAxisValues1 = new String[DateWiseExpense.size()];
+                        ArrayList<Entry> expenseEntries = new ArrayList<>();
+                        int j=0;
+                        for (Map.Entry<Date, Integer> entry : DateWiseExpense.entrySet()){
+                            Format formatter = new SimpleDateFormat("MMM d, yyyy");
+                            String s = formatter.format(entry.getKey());
+                            xAxisValues1[j]=s;
+                            expenseEntries.add(new Entry(j,entry.getValue()));
+                            j++;
+                            Log.i("DATE", xAxisValues1[j-1]);
+                            Log.i("AMOUNT", String.valueOf(entry.getValue()));
+                        }
+                        dataSets1 = new ArrayList<>();
+                        LineDataSet set2;
+
+                        set2 = new LineDataSet(expenseEntries, "Expense");
+                        set2.setColor(0xFFE74646);
+                        set2.setValueTextColor(Color.BLUE);
+                        set2.setValueTextSize(20);
+                        set2.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+                        dataSets1.add(set2);
+                        LineChart mLineGraph1 = myView.findViewById(R.id.lineChart1);
+                        YAxis rightYAxis1 = mLineGraph1.getAxisRight();
+                        rightYAxis1.setTextColor(Color.BLUE);
+                        YAxis leftYAxis1 = mLineGraph1.getAxisLeft();
+                        leftYAxis1.setEnabled(true);
+                        leftYAxis1.setTextColor(Color.BLUE);
+                        XAxis topXAxis1 = mLineGraph1.getXAxis();
+                        topXAxis1.setEnabled(true);
+                        topXAxis1.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        set2.setLineWidth(4f);
+                        set2.setCircleRadius(3f);
+                        XAxis xAxis1 = mLineGraph1.getXAxis();
+                        xAxis1.setTextColor(Color.BLUE);
+                        mLineGraph1.getXAxis().setLabelCount(DateWiseExpense.size());
+                        mLineGraph1.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues1));
+
+                        LineData data3 = new LineData(dataSets1);
+                        mLineGraph1.setData(data3);
+
+                        mLineGraph1.animateX(3000);
+                        mLineGraph1.getLegend().setEnabled(false);
+                        mLineGraph1.invalidate();
+                        mLineGraph1.getDescription().setEnabled(false);
+
                     }
-
-                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-                    String[] xAxisValues = new String[DateWiseIncome.size()];
-                    ArrayList<Entry> incomeEntries = new ArrayList<>();
-                    int i=0;
-                    for (Map.Entry<Date, Integer> entry : DateWiseIncome.entrySet()){
-                        Format formatter = new SimpleDateFormat("MMM d, yyyy");
-                        String s = formatter.format(entry.getKey());
-                        xAxisValues[i]=s;
-                        incomeEntries.add(new Entry(i,entry.getValue()));
-                        i++;
-                        Log.i("DATE", xAxisValues[i-1]);
-                        Log.i("AMOUNT", String.valueOf(entry.getValue()));
-                    }
-                    dataSets = new ArrayList<>();
-                    LineDataSet set1;
-
-                    set1 = new LineDataSet(incomeEntries, "Income");
-                    set1.setColor(0xFF1CA87A);
-                    set1.setValueTextColor(Color.BLUE);
-                    set1.setValueTextSize(20);
-                    set1.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-                    dataSets.add(set1);
-                    LineChart mLineGraph = myView.findViewById(R.id.linechart);
-                    YAxis rightYAxis = mLineGraph.getAxisRight();
-                    rightYAxis.setTextColor(Color.BLUE);
-                    YAxis leftYAxis = mLineGraph.getAxisLeft();
-                    leftYAxis.setEnabled(true);
-                    leftYAxis.setTextColor(Color.BLUE);
-                    XAxis topXAxis = mLineGraph.getXAxis();
-                    topXAxis.setEnabled(true);
-                    topXAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    set1.setLineWidth(4f);
-                    set1.setCircleRadius(3f);
-                    XAxis xAxis = mLineGraph.getXAxis();
-                    xAxis.setTextColor(Color.BLUE);
-                    mLineGraph.getXAxis().setLabelCount(DateWiseIncome.size());
-                    mLineGraph.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
-
-                    LineData data2 = new LineData(dataSets);
-                    mLineGraph.setData(data2);
-
-                    mLineGraph.animateX(3000);
-                    mLineGraph.getLegend().setEnabled(false);
-                    mLineGraph.invalidate();
-                    mLineGraph.getDescription().setEnabled(false);
-
-                    ArrayList<ILineDataSet> dataSets1 = new ArrayList<>();
-                    String[] xAxisValues1 = new String[DateWiseExpense.size()];
-                    ArrayList<Entry> expenseEntries = new ArrayList<>();
-                    int j=0;
-                    for (Map.Entry<Date, Integer> entry : DateWiseExpense.entrySet()){
-                        Format formatter = new SimpleDateFormat("MMM d, yyyy");
-                        String s = formatter.format(entry.getKey());
-                        xAxisValues1[j]=s;
-                        expenseEntries.add(new Entry(j,entry.getValue()));
-                        j++;
-                        Log.i("DATE", xAxisValues1[j-1]);
-                        Log.i("AMOUNT", String.valueOf(entry.getValue()));
-                    }
-                    dataSets1 = new ArrayList<>();
-                    LineDataSet set2;
-
-                    set2 = new LineDataSet(expenseEntries, "Expense");
-                    set2.setColor(0xFFE74646);
-                    set2.setValueTextColor(Color.BLUE);
-                    set2.setValueTextSize(20);
-                    set2.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-                    dataSets1.add(set2);
-                    LineChart mLineGraph1 = myView.findViewById(R.id.lineChart1);
-                    YAxis rightYAxis1 = mLineGraph1.getAxisRight();
-                    rightYAxis1.setTextColor(Color.BLUE);
-                    YAxis leftYAxis1 = mLineGraph1.getAxisLeft();
-                    leftYAxis1.setEnabled(true);
-                    leftYAxis1.setTextColor(Color.BLUE);
-                    XAxis topXAxis1 = mLineGraph1.getXAxis();
-                    topXAxis1.setEnabled(true);
-                    topXAxis1.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    set2.setLineWidth(4f);
-                    set2.setCircleRadius(3f);
-                    XAxis xAxis1 = mLineGraph1.getXAxis();
-                    xAxis1.setTextColor(Color.BLUE);
-                    mLineGraph1.getXAxis().setLabelCount(DateWiseExpense.size());
-                    mLineGraph1.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues1));
-
-                    LineData data3 = new LineData(dataSets1);
-                    mLineGraph1.setData(data3);
-
-                    mLineGraph1.animateX(3000);
-                    mLineGraph1.getLegend().setEnabled(false);
-                    mLineGraph1.invalidate();
-                    mLineGraph1.getDescription().setEnabled(false);
-
                 }
 
                 @Override
@@ -263,99 +264,99 @@
                         pieChart.animateXY(2000, 2000);
 
                         // ... Rest of your chart setup code ...
+
+                        ArrayList<ILineDataSet> dataSets = new ArrayList<>();
+                        String[] xAxisValues = new String[DateWiseIncome.size()];
+                        ArrayList<Entry> incomeEntries = new ArrayList<>();
+                        int i=0;
+                        for (Map.Entry<Date, Integer> entry : DateWiseIncome.entrySet()){
+                            Format formatter = new SimpleDateFormat("MMM d, yyyy");
+                            String s = formatter.format(entry.getKey());
+                            xAxisValues[i]=s;
+                            incomeEntries.add(new Entry(i,entry.getValue()));
+                            i++;
+                            Log.i("DATE", xAxisValues[i-1]);
+                            Log.i("AMOUNT", String.valueOf(entry.getValue()));
+                        }
+                        dataSets = new ArrayList<>();
+                        LineDataSet set1;
+
+                        set1 = new LineDataSet(incomeEntries, "Income");
+                        set1.setColor(0xFF1CA87A);
+                        set1.setValueTextColor(Color.BLUE);
+                        set1.setValueTextSize(20);
+                        set1.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+                        dataSets.add(set1);
+                        LineChart mLineGraph = myView.findViewById(R.id.linechart);
+                        YAxis rightYAxis = mLineGraph.getAxisRight();
+                        rightYAxis.setTextColor(Color.BLUE);
+                        YAxis leftYAxis = mLineGraph.getAxisLeft();
+                        leftYAxis.setEnabled(true);
+                        leftYAxis.setTextColor(Color.BLUE);
+                        XAxis topXAxis = mLineGraph.getXAxis();
+                        topXAxis.setEnabled(true);
+                        topXAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        set1.setLineWidth(4f);
+                        set1.setCircleRadius(3f);
+                        XAxis xAxis = mLineGraph.getXAxis();
+                        xAxis.setTextColor(Color.BLUE);
+                        mLineGraph.getXAxis().setLabelCount(DateWiseIncome.size());
+                        mLineGraph.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
+
+                        LineData data2 = new LineData(dataSets);
+                        mLineGraph.setData(data2);
+
+                        mLineGraph.animateX(3000);
+                        mLineGraph.getLegend().setEnabled(false);
+                        mLineGraph.invalidate();
+                        mLineGraph.getDescription().setEnabled(false);
+
+                        ArrayList<ILineDataSet> dataSets1 = new ArrayList<>();
+                        String[] xAxisValues1 = new String[DateWiseExpense.size()];
+                        ArrayList<Entry> expenseEntries = new ArrayList<>();
+                        int j=0;
+                        for (Map.Entry<Date, Integer> entry : DateWiseExpense.entrySet()){
+                            Format formatter = new SimpleDateFormat("MMM d, yyyy");
+                            String s = formatter.format(entry.getKey());
+                            xAxisValues1[j]=s;
+                            expenseEntries.add(new Entry(j,entry.getValue()));
+                            j++;
+                            Log.i("DATE", xAxisValues1[j-1]);
+                            Log.i("AMOUNT", String.valueOf(entry.getValue()));
+                        }
+                        dataSets1 = new ArrayList<>();
+                        LineDataSet set2;
+
+                        set2 = new LineDataSet(expenseEntries, "Expense");
+                        set2.setColor(0xFFE74646);
+                        set2.setValueTextColor(Color.BLUE);
+                        set2.setValueTextSize(20);
+                        set2.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+                        dataSets1.add(set2);
+                        LineChart mLineGraph1 = myView.findViewById(R.id.lineChart1);
+                        YAxis rightYAxis1 = mLineGraph1.getAxisRight();
+                        rightYAxis1.setTextColor(Color.BLUE);
+                        YAxis leftYAxis1 = mLineGraph1.getAxisLeft();
+                        leftYAxis1.setEnabled(true);
+                        leftYAxis1.setTextColor(Color.BLUE);
+                        XAxis topXAxis1 = mLineGraph1.getXAxis();
+                        topXAxis1.setEnabled(true);
+                        topXAxis1.setPosition(XAxis.XAxisPosition.BOTTOM);
+                        set2.setLineWidth(4f);
+                        set2.setCircleRadius(3f);
+                        XAxis xAxis1 = mLineGraph1.getXAxis();
+                        xAxis1.setTextColor(Color.BLUE);
+                        mLineGraph1.getXAxis().setLabelCount(DateWiseExpense.size());
+                        mLineGraph1.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues1));
+
+                        LineData data3 = new LineData(dataSets1);
+                        mLineGraph1.setData(data3);
+
+                        mLineGraph1.animateX(3000);
+                        mLineGraph1.getLegend().setEnabled(false);
+                        mLineGraph1.invalidate();
+                        mLineGraph1.getDescription().setEnabled(false);
                     }
-
-                    ArrayList<ILineDataSet> dataSets = new ArrayList<>();
-                    String[] xAxisValues = new String[DateWiseIncome.size()];
-                    ArrayList<Entry> incomeEntries = new ArrayList<>();
-                    int i=0;
-                    for (Map.Entry<Date, Integer> entry : DateWiseIncome.entrySet()){
-                        Format formatter = new SimpleDateFormat("MMM d, yyyy");
-                        String s = formatter.format(entry.getKey());
-                        xAxisValues[i]=s;
-                        incomeEntries.add(new Entry(i,entry.getValue()));
-                        i++;
-                        Log.i("DATE", xAxisValues[i-1]);
-                        Log.i("AMOUNT", String.valueOf(entry.getValue()));
-                    }
-                    dataSets = new ArrayList<>();
-                    LineDataSet set1;
-
-                    set1 = new LineDataSet(incomeEntries, "Income");
-                    set1.setColor(0xFF1CA87A);
-                    set1.setValueTextColor(Color.BLUE);
-                    set1.setValueTextSize(20);
-                    set1.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-                    dataSets.add(set1);
-                    LineChart mLineGraph = myView.findViewById(R.id.linechart);
-                    YAxis rightYAxis = mLineGraph.getAxisRight();
-                    rightYAxis.setTextColor(Color.BLUE);
-                    YAxis leftYAxis = mLineGraph.getAxisLeft();
-                    leftYAxis.setEnabled(true);
-                    leftYAxis.setTextColor(Color.BLUE);
-                    XAxis topXAxis = mLineGraph.getXAxis();
-                    topXAxis.setEnabled(true);
-                    topXAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    set1.setLineWidth(4f);
-                    set1.setCircleRadius(3f);
-                    XAxis xAxis = mLineGraph.getXAxis();
-                    xAxis.setTextColor(Color.BLUE);
-                    mLineGraph.getXAxis().setLabelCount(DateWiseIncome.size());
-                    mLineGraph.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues));
-
-                    LineData data2 = new LineData(dataSets);
-                    mLineGraph.setData(data2);
-
-                    mLineGraph.animateX(3000);
-                    mLineGraph.getLegend().setEnabled(false);
-                    mLineGraph.invalidate();
-                    mLineGraph.getDescription().setEnabled(false);
-
-                    ArrayList<ILineDataSet> dataSets1 = new ArrayList<>();
-                    String[] xAxisValues1 = new String[DateWiseExpense.size()];
-                    ArrayList<Entry> expenseEntries = new ArrayList<>();
-                    int j=0;
-                    for (Map.Entry<Date, Integer> entry : DateWiseExpense.entrySet()){
-                        Format formatter = new SimpleDateFormat("MMM d, yyyy");
-                        String s = formatter.format(entry.getKey());
-                        xAxisValues1[j]=s;
-                        expenseEntries.add(new Entry(j,entry.getValue()));
-                        j++;
-                        Log.i("DATE", xAxisValues1[j-1]);
-                        Log.i("AMOUNT", String.valueOf(entry.getValue()));
-                    }
-                    dataSets1 = new ArrayList<>();
-                    LineDataSet set2;
-
-                    set2 = new LineDataSet(expenseEntries, "Expense");
-                    set2.setColor(0xFFE74646);
-                    set2.setValueTextColor(Color.BLUE);
-                    set2.setValueTextSize(20);
-                    set2.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-                    dataSets1.add(set2);
-                    LineChart mLineGraph1 = myView.findViewById(R.id.lineChart1);
-                    YAxis rightYAxis1 = mLineGraph1.getAxisRight();
-                    rightYAxis1.setTextColor(Color.BLUE);
-                    YAxis leftYAxis1 = mLineGraph1.getAxisLeft();
-                    leftYAxis1.setEnabled(true);
-                    leftYAxis1.setTextColor(Color.BLUE);
-                    XAxis topXAxis1 = mLineGraph1.getXAxis();
-                    topXAxis1.setEnabled(true);
-                    topXAxis1.setPosition(XAxis.XAxisPosition.BOTTOM);
-                    set2.setLineWidth(4f);
-                    set2.setCircleRadius(3f);
-                    XAxis xAxis1 = mLineGraph1.getXAxis();
-                    xAxis1.setTextColor(Color.BLUE);
-                    mLineGraph1.getXAxis().setLabelCount(DateWiseExpense.size());
-                    mLineGraph1.getXAxis().setValueFormatter(new IndexAxisValueFormatter(xAxisValues1));
-
-                    LineData data3 = new LineData(dataSets1);
-                    mLineGraph1.setData(data3);
-
-                    mLineGraph1.animateX(3000);
-                    mLineGraph1.getLegend().setEnabled(false);
-                    mLineGraph1.invalidate();
-                    mLineGraph1.getDescription().setEnabled(false);
                 }
 
                 @Override
@@ -444,14 +445,14 @@
             String[] xAxisValues1 = new String[DateWiseExpense.size()];
             ArrayList<Entry> expenseEntries = new ArrayList<>();
              int j=0;
-            for (Map.Entry<Date, Integer> entry : DateWiseExpense.entrySet()){
+            for (Map.Entry<Date, Integer> entry_e : DateWiseExpense.entrySet()){
                 Format formatter = new SimpleDateFormat("MMM d, yyyy");
-                String s = formatter.format(entry.getKey());
+                String s = formatter.format(entry_e.getKey());
                 xAxisValues1[j]=s;
-                expenseEntries.add(new Entry(j,entry.getValue()));
+                expenseEntries.add(new Entry(j,entry_e.getValue()));
                 j++;
                 Log.i("DATE", xAxisValues1[j-1]);
-                Log.i("AMOUNT", String.valueOf(entry.getValue()));
+                Log.i("AMOUNT", String.valueOf(entry_e.getValue()));
             }
             dataSets1 = new ArrayList<>();
             LineDataSet set2;
