@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.beautycoder.pflockscreen.PFFLockScreenConfiguration;
+import com.beautycoder.pflockscreen.fragments.PFLockScreenFragment;
 import com.example.expensemanager.HomeActivity;
 import com.example.expensemanager.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -33,6 +35,21 @@ public class PinActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PFLockScreenFragment fragment = new PFLockScreenFragment();
+        PFFLockScreenConfiguration.Builder builder = new PFFLockScreenConfiguration.Builder(this)
+                .setMode(PFFLockScreenConfiguration.MODE_CREATE);
+        fragment.setConfiguration(builder.build());
+        fragment.setCodeCreateListener(new PFLockScreenFragment.OnPFLockScreenCodeCreateListener() {
+            @Override
+            public void onCodeCreated(String encodedCode) {
+                //TODO: save somewhere;
+            }
+
+            @Override
+            public void onNewCodeValidationFailed() {
+
+            }
+        });
         mAuth = FirebaseAuth.getInstance();
         mPinManager = new PinManager(this);
 
