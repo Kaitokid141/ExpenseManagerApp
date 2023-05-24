@@ -1,8 +1,17 @@
 package com.example.expensemanager;
 
+import static com.example.expensemanager.Model.DateCalculator.checkDays;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -19,6 +28,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.app.DatePickerDialog;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +48,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
@@ -177,7 +192,7 @@ public class BudgetFragment extends Fragment{
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot mysnapshot: snapshot.getChildren()){
                     Data data = mysnapshot.getValue(Data.class);
-                    if (data.getType().equals(str))
+                    if (data.getType().equals(str) && checkDays(data.getDate(), dateStart, dateEnd))
                         tam += data.getAmount();
                 }
                 callback.onResult(tam);
@@ -242,25 +257,25 @@ public class BudgetFragment extends Fragment{
             super(itemView);
             mView = itemView;
         }
-        private void setType(String type){
+        public void setType(String type){
             TextView mType = mView.findViewById(R.id.type_txt_budget);
             mType.setText("Nhóm: " + type);
         }
-        private void setDateStart(String dateStart){
+        public void setDateStart(String dateStart){
             TextView mDate = mView.findViewById(R.id.date_txt_budget_start);
             mDate.setText("Ngày: " + dateStart);
         }
-        private void setDateEnd(String dateEnd){
+        public void setDateEnd(String dateEnd){
             TextView mDateEnd = mView.findViewById(R.id.date_txt_budget_end);
             mDateEnd.setText("Ngày: " + dateEnd);
         }
 
-        private void setAmount(int amount){
+        public void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_budget);
             String smAmount = String.valueOf(amount);
             mAmount.setText("Hạn mức: " + smAmount);
         }
-        private void setProgress(int amount, int total){
+        public void setProgress(int amount, int total){
             ProgressBar progressBar = mView.findViewById(R.id.progressBar);
             TextView percent_txt_budget = mView.findViewById(R.id.percent_txt_budget);
             int percent = (int)(amount * 100 / total);
@@ -414,28 +429,57 @@ public class BudgetFragment extends Fragment{
         AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = LayoutInflater.from(getActivity());
 
-        View myview=inflater.inflate(R.layout.filter_searching, null);
+        View myview=inflater.inflate(R.layout.filter_searching_budget, null);
         mydialog.setView(myview);
 
         final AlertDialog dialog = mydialog.create();
         dialog.setCancelable(false);
-        EditText edtamount = myview.findViewById(R.id.amount_filter);
-        EditText edttype = myview.findViewById(R.id.autoCompleteTextView_filter);
-        EditText edtDateStart = myview.findViewById(R.id.set_date_start_filter);
-        EditText edtDateEnd = myview.findViewById(R.id.set_date_end_filter);
+        //EditText edtamount = myview.findViewById(R.id.amount_filter_budget);
+        EditText edttype = myview.findViewById(R.id.autoCompleteTextView_filter_budget);
 
-        btnFilter = myview.findViewById(R.id.btnFilter);
-        btnCancel = myview.findViewById(R.id.btnCancel_filter);
+        btnFilter = myview.findViewById(R.id.btnFilter_budget);
+        btnCancel = myview.findViewById(R.id.btnCancel_filter_budget);
 
         btnFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String amount = edtamount.getText().toString().trim();
-                String type = edttype.getText().toString().trim();
-                String dateStart = edtDateStart.getText().toString().trim();
-                String dateEnd = edtDateEnd.getText().toString().trim();
+                String type1 = edttype.getText().toString().trim();
 
-                int amountInInt= Integer.parseInt(amount);
+                //Query budgetQuery = mBudgetDatabase.orderByChild("type").equalTo(type1);
+                FirebaseRecyclerAdapter<Budget, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Budget, MyViewHolder>(
+                        Budget.class,
+                        R.layout.budget_recycler_data,
+                        MyViewHolder.class,
+                        budgetQuery(type1)
+                ) {
+                    @Override
+                    protected void populateViewHolder(MyViewHolder viewHolder, final Budget model, final int position) {
+                        viewHolder.setType(model.getType());
+                        viewHolder.setDateEnd(model.getDateEnd());
+                        viewHolder.setDateStart(model.getDateStart());
+                        viewHolder.setAmount(model.getLimitAmount());
+                        calculateExpense(model.getType().toString(), model.getDateStart(), model.getDateEnd(), new YourCallback() {
+                            @Override
+                            public void onResult(int result) {
+                                viewHolder.setProgress(result, model.getLimitAmount());
+                            }
+                        });
+
+                        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                post_key = getRef(position).getKey();
+                                amount = model.getLimitAmount();
+                                type = model.getType();
+                                dateEnd = model.getDateEnd();
+                                dateStart = model.getDateStart();
+                                updateDataItem();
+                            }
+                        });
+                    }
+                };
+                recyclerView.setAdapter(adapter);
+
                 dialog.dismiss();
             }
         });
@@ -449,7 +493,7 @@ public class BudgetFragment extends Fragment{
         dialog.show();
         String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
-        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_filter);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_filter_budget);
         textView.setAdapter(arrayAdapter);
         textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -569,5 +613,14 @@ public class BudgetFragment extends Fragment{
     private void updateSelectedDateTextView_end() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
         selectedDateTextView_end.setText(dateFormat.format(calendar.getTime()));
+    }
+
+    public Query budgetQuery(String type1){
+        Query budgetQuery;
+        if(type1.equals("Chọn loại"))
+            budgetQuery = mBudgetDatabase;
+        else
+            budgetQuery = mBudgetDatabase.orderByChild("type").equalTo(type1);
+        return budgetQuery;
     }
 }

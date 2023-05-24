@@ -18,6 +18,9 @@
         <activity android:name=".Model.PinActivity"/>
         <activity android:name=".CustomPinActivity"
             android:exported="false" />
+        <activity android:name=".Login.ResetPasswordActivity" />
+        <activity android:name=".Login.RegistrationActivity" />
+        <activity android:name=".PinActivity"/>
         <activity android:name=".SliderScreen"
             android:exported="true"/>
         <activity

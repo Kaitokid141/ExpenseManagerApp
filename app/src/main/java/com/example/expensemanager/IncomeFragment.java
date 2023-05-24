@@ -1,8 +1,9 @@
 package com.example.expensemanager;
 
+import static com.example.expensemanager.Model.DateCalculator.checkDays;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -12,8 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.ContactsContract;
-import android.provider.SearchRecentSuggestions;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -27,11 +26,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.expensemanager.Model.Data;
+import com.example.expensemanager.Adapter.MyAdapterIncome;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -43,8 +41,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class IncomeFragment extends Fragment {
@@ -233,25 +233,25 @@ public class IncomeFragment extends Fragment {
             super(itemView);
             mView = itemView;
         }
-        private void setType(String type){
+        public void setType(String type){
             TextView mType = mView.findViewById(R.id.type_txt_income);
             mType.setText(type);
         }
-        private void setNote(String note){
+        public void setNote(String note){
             TextView mNote = mView.findViewById(R.id.note_txt_income);
             mNote.setText(note);
         }
-        private void setDate(String date){
+        public void setDate(String date){
             TextView mDate = mView.findViewById(R.id.date_txt_income);
             mDate.setText(date);
         }
-        private void setAmount(int amount){
+        public void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_income);
             String smAmount = String.valueOf(amount);
             mAmount.setText(smAmount + " đ");
         }
 
-        private void setIcon(Drawable drawable){
+        public void setIcon(Drawable drawable){
             ImageView mIcon = mView.findViewById(R.id.icon_income);
             mIcon.setBackground(drawable);
         }
@@ -316,11 +316,106 @@ public class IncomeFragment extends Fragment {
         dialog.show();
     }
 
-    public void selectDateInsertData(View myview){
-        pickDateButton_start = myview.findViewById(R.id.setDateBtn_start);
-        selectedDateTextView_start = myview.findViewById(R.id.set_date_start);
-        pickDateButton_end = myview.findViewById(R.id.setDateBtn_end);
-        selectedDateTextView_end = myview.findViewById(R.id.set_date_end);
+    public void insertDataFilterItem(){
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+
+        View myview = inflater.inflate(R.layout.filter_searching, null);
+        mydialog.setView(myview);
+
+        selectDateFilterData(myview);
+
+        final AlertDialog dialog = mydialog.create();
+        dialog.setCancelable(false);
+        EditText edtamount = myview.findViewById(R.id.amount_filter);
+        EditText edttype = myview.findViewById(R.id.autoCompleteTextView_filter);
+        EditText edtDateStart = myview.findViewById(R.id.set_date_start_filter);
+        EditText edtDateEnd = myview.findViewById(R.id.set_date_end_filter);
+
+        btnFilter = myview.findViewById(R.id.btnFilter);
+        btnCancel = myview.findViewById(R.id.btnCancel_filter);
+
+        btnFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amount = edtamount.getText().toString().trim();
+                String type = edttype.getText().toString().trim();
+                String dateStart = edtDateStart.getText().toString().trim();
+                String dateEnd = edtDateEnd.getText().toString().trim();
+
+                List<Data> myList = filterDate(mIncomeDatabase, amount, type, dateStart, dateEnd);
+                MyAdapterIncome myAdapter = new MyAdapterIncome(myList);
+                recyclerView.setAdapter(myAdapter);
+
+                dialog.dismiss();
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+        String[] transaction = getResources().getStringArray(R.array.typesOfIncome);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
+        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_filter);
+        textView.setAdapter(arrayAdapter);
+        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (position == 0) { // first item selected
+                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
+                    textView.setText(""); // set text to empty string
+                    textView.setHint("Thêm"); // set hint to "more"
+                }else{
+                    textView.setInputType(InputType.TYPE_NULL);
+                }
+            }
+        });
+    }
+
+    public List<Data> filterDate(DatabaseReference mDatabase, String amount1, String type1, String dateStart1, String dateEnd1) {
+        List<Data> list = new ArrayList<Data>();
+        final String[] temp = new String[4];
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Data data = dataSnapshot.getValue(Data.class);
+                    if(amount1.isEmpty())
+                        temp[0] = "0";
+                    else
+                        temp[0] = amount1;
+                    if(type1.equals("Chọn loại"))
+                        temp[1] = data.getType();
+                    else
+                        temp[1] = type1;
+                    if(dateStart1.isEmpty())
+                        temp[2] = "May 1, 2023";
+                    else
+                        temp[2] = dateStart1;
+                    if(dateEnd1.isEmpty())
+                        temp[3] = "May 30, 2050";
+                    else
+                        temp[3] = dateEnd1;
+                    if (data.getAmount() >= Integer.parseInt(temp[0]) && data.getType().equals(temp[1]) && checkDays(data.getDate(), temp[2], temp[3]))
+                        list.add(data);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        return list;
+    }
+    public void selectDateFilterData(View myview){
+        pickDateButton_start = myview.findViewById(R.id.setDateBtn_start_filter);
+        selectedDateTextView_start = myview.findViewById(R.id.set_date_start_filter);
+        pickDateButton_end = myview.findViewById(R.id.setDateBtn_end_filter);
+        selectedDateTextView_end = myview.findViewById(R.id.set_date_end_filter);
         calendar = Calendar.getInstance();
 
         pickDateButton_start.setOnClickListener(new View.OnClickListener() {
@@ -363,7 +458,6 @@ public class IncomeFragment extends Fragment {
             }
         });
     }
-
     private void updateSelectedDateTextView_start() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
         selectedDateTextView_start.setText(dateFormat.format(calendar.getTime()));
@@ -373,78 +467,4 @@ public class IncomeFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault());
         selectedDateTextView_end.setText(dateFormat.format(calendar.getTime()));
     }
-
-    public void insertDataFilterItem(){
-        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-
-        View myview=inflater.inflate(R.layout.filter_searching, null);
-        mydialog.setView(myview);
-
-
-        final AlertDialog dialog = mydialog.create();
-        dialog.setCancelable(false);
-        EditText edtamount = myview.findViewById(R.id.amount_filter);
-        EditText edttype = myview.findViewById(R.id.autoCompleteTextView_filter);
-        EditText edtDateStart = myview.findViewById(R.id.set_date_start_filter);
-        EditText edtDateEnd = myview.findViewById(R.id.set_date_end_filter);
-
-        btnFilter = myview.findViewById(R.id.btnFilter);
-        btnCancel = myview.findViewById(R.id.btnCancel_filter);
-
-        btnFilter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String amount = edtamount.getText().toString().trim();
-                String type = edttype.getText().toString().trim();
-                String dateStart = edtDateStart.getText().toString().trim();
-                String dateEnd = edtDateEnd.getText().toString().trim();
-
-//                if(TextUtils.isEmpty(amount)){
-//                    edtamount.setError("Please Enter Amount");
-//                    return;
-//                }
-//                if(TextUtils.isEmpty(type)){
-//                    edttype.setError("Please Enter A Type");
-//                    return;
-//                }
-//                if(TextUtils.isEmpty(dateStart)){
-//                    edtDateStart.setError("Please Enter A Note");
-//                    return;
-//                }
-//                if(TextUtils.isEmpty(dateEnd)){
-//                    edtDateEnd.setError("Please Enter A Note");
-//                    return;
-//                }
-
-                int amountInInt= Integer.parseInt(amount);
-                dialog.dismiss();
-            }
-        });
-
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog.dismiss();
-            }
-        });
-        dialog.show();
-        String[] transaction = getResources().getStringArray(R.array.typesOfTransactions);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(requireContext(), R.layout.dropdown_item, transaction);
-        AutoCompleteTextView textView = (AutoCompleteTextView) myview.findViewById(R.id.autoCompleteTextView_filter);
-        textView.setAdapter(arrayAdapter);
-        textView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) { // first item selected
-                    textView.setInputType(InputType.TYPE_CLASS_TEXT); // set input type to number
-                    textView.setText(""); // set text to empty string
-                    textView.setHint("Thêm"); // set hint to "more"
-                }else{
-                    textView.setInputType(InputType.TYPE_NULL);
-                }
-            }
-        });
-    }
-
 }

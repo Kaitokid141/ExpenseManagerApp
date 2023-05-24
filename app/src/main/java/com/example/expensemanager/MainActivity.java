@@ -13,11 +13,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.expensemanager.Login.RegistrationActivity;
+import com.example.expensemanager.Login.ResetPasswordActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import java.util.Date;
+
 import org.mindrot.jbcrypt.BCrypt;
 public class MainActivity extends AppCompatActivity {
     private EditText mEmail;
@@ -117,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         mForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(),ResetPasswordActivity.class));
+                startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
             }
         });
 
