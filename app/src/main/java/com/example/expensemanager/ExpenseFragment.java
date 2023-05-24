@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -405,6 +406,11 @@ public class ExpenseFragment extends Fragment {
             public void onClick(View v) {
                 type = edtType.getText().toString().trim();
                 note = edtNote.getText().toString().trim();
+
+                if(TextUtils.isEmpty(note)){
+                    edtNote.setText("none");
+                    return;
+                }
 
                 String stamount = String.valueOf(amount);
                 stamount = String.valueOf(edtAmount.getText());

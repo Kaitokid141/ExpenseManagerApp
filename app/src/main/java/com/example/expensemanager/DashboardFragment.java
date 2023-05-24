@@ -244,7 +244,7 @@ public class DashboardFragment extends Fragment {
                     return;
                 }
                 if(TextUtils.isEmpty(note)){
-                    edtNote.setError("Please Enter A Note");
+                    edtNote.setText("none");
                     return;
                 }
                 int amountInInt=Integer.parseInt(amount);
@@ -319,7 +319,7 @@ public class DashboardFragment extends Fragment {
                     return;
                 }
                 if(TextUtils.isEmpty(note)){
-                    edtnote.setError("Please Enter A Note");
+                    edtnote.setText("none");
                     return;
                 }
                 int amountInInt = Integer.parseInt(amount);

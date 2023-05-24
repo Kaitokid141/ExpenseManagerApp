@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.provider.ContactsContract;
 import android.provider.SearchRecentSuggestions;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -288,6 +289,11 @@ public class IncomeFragment extends Fragment {
             public void onClick(View view) {
                 type = edtType.getText().toString().trim();
                 note = edtNote.getText().toString().trim();
+
+                if(TextUtils.isEmpty(note)){
+                    edtNote.setText("none");
+                    return;
+                }
 
                 String mdamount = String.valueOf(amount);
                 mdamount = edtAmount.getText().toString().trim();
