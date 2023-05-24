@@ -425,14 +425,13 @@ public class DashboardFragment extends Fragment {
 
     // For expense Data
     public static class ExpenseViewHolder extends  RecyclerView.ViewHolder{
-
         View mExpenseView;
         public ExpenseViewHolder(@NonNull View itemView) {
             super(itemView);
-            mExpenseView=itemView;
+            mExpenseView = itemView;
         }
         public void setExpenseType(String type){
-            TextView mtype=mExpenseView.findViewById(R.id.type_Expense_ds);
+            TextView mtype = mExpenseView.findViewById(R.id.type_Expense_ds);
             mtype.setText(type);
         }
         public void setExpenseAmount(int amount){

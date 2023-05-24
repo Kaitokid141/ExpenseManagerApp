@@ -33,8 +33,8 @@
                 android:id="@+id/sum_budget_expense"
                 android:textAppearance="?android:textAppearanceMedium"
                 android:visibility="invisible"
-                android:layout_weight="0"
-                android:text="0.000000"/>
+                android:text="0"/>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

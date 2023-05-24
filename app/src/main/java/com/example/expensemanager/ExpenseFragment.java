@@ -348,13 +348,11 @@ public class ExpenseFragment extends Fragment {
 
         private void setType(String type){
             TextView mType = mView.findViewById(R.id.type_txt_expense);
-            type = mType.getText() + " " + type;
             mType.setText(type);
         }
 
         private void setNote(String note){
             TextView mNote = mView.findViewById(R.id.note_txt_expense);
-            note = mNote.getText() + " " + note;
             mNote.setText(note);
         }
 
@@ -366,8 +364,7 @@ public class ExpenseFragment extends Fragment {
         private void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_expense);
             String smAmount = String.valueOf(amount);
-                smAmount = smAmount + " đ";
-            mAmount.setText(smAmount);
+            mAmount.setText(smAmount + " đ");
         }
 
         private void setIcon(Drawable drawable){
@@ -506,5 +503,4 @@ public class ExpenseFragment extends Fragment {
             }
         });
     }
-
 }

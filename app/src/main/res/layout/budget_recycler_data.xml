@@ -4,11 +4,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="5dp"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="14dp"
-    android:layout_height="wrap_content"
-    android:backgroundTint="#403ddc84">
+
+    app:cardBackgroundColor="@android:color/transparent"
+    android:layout_height="wrap_content">
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardElevation="5dp"
+        android:layout_margin="10dp"
+        app:cardCornerRadius="10dp"
+        android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -71,7 +78,7 @@
                             android:layout_marginBottom="5dp"
                             android:id="@+id/date_txt_budget_start"
                             android:layout_weight="1"
-                            android:text="Ngày tháng:"
+                            android:text="Ngày:"
                             android:textAppearance="?android:textAppearanceSmall"
                             android:textColor="@color/date_colour"
                             android:textStyle="bold" />
@@ -85,14 +92,12 @@
                             android:layout_marginBottom="5dp"
                             android:id="@+id/date_txt_budget_end"
                             android:layout_weight="1"
-                            android:text="Ngày tháng:"
+                            android:text="Ngày:"
                             android:textAppearance="?android:textAppearanceSmall"
                             android:textColor="@color/date_colour"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
-
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -134,8 +139,7 @@
                         android:id="@+id/percent_txt_budget"
                         />
                 </LinearLayout>
-
             </RelativeLayout>
         </LinearLayout>
-
+    </androidx.cardview.widget.CardView>
 </androidx.cardview.widget.CardView>

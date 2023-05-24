@@ -5,9 +5,11 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.appcompat.view.menu.MenuPopupHelper;
 import androidx.fragment.app.DialogFragment;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,14 +33,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.app.Dialog;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
-import com.example.expensemanager.Model.Category;
+import com.example.expensemanager.Model.Budget;
 import com.example.expensemanager.Model.Data;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -50,10 +53,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.text.DateFormat;
-import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -85,8 +85,8 @@ public class BudgetFragment extends Fragment{
      * @return A new instance of fragment ExpenseFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ExpenseFragment newInstance(String param1, String param2) {
-        ExpenseFragment fragment = new ExpenseFragment();
+    public static BudgetFragment newInstance(String param1, String param2) {
+        BudgetFragment fragment = new BudgetFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -143,7 +143,7 @@ public class BudgetFragment extends Fragment{
     private int amount;
     private String post_key;
     private FloatingActionButton fab_budget_plus_btn;
-
+    private int temp, tam;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -154,7 +154,7 @@ public class BudgetFragment extends Fragment{
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uid = mUser.getUid();
         mBudgetDatabase = FirebaseDatabase.getInstance().getReference().child("BudgetExpense").child(uid);
-        mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
+        //mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
 
         expenseSumResult = myview.findViewById(R.id.sum_budget_expense);
         recyclerView = myview.findViewById(R.id.recycler_budget);
@@ -164,26 +164,31 @@ public class BudgetFragment extends Fragment{
         layoutManager.setStackFromEnd(true);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(layoutManager);
-        mExpenseDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                int totalvalue = 0;
-                for(DataSnapshot mysnapshot: snapshot.getChildren()){
-                    Data data = mysnapshot.getValue(Data.class);
-                    totalvalue += data.getAmount();
-                    String stotal = String.valueOf(totalvalue);
-                    expenseSumResult.setText(stotal);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+//        mBudgetDatabase.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for(DataSnapshot mysnapshot: snapshot.getChildren()){
+//                    Budget data = mysnapshot.getValue(Budget.class);
+//
+////                    String stotal = String.valueOf(totalvalue);
+////                    expenseSumResult.setText(stotal);
+//                    calculateExpense(data.getType().toString().trim(), new YourCallback() {
+//                        @Override
+//                        public void onResult(int result) {
+//
+//                        }
+//                    });
+//                }
+//            }
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
         fab_budget_plus_btn = myview.findViewById(R.id.fab_budget_plus_btn);
-
+        fab_budget_plus_btn = myview.findViewById(R.id.fab_budget_plus_btn);
         btn_filter_budget = myview.findViewById(R.id.btn_filter_budget);
-
         btn_filter_budget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,39 +200,71 @@ public class BudgetFragment extends Fragment{
         return myview;
     }
 
+    public interface YourCallback {
+        void onResult(int result);
+    }
+    public void calculateExpense(String str, String dateStart, String dateEnd, final YourCallback callback) {
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser mUser = mAuth.getCurrentUser();
+        String uid = mUser.getUid();
+        mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
+        tam = 0;
+        mExpenseDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot mysnapshot: snapshot.getChildren()){
+                    Data data = mysnapshot.getValue(Data.class);
+                    if (data.getType().equals(str))
+                        tam += data.getAmount();
+                }
+                callback.onResult(tam);
+                tam = 0;
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
     @Override
     public void onStart()
     {
         super.onStart();
-        FirebaseRecyclerAdapter<Category, MyViewHolder>adapter = new FirebaseRecyclerAdapter<Category, MyViewHolder>(
-                Category.class,
+        FirebaseRecyclerAdapter<Budget, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Budget, MyViewHolder>(
+                Budget.class,
                 R.layout.budget_recycler_data,
                 MyViewHolder.class,
                 mBudgetDatabase
         ) {
             @Override
-            protected void populateViewHolder(MyViewHolder viewHolder, final Category category, final int position) {
-                viewHolder.setType(category.getType());
-                viewHolder.setDateEnd(category.getDateEnd());
-                viewHolder.setDateStart(category.getDateStart());
-                viewHolder.setAmount(category.getLimitAmount());
-                viewHolder.setProgress(category.getLimitAmount(), 10000000);
+            protected void populateViewHolder(MyViewHolder viewHolder, final Budget model, final int position) {
+                viewHolder.setType(model.getType());
+                viewHolder.setDateEnd(model.getDateEnd());
+                viewHolder.setDateStart(model.getDateStart());
+                viewHolder.setAmount(model.getLimitAmount());
+                calculateExpense(model.getType().toString(), model.getDateStart(), model.getDateEnd(), new YourCallback() {
+                    @Override
+                    public void onResult(int result) {
+                        viewHolder.setProgress(result, model.getLimitAmount());
+                    }
+                });
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         post_key = getRef(position).getKey();
-                        amount = category.getLimitAmount();
-                        type = category.getType();
-                        dateEnd = category.getDateEnd();
-                        dateStart = category.getDateStart();
+                        amount = model.getLimitAmount();
+                        type = model.getType();
+                        dateEnd = model.getDateEnd();
+                        dateStart = model.getDateStart();
                         updateDataItem();
                     }
                 });
             }
         };
-
         recyclerView.setAdapter(adapter);
+
         fab_budget_plus_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -244,31 +281,31 @@ public class BudgetFragment extends Fragment{
         }
         private void setType(String type){
             TextView mType = mView.findViewById(R.id.type_txt_budget);
-            type = mType.getText() + " " + type;
-            mType.setText(type);
+            mType.setText("Nhóm: " + type);
         }
         private void setDateStart(String dateStart){
             TextView mDate = mView.findViewById(R.id.date_txt_budget_start);
-            dateStart = mDate.getText() + " " + dateStart;
-            mDate.setText(dateStart);
+            mDate.setText("Ngày: " + dateStart);
         }
         private void setDateEnd(String dateEnd){
-            TextView mNote = mView.findViewById(R.id.date_txt_budget_end);
-            dateEnd = mNote.getText() + " " + dateEnd;
-            mNote.setText(dateEnd);
+            TextView mDateEnd = mView.findViewById(R.id.date_txt_budget_end);
+            mDateEnd.setText("Ngày: " + dateEnd);
         }
+
         private void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_budget);
             String smAmount = String.valueOf(amount);
-            smAmount = mAmount.getText() + " " + smAmount + " đ";
-            mAmount.setText(smAmount);
+            mAmount.setText("Hạn mức: " + smAmount);
         }
         private void setProgress(int amount, int total){
             ProgressBar progressBar = mView.findViewById(R.id.progressBar);
             TextView percent_txt_budget = mView.findViewById(R.id.percent_txt_budget);
             int percent = (int)(amount * 100 / total);
             progressBar.setProgress(percent);
-            percent_txt_budget.setText(Integer.toString(percent) + "%");
+            if (percent <= 100)
+                percent_txt_budget.setText(Integer.toString(percent) + "%");
+            else
+                percent_txt_budget.setText(">100%");
         }
     }
 
@@ -315,7 +352,7 @@ public class BudgetFragment extends Fragment{
                 dateStart = edtDateStart.getText().toString().trim();
                 dateEnd = edtDateEnd.getText().toString().trim();
 
-                Category data = new Category(post_key, intamount, type, dateStart, dateEnd);
+                Budget data = new Budget(post_key, intamount, type, dateStart, dateEnd);
                 mBudgetDatabase.child(post_key).setValue(data);
                 dialog.dismiss();
             }
@@ -378,7 +415,7 @@ public class BudgetFragment extends Fragment{
                 int amountInInt= Integer.parseInt(amount);
                 //Create random ID inside database
                 String id = mBudgetDatabase.push().getKey();
-                Category data = new Category(id, amountInInt, type, dateStart, dateEnd);
+                Budget data = new Budget(id, amountInInt, type, dateStart, dateEnd);
                 mBudgetDatabase.child(id).setValue(data);
                 Toast.makeText(getActivity(), "Added Successfully!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
@@ -434,23 +471,6 @@ public class BudgetFragment extends Fragment{
                 String type = edttype.getText().toString().trim();
                 String dateStart = edtDateStart.getText().toString().trim();
                 String dateEnd = edtDateEnd.getText().toString().trim();
-
-//                if(TextUtils.isEmpty(amount)){
-//                    edtamount.setError("Please Enter Amount");
-//                    return;
-//                }
-//                if(TextUtils.isEmpty(type)){
-//                    edttype.setError("Please Enter A Type");
-//                    return;
-//                }
-//                if(TextUtils.isEmpty(dateStart)){
-//                    edtDateStart.setError("Please Enter A Note");
-//                    return;
-//                }
-//                if(TextUtils.isEmpty(dateEnd)){
-//                    edtDateEnd.setError("Please Enter A Note");
-//                    return;
-//                }
 
                 int amountInInt= Integer.parseInt(amount);
                 dialog.dismiss();

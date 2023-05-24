@@ -44,7 +44,7 @@
                     android:id="@+id/income_txt_result"
                     android:textAppearance="?android:textAppearanceMedium"
 
-                    android:text="0.000000"/>
+                    android:text="0"/>
 
             </RelativeLayout>
 

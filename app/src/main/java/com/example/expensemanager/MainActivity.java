@@ -46,13 +46,6 @@ public class MainActivity extends AppCompatActivity {
         login();
     }
 
-//    private void login(){
-//        mEmail=findViewById(R.id.email_login);
-//        mPassword=findViewById(R.id.password_login);
-//        loginButton=findViewById(R.id.btn_login);
-//        mForgotPassword=findViewById(R.id.forgot_password);
-//        mSignup=findViewById(R.id.signup);
-
     // Login
     private void login(){
         mEmail = findViewById(R.id.email_login);
@@ -93,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                         {
                             mDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Login Successful!",Toast.LENGTH_SHORT).show();
-//                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+
                             startActivity(new Intent(getApplicationContext(), PinActivity.class));
                             finish();
                         }

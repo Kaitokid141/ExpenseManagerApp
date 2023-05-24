@@ -234,12 +234,10 @@ public class IncomeFragment extends Fragment {
         }
         private void setType(String type){
             TextView mType = mView.findViewById(R.id.type_txt_income);
-            type = mType.getText() + " " + type;
             mType.setText(type);
         }
         private void setNote(String note){
             TextView mNote = mView.findViewById(R.id.note_txt_income);
-            note = mNote.getText() + " " + note;
             mNote.setText(note);
         }
         private void setDate(String date){
@@ -249,8 +247,7 @@ public class IncomeFragment extends Fragment {
         private void setAmount(int amount){
             TextView mAmount = mView.findViewById(R.id.amount_txt_income);
             String smAmount = String.valueOf(amount);
-            smAmount = smAmount + " đ";
-            mAmount.setText(smAmount);
+            mAmount.setText(smAmount + " đ");
         }
 
         private void setIcon(Drawable drawable){
