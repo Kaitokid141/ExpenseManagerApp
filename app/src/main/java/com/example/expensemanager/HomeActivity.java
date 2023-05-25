@@ -10,6 +10,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.INotificationSideChannel;
@@ -50,18 +51,28 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     //Firebase
     private FirebaseAuth mAuth;
 
+    public SharedPreferences preferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         mAuth=FirebaseAuth.getInstance();
+        LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+        preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isFirstTime = preferences.getBoolean("isFirstTimePin", true);
         Intent intent = new Intent(HomeActivity.this, CustomPinActivity.class);
-        if(!lockManager.isAppLockEnabled() || !lockManager.getAppLock().isPasscodeSet()) {
+        if(!isFirstTime){
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+            startActivity(intent);
+        }else{
             intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+            startActivity(intent);
         }
-        startActivity(intent);
+//        else {
+//            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+//        }
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle("Expense Manager");
@@ -201,4 +212,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         displaySelectedListener(item.getItemId());
         return true;
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // Save boolean value to SharedPreferences
+        preferences.edit().putBoolean("isFirstTimePin", false).apply();
+    }
+
 }
