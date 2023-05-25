@@ -170,8 +170,7 @@
                         mLineGraph.getLegend().setEnabled(false);
                         mLineGraph.invalidate();
                         mLineGraph.getDescription().setEnabled(false);
-
-
+                        
 
                         ArrayList<ILineDataSet> dataSets1;
                         String[] xAxisValues1 = new String[DateWiseExpense.size()];
@@ -364,8 +363,6 @@
 
                 }
             });
-
-
 
             //Pie Chart
             PieChart pieChart = myView.findViewById(R.id.piechart);

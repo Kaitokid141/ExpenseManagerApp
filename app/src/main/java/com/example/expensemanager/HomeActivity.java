@@ -174,12 +174,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 return;
             case R.id.dashboard:
                 bottomNavigationView.setSelectedItemId(R.id.dashboard);
-                fragment=new DashboardFragment();
+                fragment = new DashboardFragment();
                 break;
 
             case R.id.income:
                 bottomNavigationView.setSelectedItemId(R.id.income);
-                fragment=new IncomeFragment();
+                fragment = new IncomeFragment();
                 break;
 
             case R.id.expense:
