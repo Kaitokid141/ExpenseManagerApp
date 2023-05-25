@@ -72,7 +72,7 @@
         private int[] values={0,0};
         private Map<Date, Integer> DateWiseIncome = new TreeMap<Date, Integer>();
         private Map<Date, Integer> DateWiseExpense = new TreeMap<Date, Integer>();
-        private static Set<Pair<Integer,Integer>> DateWiseIncomeSorter= new HashSet<Pair<Integer,Integer>>();;
+        private static Set<Pair<Integer,Integer>> DateWiseIncomeSorter= new HashSet<Pair<Integer,Integer>>();
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
