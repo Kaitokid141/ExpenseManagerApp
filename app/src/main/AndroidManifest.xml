@@ -20,11 +20,11 @@
             android:exported="false" />
         <activity android:name=".Login.ResetPasswordActivity" />
         <activity android:name=".Login.RegistrationActivity" />
-        <activity android:name=".PinActivity"/>
-        <activity android:name=".SliderScreen"
+
+        <activity android:name=".SlideShow.SliderScreen"
             android:exported="true"/>
         <activity
-            android:name=".SplashScreen"
+            android:name=".SlideShow.SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +32,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".Model.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.expensemanager;
+package com.example.expensemanager.SlideShow;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -14,6 +14,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.expensemanager.Login.RegistrationActivity;
+import com.example.expensemanager.MainActivity;
+import com.example.expensemanager.R;
+import com.example.expensemanager.SlideShow.ViewPagerAdapter;
 
 
 public class SliderScreen extends AppCompatActivity {

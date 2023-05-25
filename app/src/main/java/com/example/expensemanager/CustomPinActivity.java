@@ -15,12 +15,12 @@ public class CustomPinActivity extends AppLockActivity {
 
     @Override
     public void onPinFailure(int attempts) {
-        Toast.makeText(this,"Wrong!",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Wrong!",Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onPinSuccess(int attempts) {
-        Toast.makeText(this,"Correct Pin",Toast.LENGTH_LONG).show();
+        Toast.makeText(this,"Correct Pin",Toast.LENGTH_SHORT).show();
     }
 
     @Override

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#1ca87a"
     android:orientation="horizontal"
-    tools:context=".SplashScreen">
+    tools:context=".SlideShow.SplashScreen">
 
     <ImageView
         android:id="@+id/imageView"

@@ -1,4 +1,4 @@
-package com.example.expensemanager;
+package com.example.expensemanager.SlideShow;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
+
+import com.example.expensemanager.R;
 
 public class ViewPagerAdapter extends PagerAdapter {
 

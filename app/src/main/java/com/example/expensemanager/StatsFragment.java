@@ -75,8 +75,7 @@
         private static Set<Pair<Integer,Integer>> DateWiseIncomeSorter= new HashSet<Pair<Integer,Integer>>();;
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             // Inflate the layout for this fragment
             View myView = inflater.inflate(R.layout.fragment_stats, container, false);
 
@@ -246,7 +245,7 @@
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                        DateWiseExpense.put(date,DateWiseExpense.getOrDefault(date,0)+data.getAmount());
+                        DateWiseExpense.put(date,DateWiseExpense.getOrDefault(date,0) + data.getAmount());
                     }
 
                     if (values[0] != 0 && values[1] != 0) {
@@ -457,6 +456,7 @@
             }
             dataSets1 = new ArrayList<>();
             LineDataSet set2;
+
 
             set2 = new LineDataSet(expenseEntries, "Expense");
             set2.setColor(0xFFE74646);

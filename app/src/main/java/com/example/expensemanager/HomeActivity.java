@@ -26,6 +26,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.expensemanager.Model.MyFirebaseMessagingService;
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
@@ -34,6 +35,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.common.math.Stats;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.expensemanager.R.string.navigation_drawer_open;
 import static com.example.expensemanager.R.string.pin_code_forgot_text;
@@ -59,7 +63,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         boolean isFirstTime = preferences.getBoolean("isFirstTimePin", true);

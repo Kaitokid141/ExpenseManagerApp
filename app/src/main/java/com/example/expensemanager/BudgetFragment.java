@@ -4,6 +4,7 @@ import static com.example.expensemanager.Model.DateCalculator.checkDays;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Notification;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +52,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.RemoteMessage;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -225,6 +228,12 @@ public class BudgetFragment extends Fragment{
                     @Override
                     public void onResult(int result) {
                         viewHolder.setProgress(result, model.getLimitAmount());
+                        if(result > model.getLimitAmount()) {
+                            String str = "Loại " + model.getType() + " đã vượt quá hạn mức!";
+                            Toast toast = Toast.makeText(requireContext(), str, Toast.LENGTH_LONG);
+                            toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+                            toast.show();
+                        }
                     }
                 });
 
@@ -282,8 +291,9 @@ public class BudgetFragment extends Fragment{
             progressBar.setProgress(percent);
             if (percent <= 100)
                 percent_txt_budget.setText(Integer.toString(percent) + "%");
-            else
+            else{
                 percent_txt_budget.setText(">100%");
+            }
         }
     }
 
