@@ -10,25 +10,34 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.INotificationSideChannel;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-
 import com.fasterxml.jackson.core.io.JsonStringEncoder;
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.common.math.Stats;
 import com.google.firebase.auth.FirebaseAuth;
 
 import static com.example.expensemanager.R.string.navigation_drawer_open;
+import static com.example.expensemanager.R.string.pin_code_forgot_text;
+
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView bottomNavigationView;
     private FrameLayout frameLayout;
@@ -42,11 +51,29 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     //Firebase
     private FirebaseAuth mAuth;
+
+    public SharedPreferences preferences;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         mAuth=FirebaseAuth.getInstance();
+        LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
+        preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        boolean isFirstTime = preferences.getBoolean("isFirstTimePin", true);
+        Intent intent = new Intent(HomeActivity.this, CustomPinActivity.class);
+        if(!isFirstTime){
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+            startActivity(intent);
+        }else{
+            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+            startActivity(intent);
+        }
+//        else {
+//            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+//        }
 
         Toolbar toolbar = findViewById(R.id.my_toolbar);
         toolbar.setTitle("Expense Manager");
@@ -106,6 +133,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1){
+                Toast.makeText(this, "PinCode enabled", Toast.LENGTH_SHORT).show();
+        }
     }
     private void setFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
@@ -178,4 +213,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         displaySelectedListener(item.getItemId());
         return true;
     }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        // Save boolean value to SharedPreferences
+        preferences.edit().putBoolean("isFirstTimePin", false).apply();
+    }
+
 }

@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser()!=null){
 //            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            startActivity(new Intent(getApplicationContext(), PinActivity.class));
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         }
         mDialog = new ProgressDialog(this);
         login();
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                             mDialog.dismiss();
                             Toast.makeText(getApplicationContext(),"Login Successful!",Toast.LENGTH_SHORT).show();
 
-                            startActivity(new Intent(getApplicationContext(), PinActivity.class));
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                             finish();
                         }
                         else{
