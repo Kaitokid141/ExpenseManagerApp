@@ -501,7 +501,7 @@ public class ExpenseFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     Data data = dataSnapshot.getValue(Data.class);
-                    if(amount1.isEmpty())
+                    if(TextUtils.isEmpty(amount1))
                         temp[0] = "0";
                     else
                         temp[0] = amount1;
@@ -509,11 +509,11 @@ public class ExpenseFragment extends Fragment {
                         temp[1] = data.getType();
                     else
                         temp[1] = type1;
-                    if(dateStart1.isEmpty())
+                    if(TextUtils.isEmpty(dateStart1))
                         temp[2] = "May 1, 2023";
                     else
                         temp[2] = dateStart1;
-                    if(dateEnd1.isEmpty())
+                    if(TextUtils.isEmpty(dateEnd1))
                         temp[3] = "May 30, 2050";
                     else
                         temp[3] = dateEnd1;

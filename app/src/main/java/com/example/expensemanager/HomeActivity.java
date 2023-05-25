@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import com.fasterxml.jackson.core.io.JsonStringEncoder;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.common.math.Stats;
@@ -59,7 +60,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                         this,
                         drawerLayout,
                         toolbar,
-                        R.string.navigation_drawer_open,
+                        navigation_drawer_open,
                         R.string.navigation_drawer_close
                 )
         {};

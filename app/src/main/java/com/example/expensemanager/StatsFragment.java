@@ -79,13 +79,14 @@
                                  Bundle savedInstanceState) {
             // Inflate the layout for this fragment
             View myView = inflater.inflate(R.layout.fragment_stats, container, false);
-            mAuth = FirebaseAuth.getInstance();
 
+            mAuth = FirebaseAuth.getInstance();
             FirebaseUser mUser = mAuth.getCurrentUser();
             String uid = mUser.getUid();
 
             mIncomeDatabase = FirebaseDatabase.getInstance().getReference().child("IncomeData").child(uid);
             mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
+
             mIncomeDatabase.keepSynced(true);
             mExpenseDatabase.keepSynced(true);
             mIncomeDatabase.addValueEventListener(new ValueEventListener() {
