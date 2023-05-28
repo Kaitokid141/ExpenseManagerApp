@@ -48,29 +48,14 @@ import java.util.List;
 import java.util.Locale;
 
 public class IncomeFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // parameters (eg: ARG_ITEM_NUMBER)
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public IncomeFragment() {
 
     }
-
-    /**
-     * Method to create a new instance of
-     * Fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment IncomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static IncomeFragment newInstance(String param1, String param2) {
         IncomeFragment fragment = new IncomeFragment();
         Bundle args = new Bundle();
@@ -161,7 +146,6 @@ public class IncomeFragment extends Fragment {
         });
 
         btn_filter_income = myview.findViewById(R.id.btn_filter_income);
-
         btn_filter_income.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

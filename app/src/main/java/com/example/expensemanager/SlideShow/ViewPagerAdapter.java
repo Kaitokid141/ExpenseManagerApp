@@ -14,9 +14,7 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.example.expensemanager.R;
 
 public class ViewPagerAdapter extends PagerAdapter {
-
     Context context;
-
     int images[] = {
             R.drawable.pic_manage_money,
             R.drawable.pic_catgiamchitieu,
@@ -26,7 +24,6 @@ public class ViewPagerAdapter extends PagerAdapter {
     };
 
     int headings[] = {
-
             R.string.heading_one,
             R.string.heading_two,
             R.string.heading_three,
@@ -35,7 +32,6 @@ public class ViewPagerAdapter extends PagerAdapter {
     };
 
     int description[] = {
-
             R.string.desc_one,
             R.string.desc_two,
             R.string.desc_three,
@@ -44,9 +40,7 @@ public class ViewPagerAdapter extends PagerAdapter {
     };
 
     public ViewPagerAdapter(Context context){
-
         this.context = context;
-
     }
 
     @Override
@@ -82,8 +76,6 @@ public class ViewPagerAdapter extends PagerAdapter {
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-
         container.removeView((LinearLayout)object);
-
     }
 }

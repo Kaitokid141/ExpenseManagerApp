@@ -1,9 +1,10 @@
-package com.example.expensemanager;
+package com.example.expensemanager.Pin;
 
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.expensemanager.R;
 import com.github.omadahealth.lollipin.lib.managers.AppLockActivity;
 
 public class CustomPinActivity extends AppLockActivity {

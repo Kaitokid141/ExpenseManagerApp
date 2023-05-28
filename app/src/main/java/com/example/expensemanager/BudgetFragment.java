@@ -57,36 +57,15 @@ import com.google.firebase.messaging.RemoteMessage;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ExpenseFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class BudgetFragment extends Fragment{
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     public BudgetFragment() {
 
     }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ExpenseFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static BudgetFragment newInstance(String param1, String param2) {
         BudgetFragment fragment = new BudgetFragment();
         Bundle args = new Bundle();
@@ -95,7 +74,6 @@ public class BudgetFragment extends Fragment{
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,7 +134,6 @@ public class BudgetFragment extends Fragment{
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uid = mUser.getUid();
         mBudgetDatabase = FirebaseDatabase.getInstance().getReference().child("BudgetExpense").child(uid);
-        //mExpenseDatabase = FirebaseDatabase.getInstance().getReference().child("ExpenseData").child(uid);
 
         expenseSumResult = myview.findViewById(R.id.sum_budget_expense);
         recyclerView = myview.findViewById(R.id.recycler_budget);
@@ -173,8 +150,6 @@ public class BudgetFragment extends Fragment{
         btn_filter_budget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                View menuItemView = myview.findViewById(R.id.btn_filter_budget);
-//                showPopup(menuItemView);
                 insertDataFilterItem();
             }
         });
@@ -230,7 +205,7 @@ public class BudgetFragment extends Fragment{
                         viewHolder.setProgress(result, model.getLimitAmount());
                         if(result > model.getLimitAmount()) {
                             String str = "Loại " + model.getType() + " đã vượt quá hạn mức!";
-                            Toast toast = Toast.makeText(requireContext(), str, Toast.LENGTH_LONG);
+                            Toast toast = Toast.makeText(requireContext(), str, Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
                             toast.show();
                         }
@@ -454,8 +429,6 @@ public class BudgetFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 String type1 = edttype.getText().toString().trim();
-
-                //Query budgetQuery = mBudgetDatabase.orderByChild("type").equalTo(type1);
                 FirebaseRecyclerAdapter<Budget, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Budget, MyViewHolder>(
                         Budget.class,
                         R.layout.budget_recycler_data,

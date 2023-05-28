@@ -16,7 +16,7 @@
         <activity android:name=".ResetPasswordActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".Model.PinActivity"/>
-        <activity android:name=".CustomPinActivity"
+        <activity android:name=".Pin.CustomPinActivity"
             android:exported="false" />
         <activity android:name=".Login.ResetPasswordActivity" />
         <activity android:name=".Login.RegistrationActivity" />

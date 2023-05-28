@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView mSignup;
     private ProgressDialog mDialog;
     private FirebaseAuth mAuth;
-
     private int counter = 5;
     private long lockTimeMillis = 0L;
 
@@ -38,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth = FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser()!=null){
-//            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+        if(mAuth.getCurrentUser() != null){
             startActivity(new Intent(getApplicationContext(), HomeActivity.class));
         }
         mDialog = new ProgressDialog(this);
@@ -66,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
                     mPassword.setError("Password cannot be empty.");
                     return;
                 }
-
 
                 // Check if the account is locked
                 if(lockTimeMillis > System.currentTimeMillis()) {
@@ -122,5 +119,4 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), ResetPasswordActivity.class));
             }
         });
-
     }}

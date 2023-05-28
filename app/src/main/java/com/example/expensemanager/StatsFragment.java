@@ -68,11 +68,11 @@
         private FirebaseAuth mAuth;
         private DatabaseReference mIncomeDatabase;
         private DatabaseReference mExpenseDatabase;
-        private String[] type={"Income", "Expense"};
-        private int[] values={0,0};
+        private String[] type = {"Income", "Expense"};
+        private int[] values = {0,0};
         private Map<Date, Integer> DateWiseIncome = new TreeMap<Date, Integer>();
         private Map<Date, Integer> DateWiseExpense = new TreeMap<Date, Integer>();
-        private static Set<Pair<Integer,Integer>> DateWiseIncomeSorter= new HashSet<Pair<Integer,Integer>>();;
+        private static Set<Pair<Integer,Integer>> DateWiseIncomeSorter = new HashSet<Pair<Integer,Integer>>();;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,7 +96,6 @@
                     View myView = inflater.inflate(R.layout.fragment_stats, container, false);
                     for (DataSnapshot mysnap : snapshot.getChildren()) {
                         Data data = mysnap.getValue(Data.class);
-
                         values[0] += data.getAmount();
                         DateFormat format = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
                         Date date = null;
@@ -138,10 +137,11 @@
                             Log.i("DATE", xAxisValues[i-1]);
                             Log.i("AMOUNT", String.valueOf(entry.getValue()));
                         }
+
                         dataSets = new ArrayList<>();
                         LineDataSet set1;
 
-                        set1 = new LineDataSet(incomeEntries, "Income");
+                        set1 = new LineDataSet(incomeEntries, "Thu nhập");
                         set1.setColor(0xFF1CA87A);
                         set1.setValueTextColor(Color.BLUE);
                         set1.setValueTextSize(20);
@@ -170,7 +170,7 @@
                         mLineGraph.getLegend().setEnabled(false);
                         mLineGraph.invalidate();
                         mLineGraph.getDescription().setEnabled(false);
-                        
+
 
                         ArrayList<ILineDataSet> dataSets1;
                         String[] xAxisValues1 = new String[DateWiseExpense.size()];
@@ -188,7 +188,7 @@
                         dataSets1 = new ArrayList<>();
                         LineDataSet set2;
 
-                        set2 = new LineDataSet(expenseEntries, "Expense");
+                        set2 = new LineDataSet(expenseEntries, "Chi tiêu");
                         set2.setColor(0xFFE74646);
                         set2.setValueTextColor(Color.BLUE);
                         set2.setValueTextSize(20);
@@ -233,9 +233,9 @@
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     values[1] = 0;
+                    DateWiseExpense.clear();
                     for (DataSnapshot mysnap : snapshot.getChildren()) {
                         Data data = mysnap.getValue(Data.class);
-
                         values[1] += data.getAmount();
                         DateFormat format = new SimpleDateFormat("MMM d, yyyy", Locale.ENGLISH);
                         Date date = null;
@@ -263,7 +263,6 @@
                         pieChart.animateXY(2000, 2000);
 
                         // ... Rest of your chart setup code ...
-
                         ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                         String[] xAxisValues = new String[DateWiseIncome.size()];
                         ArrayList<Entry> incomeEntries = new ArrayList<>();
@@ -371,7 +370,7 @@
                 data.add(new PieEntry(values[i], type[i]));
             }
 
-            int[] colorClassArray=new int[]{0xFF1CA87A, 0xFFE74646};
+            int[] colorClassArray = new int[]{0xFF1CA87A, 0xFFE74646};
             PieDataSet pieDataSet = new PieDataSet(data,"");
             pieDataSet.setColors(colorClassArray);
             PieData pieData=new PieData(pieDataSet);
@@ -391,6 +390,7 @@
             pieChart.getDescription().setEnabled(false);
             pieChart.invalidate();
 
+
             //Line Chart 1
             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
             String[] xAxisValues = new String[DateWiseIncome.size()];
@@ -399,8 +399,8 @@
             for (Map.Entry<Date, Integer> entry : DateWiseIncome.entrySet()){
                 Format formatter = new SimpleDateFormat("MMM d, yyyy");
                 String s = formatter.format(entry.getKey());
-                xAxisValues[i]=s;
-                incomeEntries.add(new Entry(i,entry.getValue()));
+                xAxisValues[i] = s;
+                incomeEntries.add(new Entry(i, entry.getValue()));
                 i++;
                 Log.i("DATE", xAxisValues[i-1]);
                 Log.i("AMOUNT", String.valueOf(entry.getValue()));
@@ -408,7 +408,7 @@
             dataSets = new ArrayList<>();
             LineDataSet set1;
 
-            set1 = new LineDataSet(incomeEntries, "Income");
+            set1 = new LineDataSet(incomeEntries, "Thu nhập");
             set1.setColor(0xFF1CA87A);
             set1.setValueTextColor(Color.BLUE);
             set1.setValueTextSize(20);
@@ -438,10 +438,11 @@
             mLineGraph.invalidate();
             mLineGraph.getDescription().setEnabled(false);
 
+
             ArrayList<ILineDataSet> dataSets1 = new ArrayList<>();
             String[] xAxisValues1 = new String[DateWiseExpense.size()];
             ArrayList<Entry> expenseEntries = new ArrayList<>();
-             int j=0;
+            int j = 0;
             for (Map.Entry<Date, Integer> entry_e : DateWiseExpense.entrySet()){
                 Format formatter = new SimpleDateFormat("MMM d, yyyy");
                 String s = formatter.format(entry_e.getKey());
@@ -451,11 +452,11 @@
                 Log.i("DATE", xAxisValues1[j-1]);
                 Log.i("AMOUNT", String.valueOf(entry_e.getValue()));
             }
+
             dataSets1 = new ArrayList<>();
             LineDataSet set2;
 
-
-            set2 = new LineDataSet(expenseEntries, "Expense");
+            set2 = new LineDataSet(expenseEntries, "Chi tiêu");
             set2.setColor(0xFFE74646);
             set2.setValueTextColor(Color.BLUE);
             set2.setValueTextSize(20);

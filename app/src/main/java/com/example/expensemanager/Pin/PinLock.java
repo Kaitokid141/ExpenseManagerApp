@@ -1,8 +1,8 @@
-package com.example.expensemanager;
+package com.example.expensemanager.Pin;
 
 import android.app.Application;
-import android.os.Bundle;
 
+import com.example.expensemanager.R;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 public class PinLock extends Application {

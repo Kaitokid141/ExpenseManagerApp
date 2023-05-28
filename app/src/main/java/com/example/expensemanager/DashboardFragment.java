@@ -71,13 +71,11 @@ public class DashboardFragment extends Fragment {
     private RecyclerView mRecyclerExpense;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View myview = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         mAuth = FirebaseAuth.getInstance();
-
         FirebaseUser mUser = mAuth.getCurrentUser();
         String uid = mUser.getUid();
 

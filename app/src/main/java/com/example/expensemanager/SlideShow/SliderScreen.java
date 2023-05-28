@@ -18,7 +18,6 @@ import com.example.expensemanager.MainActivity;
 import com.example.expensemanager.R;
 import com.example.expensemanager.SlideShow.ViewPagerAdapter;
 
-
 public class SliderScreen extends AppCompatActivity {
 
     public SharedPreferences preferences;
@@ -115,7 +114,6 @@ public class SliderScreen extends AppCompatActivity {
     };
 
     private int getitem(int i){
-
         return mSLideViewPager.getCurrentItem() + i;
     }
 
