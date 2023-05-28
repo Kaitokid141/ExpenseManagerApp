@@ -485,7 +485,7 @@
             mLineGraph1.getLegend().setEnabled(false);
             mLineGraph1.invalidate();
             mLineGraph1.getDescription().setEnabled(false);
-            
+
             return myView;
         }
     }

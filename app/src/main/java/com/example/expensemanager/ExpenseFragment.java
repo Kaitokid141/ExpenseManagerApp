@@ -398,7 +398,7 @@ public class ExpenseFragment extends Fragment {
 
                 String stamount = String.valueOf(amount);
                 stamount = String.valueOf(edtAmount.getText());
-                System.out.print(stamount);
+                //System.out.print(stamount);
                 int intamount = Integer.parseInt(stamount);
 
                 String mDate = DateFormat.getDateInstance().format(new Date());
