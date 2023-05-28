@@ -11,7 +11,7 @@ public class PinLock extends Application {
        super.onCreate();
         LockManager<CustomPinActivity> lockManager = LockManager.getInstance();
         lockManager.enableAppLock(this, CustomPinActivity.class);
-        lockManager.getAppLock().setTimeout(10000);
+        lockManager.getAppLock().setTimeout(1000);
         lockManager.getAppLock().setLogoId(R.drawable.padlock);
     }
 }
